@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// computes the check digit of a upc barcode
+// computes the check digit of a 12 digit UPC barcode
 
 int main(void)
 {
