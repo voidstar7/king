@@ -1,12 +1,13 @@
 #include <stdio.h>
 
-// calculates the commission paid to a broker according to transaction size. The minimum commission amount is $39
+// calculates the commission paid to a broker according to the number and price of shares purchased. The minimum commission amount is $39
 
 int main(void) {
-	float v, c;
-	printf("Enter value of trade: ");
-	scanf("%f", &v);
+	float v, c, p; int s;
+	printf("Enter the number of shares: "); scanf("%i", &s);
+	printf("Enter the price per share: "); scanf("%f", &p);
 
+	v = s * p;
 	if (v < 2500.00f) {
 		c = 30.00f + (v * 0.017f);
 	} else if (v > 2500.00f && v < 6250.00f) {
