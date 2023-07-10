@@ -4,7 +4,7 @@
 
 int main(void) {
 	float v, c, p; int s;
-	printf("Enter the number of shares: "); scanf("%i", &s);
+	printf("Enter the number of shares: "); scanf("%d", &s);
 	printf("Enter the price per share: "); scanf("%f", &p);
 	v = s * p;
 
