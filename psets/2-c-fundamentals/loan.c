@@ -13,14 +13,11 @@ int main(void)
 	printf("Enter the monthly payment: ");
 	scanf("%f", &monthlyPayment);
 
-	monthlyInterestRate = (interestRate * .01) / 12;
+	monthlyInterestRate = (interestRate / 100) / 12;
 
-	first = (principle - monthlyPayment);
-	first = first * (1 + monthlyInterestRate);
-	second = (first - monthlyPayment);
-	second = second * (1 + monthlyInterestRate);
-	third = (second - monthlyPayment);
-	third = third * (1 + monthlyInterestRate);
+	first = principle * (1.0f + monthlyInterestRate) - monthlyPayment;
+	second = first * (1.0f + monthlyInterestRate) - monthlyPayment;
+	third = second * (1.0f + monthlyInterestRate) - monthlyPayment;
 
 	printf("Balance remaining after first payment: %.2f\n", first);
 	printf("Balance remaining after second payment: %.2f\n", second);
