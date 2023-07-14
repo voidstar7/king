@@ -1,25 +1,59 @@
 #include <stdio.h>
 
-// prompts the user to enter two dates, then tells them which one comes earlier\n on the calendar
-int main(void) {
-	int monthOne, dayOne, yearOne, monthTwo, dayTwo, yearTwo;
-	printf("Enter first date (mm/dd/yy): "); scanf("%d/%d/%d", &monthOne, &dayOne, &yearOne);
-	printf("Enter second date (mm/dd/yy): "); scanf("%d/%d/%d", &monthTwo, &dayTwo, &yearTwo);
+// prompts for calendar dates then returns the earliest one
 
-	if (yearOne < yearTwo) 
-		printf("date one is earlier\n");
-	else if (yearOne > yearTwo) 
-		printf("date two is earlier\n");
-	else 
-		if (monthOne < monthTwo)
-			printf("date one is earlier\n");
-		else if (monthOne > monthTwo)
-			printf("date two is earlier\n");
-		else 
-			if (dayOne < dayTwo)
-				printf("date one is earlier\n");
-			else if (dayOne > dayTwo)
-				printf("date two is earlier\n");
-			else 
-				printf("The dates are the same\n");
+int main(void) {
+	int month, day, year, earlyMonth, earlyDay, earlyYear;
+	printf("Enter a date (mm/dd/yy) - 0/0/0 to stop: "); scanf("%d/%d/%d", &month, &day, &year);
+	if (month > 12 || day > 31 || year < 0) { 
+			printf("Invalid entry\n");
+			return 1;
+	}
+	else if (month == 0 && day == 0 && year == 0) { 
+		goto zeroInit;
+	}	
+	else { 
+		earlyMonth = month;
+		earlyDay = day;
+		earlyYear = year;
+		while (1) {
+			printf("Enter a date (mm/dd/yy) - 0/0/0 to stop: "); scanf("%d/%d/%d", &month, &day, &year);
+			if (month > 12 || day > 31 || year < 0) { 
+				printf("Invalid entry\n");
+				return 1;
+			}
+			else if (month == 0 && day == 0 && year == 0) 
+				break;
+			else { 
+				if (year < earlyYear) {
+					earlyYear = year;
+					earlyMonth = month;
+					earlyDay = day;
+					continue;
+				}
+				else if (year == earlyYear) { 
+					if (month < earlyMonth) {
+						earlyYear = year;
+						earlyMonth = month;
+						earlyDay = day;
+						continue;
+					}
+					else if (month == earlyMonth) { 
+						if (day < earlyDay) { 
+							earlyYear = year;
+							earlyMonth = month;
+							earlyDay = day;
+							continue;
+						}
+					}
+				}
+			}
+		}	
+	}	
+	printf("Earliest date: %d/%d/%d\n", earlyMonth, earlyDay, earlyYear);
+	return 0;
+
+zeroInit:
+	printf("Earliest date 0/0/0\n");
+	return 2;
 }
