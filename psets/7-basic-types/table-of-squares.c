@@ -2,11 +2,10 @@
 
 int main(void)
 {
-	int n, i = 1;
+	int n;
 	printf("Enter the number of entries of the table: ");
 	scanf("%d", &n);
-	while (i <= n) {
+	for (int i = 1; i <= n; i++) {
 		printf("%10d%10d\n", i, i * i);
-		i++;
 	}
 }
