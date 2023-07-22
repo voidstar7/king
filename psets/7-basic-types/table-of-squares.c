@@ -4,13 +4,22 @@ int main(void)
 {
 
 // when i is an int, when i goes above 46,340 then i * i is no longer correct. This indicates that the max (signed) int value on this machine is 2,147,483,647 with a size of 4B.
-//
-// int n;
-// printf("Enter the number of entries of the table: ");
-// scanf("%d", &n);
-//	for (int i = 1; i <= n; i++) {
-//		printf("%20d%20d\n", i, i * i);
-//	}
+
+ int n; 
+ char c;
+ printf("Enter the number of entries of the table: ");
+ scanf("%d", &n);
+ getchar(); // clears \n from the input buffer in scanf so it isn't used in the while statement below
+ for (int j = 1, i = 1; i <= n; j++, i++) {
+		printf("%20d%20d\n", i, i * i);
+		if (j % 24 != 0) 
+			continue;
+		do {
+			printf("\n%18cPress Enter to continue ...\n", 32);
+			c = getchar();
+		}
+		while (c != '\x0a');
+	}
 /*
                46338          2147210244
                46339          2147302921
