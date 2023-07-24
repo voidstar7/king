@@ -5,33 +5,30 @@
 int main(void)
 {
 	char c;
-	int digit, sum = 0;
 	printf("Enter a phone number: ");	
-	do
+	while (1)
 	{
 		c = getchar();
-		switch (c)
+		if (c >= 65 && c <= 90)
 		{
-			case 'A': case 'B': case 'C':	digit = 2; break;
-			case 'D': case 'E': case 'F':	digit = 3; break;
-			case 'G': case 'H': case 'I':	digit = 4; break;
-			case 'J': case 'K': case 'L':	digit = 5; break;
-			case 'M': case 'N': case 'O':	digit = 6; break;
-			case 'P': case 'Q': case 'R':	digit = 7; break;
-			case 'S': case 'T': case 'U':	digit = 8; break;
-			case 'V': case 'W': case 'X':	digit = 9; break;
-			case 'Y': case 'Z':						digit = 0; break;
-			case '\x0a': goto end;
-
+			switch (c)
+			{
+				case 'A': case 'B': case 'C':	printf("2"); break;
+				case 'D': case 'E': case 'F':	printf("3"); break;
+				case 'G': case 'H': case 'I':	printf("4"); break;
+				case 'J': case 'K': case 'L':	printf("5"); break;
+				case 'M': case 'N': case 'O':	printf("6"); break;
+				case 'P': case 'Q': case 'R':	printf("7"); break;
+				case 'S': case 'T': case 'U':	printf("8"); break;
+				case 'V': case 'W': case 'X':	printf("9"); break;
+				case 'Y': case 'Z':						printf("0"); break;
+			}
 		}
-		if (sum == 0)
-		{
-			sum += digit; 
-			continue;
-		}
-		sum = digit + (sum * 10); 
+		else if (c == '\x0a')
+			break;
+		else
+			printf("%c", c);
 	}
-	while (c != '\x0a');
-	end:
-		printf("%d\n", sum);
+	printf("\n");
+	return 0;
 }
