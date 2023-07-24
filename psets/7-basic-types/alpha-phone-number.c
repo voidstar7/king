@@ -21,7 +21,7 @@ int main(void)
 				case 'P': case 'Q': case 'R':	printf("7"); break;
 				case 'S': case 'T': case 'U':	printf("8"); break;
 				case 'V': case 'W': case 'X':	printf("9"); break;
-				case 'Y': case 'Z':						printf("0"); break;
+				case 'Y': case 'Z':	printf("0"); break;
 			}
 		}
 		else if (c == '\x0a')
