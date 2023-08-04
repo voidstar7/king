@@ -1,18 +1,15 @@
 #include <stdio.h>
+#include <math.h>
 
 int main(void)
 {
-	double x, z = 0.0;
+	double x, y = 1.0;
 	printf("Enter a positive number: ");
 	scanf("%lf", &x);
-	for (
-			double y = 1.0; 
-			x / y - y < 0.000001; 
-			y = (x + (x / y)) / 2
-			)
+	while (fabs((((x / y) + y)) / 2 - y) > .00001)
 	{
-		z = x / y;
+		y = ((x / y) + y) / 2;
 	}
-	printf("Square root: %lf\n", z);
+	printf("Square root: %.5lf\n", y);
 	return 0;
 }
