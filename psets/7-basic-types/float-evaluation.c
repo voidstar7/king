@@ -6,7 +6,7 @@
 
 int main(void)
 {
-	bool NUMBER, DECIMAL;
+	bool number, decimal;
 	int flag = 0, scale = 0;
 	float digit = 0.0f;
 	float value = 0.0f;
@@ -19,7 +19,7 @@ input:
 		c = getchar();
 		if (isdigit(c)) // number
 		{
-			NUMBER = true;
+			number = true;
 			scale++;
 			break;
 		}
@@ -31,7 +31,7 @@ input:
 				scale = 0; 
 				continue;
 			case 46: // decimal
-				DECIMAL = true;
+				decimal = true;
 				scale++;
 				break;
 			case 43: // add
@@ -54,7 +54,7 @@ input:
 				continue;
 		}
 	}
-	if (NUMBER)
+	if (number)
 	{
 		if (scale == 1)
 		{
@@ -64,6 +64,7 @@ input:
 		digit = (digit * 10) + ((float)c - 48);
 		goto input;
 	}
+	else if (decimal)
 
 end:
 		printf("Value of expression: %f\n", digit);
