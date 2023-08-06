@@ -2,20 +2,11 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-/* 
- * evaluates an expression of from left to right regardless of operator precedence. Possible operators are +, -, *, and /
- *
- * FLAGS:
- * 1 number
- * 2 decimal
- * 3 add
- * 4 subtract
- * 5 multiply
- * 6 divide
-*/
+// evaluates an expression of from left to right regardless of operator precedence. Possible operators are +, -, *, and /
 
 int main(void)
 {
+	bool NUMBER, DECIMAL;
 	int flag = 0, scale = 0;
 	float digit = 0.0f;
 	float value = 0.0f;
@@ -28,42 +19,42 @@ input:
 		c = getchar();
 		if (isdigit(c)) // number
 		{
-			flag = 1;
+			NUMBER = true;
 			scale++;
 			break;
 		}
 		switch (c)
 		{
-			case 10: 
+			case 10: // return
 				goto end;
-			case 32: 
+			case 32: // space
 				scale = 0; 
 				continue;
 			case 46: // decimal
-				flag = 2; 
+				DECIMAL = true;
 				scale++;
 				break;
 			case 43: // add
-				flag = 3;
+				flag = 1;
 				scale = 0;
 				break;
 			case 45: // subtract
-				flag = 4; 
+				flag = 2; 
 				scale = 0;
 				break;
 			case 42: // multiply
-				flag = 5; 
+				flag = 3; 
 				scale = 0;
 				break;
 			case 47: // divide
-				flag = 6;
+				flag = 4;
 				scale = 0;
 				break;
 			default:
 				continue;
 		}
 	}
-	if (flag == 1)
+	if (NUMBER)
 	{
 		if (scale == 1)
 		{
