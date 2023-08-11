@@ -14,20 +14,13 @@ int main(void)
 		digit_seen[digit]++;
 		n /= 10;
 	}
+	printf("Digit:      ");
 	for (int i = 0; i < 10; i++)
-	{
-		if (digit_seen[i] > 1)
-		{
-			printf("Repeated digit(s): ");
-			for (int j = 0; j < 10; j++)
-			{
-				if (digit_seen[j] > 1)
-					printf("%d ", j);
-			}
-			printf("\n");
-			return 0;
-		}
-	}
-	printf("No repeated digits\n");
+		printf("%2d ", i);
+	printf("\n");
+	printf("Occurences: ");
+	for (int j = 0; j < 10; j++)
+		printf("%2d ", digit_seen[j]);
+	printf("\n");
 	return 0;
 }
