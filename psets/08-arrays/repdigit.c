@@ -1,9 +1,8 @@
 #include <stdio.h>
-#include <stdbool.h>
 
 int main(void)
 {
-	bool digit_seen[10] = { false };
+	int digit_seen[10] = { 0 };
 	int digit;
 	long n;
 
@@ -12,15 +11,23 @@ int main(void)
 	while (n > 0)
 	{
 		digit = n % 10;
-		if (digit_seen[digit])
-			break;
-		digit_seen[digit] = true;
+		digit_seen[digit]++;
 		n /= 10;
 	}
-	if (n > 0)
-		printf("Repeated digit\n");
-	else
-		printf("No repeated digit\n");
-
+	for (int i = 0; i < 10; i++)
+	{
+		if (digit_seen[i] > 1)
+		{
+			printf("Repeated digit(s): ");
+			for (int j = 0; j < 10; j++)
+			{
+				if (digit_seen[j] > 1)
+					printf("%d ", j);
+			}
+			printf("\n");
+			return 0;
+		}
+	}
+	printf("No repeated digits\n");
 	return 0;
 }
