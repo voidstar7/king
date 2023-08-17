@@ -2,6 +2,8 @@
 #include <ctype.h>
 #define R 5 
 #define C 5
+#define SPACE 32
+#define RETURN 10
 
 // prompts for a 5x5 array of integers and displays the sum of each row and column
 int main(void)
@@ -19,9 +21,9 @@ int main(void)
 			n = getchar();
 			if (isdigit(n))
 				rowSum[i] += (int)n - 48;
-			else if (n == 32)
+			else if (n == SPACE) 
 				continue;
-			else if (n == 10)
+			else if (n == RETURN) 
 				break;
 			else
 			{
