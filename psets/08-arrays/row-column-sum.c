@@ -11,9 +11,9 @@ int main(void)
 	int n = 0;
 
 	printf("Enter %d numbers in each row\n", C);
-	for (int i = 1; i <= R; i++)
+	for (int i = 0; i <= R; i++)
 	{
-		printf("Enter row %d: ", i);
+		printf("Enter row %d: ", i + 1);
 		while (1)
 		{
 			n = getchar();
@@ -31,7 +31,7 @@ int main(void)
 		}
 	}
 	printf("Row totals: ");
-	for (int k = 1; k <= R; k++)
+	for (int k = 0; k < R; k++)
 		printf("%d ", rowSum[k]);
 	printf("\n");
 	return 0;
