@@ -1,40 +1,40 @@
 #include <stdio.h>
 #include <ctype.h>
-#define R 5 
-#define C 5
-#define SPACE 32
-#define RETURN 10
+#define DIGIT (int)(row[i] - 48)
 
-// prompts for a 5x5 array of integers and displays the sum of each row and column
 int main(void)
 {
-	int rowSum[R] = {0};
-	int columnSum[C] = {0};
-	int n = 0;
-
-	printf("Enter %d numbers in each row\n", C);
-	for (int i = 0; i <= R; i++)
+	int array[5];
+	char row[100];
+	int i, arrayIndex = 0, rowNumberValue = 0, count = 0;
+	printf("Enter 5 numbers: ");
+	char c; 
+	while (1)
 	{
-		printf("Enter row %d: ", i + 1);
-		while (1)
-		{
-			n = getchar();
-			if (isdigit(n))
-				rowSum[i] += (int)n - 48;
-			else if (n == SPACE) 
-				continue;
-			else if (n == RETURN) 
-				break;
-			else
-			{
-				printf("Invalid entry\n");
-				return 1;
-			}
-		}
+		c = getchar();
+		if (c == 10)
+			break;
+		row[count] = c;
+		count++;
 	}
-	printf("Row totals: ");
-	for (int k = 0; k < R; k++)
-		printf("%d ", rowSum[k]);
+	for (i = 0; i <= count; i++)
+	{
+		if (isdigit(row[i]))
+		{
+			if (rowNumberValue == 0)  
+				rowNumberValue += DIGIT;
+			else
+				rowNumberValue = rowNumberValue * 10 + DIGIT;
+			continue;
+		}
+		array[arrayIndex] = rowNumberValue;
+		rowNumberValue = 0;
+		arrayIndex++;
+	}
+	for (i = 0; i < 5; i++)
+	{
+		printf("%d ", array[i]);
+	}
 	printf("\n");
 	return 0;
 }
