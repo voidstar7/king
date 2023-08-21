@@ -2,13 +2,13 @@
 #include <ctype.h>
 #define R 5
 #define C 5
-#define DIGIT (int)(rowBuffer[i] - 48)
+#define DIGIT (int)(buffer[i] - 48)
 
 int main(void)
 {
 	int matrix[R];
-	char rowBuffer[100];
-	int i, rowIndex = 0, rowNumberValue = 0, count = 0;
+	char buffer[100];
+	int i, columnIndex = 0, columnNumberValue = 0, count = 0;
 	printf("Enter 5 numbers: ");
 	char c; 
 	while (1)
@@ -16,22 +16,22 @@ int main(void)
 		c = getchar();
 		if (c == 10)
 			break;
-		rowBuffer[count] = c;
+		buffer[count] = c;
 		count++;
 	}
 	for (i = 0; i <= count; i++)
 	{
-		if (isdigit(rowBuffer[i]))
+		if (isdigit(buffer[i]))
 		{
-			if (rowNumberValue == 0)  
-				rowNumberValue += DIGIT;
+			if (columnNumberValue == 0)  
+				columnNumberValue += DIGIT;
 			else
-				rowNumberValue = rowNumberValue * 10 + DIGIT;
+				columnNumberValue = columnNumberValue * 10 + DIGIT;
 			continue;
 		}
-		matrix[rowIndex] = rowNumberValue;
-		rowNumberValue = 0;
-		rowIndex++;
+		matrix[columnIndex] = columnNumberValue;
+		columnNumberValue = 0;
+		columnIndex++;
 	}
 	for (i = 0; i < 5; i++)
 	{
