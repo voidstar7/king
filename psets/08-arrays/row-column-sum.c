@@ -50,13 +50,13 @@ int main(void)
 	printf("\n");
 	for (i = 0; i < S; i++)
 	{
-		printf("Student %d total scores (all quizzes): ", i + 1);
+		//printf("Student %d total scores (all quizzes): ", i + 1);
 		temp = 0;
 		for (j = 0; j < Q; j++)
 		{
 			temp += matrix[i][j];
 		}
-		printf("%d\n", temp);
+		printf("Student %d: total = %d / average = %d\n", i + 1, temp, temp / Q);
 	}
 	temp = 0;
 	printf("\n");
