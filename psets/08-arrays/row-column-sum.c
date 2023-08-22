@@ -8,7 +8,7 @@
 int main(void)
 {
 	int matrix[R][C];
-	int i, j, k, columnIndex = 0, columnNumberValue = 0, count = 0;
+	int i, j, k, temp, columnIndex = 0, columnNumberValue = 0, count = 0;
 	char buffer[100];
 	char c; 
 
@@ -40,8 +40,6 @@ int main(void)
 		columnIndex = 0;
 		count = 0;
 	}
-	int rowSum[R];
-	int temp;
 	printf("Row totals: ");
 	for (i = 0; i < R; i++)
 	{
@@ -49,6 +47,18 @@ int main(void)
 		for (j = 0; j < C; j++)
 		{
 			temp += matrix[i][j];
+		}
+		printf("%d ", temp);
+	}
+	temp = 0;
+	printf("\n");
+	printf("Column totals: ");
+	for (i = 0; i < C; i++)
+	{
+		temp = 0;
+		for (j = 0; j < R; j++)
+		{
+			temp += matrix[j][i];
 		}
 		printf("%d ", temp);
 	}
