@@ -12,7 +12,7 @@
 int main(void)
 {
 	int matrix[S][Q];
-	int i, j, k, temp, quizIndex = 0, quizScore = 0, count = 0;
+	int i, j, k, total, quizIndex = 0, quizScore = 0, count = 0;
 	char buffer[100];
 	char c; 
 
@@ -46,34 +46,31 @@ int main(void)
 		count = 0;
 	}
 
-	// total scores for each student 
+	// total and average scores for each student 
 	printf("\n");
 	for (i = 0; i < S; i++)
 	{
-		//printf("Student %d total scores (all quizzes): ", i + 1);
-		temp = 0;
+		total = 0;
 		for (j = 0; j < Q; j++)
 		{
-			temp += matrix[i][j];
+			total += matrix[i][j];
 		}
-		printf("Student %d: total = %d / average = %d\n", i + 1, temp, temp / Q);
+		printf("Student %d: total = %d / average = %d\n", i + 1, total, total / Q);
 	}
-	temp = 0;
+	total = 0;
 	printf("\n");
 
 
-	/*
-	printf("Column totals: ");
+	// lowest, highest, and average scores for each quiz
 	for (i = 0; i < Q; i++)
 	{
-		temp = 0;
+		total = 0;
 		for (j = 0; j < S; j++)
 		{
-			temp += matrix[j][i];
+			total += matrix[j][i];
 		}
-		printf("%d ", temp);
+		printf("%d ", total);
 	}
 	printf("\n");
 	return 0;
-	*/
 }
