@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
+
 #define R 5
 #define C 5
 #define DIGIT (int)(buffer[i] - 48)
@@ -39,16 +40,18 @@ int main(void)
 		columnIndex = 0;
 		count = 0;
 	}
-	
-
+	int rowSum[R];
+	int temp;
+	printf("Row totals: ");
 	for (i = 0; i < R; i++)
 	{
-		printf("row %d: ", i + 1);
+		temp = 0;
 		for (j = 0; j < C; j++)
 		{
-			printf("%d ", matrix[i][j]);
+			temp += matrix[i][j];
 		}
-		printf("\n");
+		printf("%d ", temp);
 	}
+	printf("\n");
 	return 0;
 }
