@@ -1,20 +1,24 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#define R 5
-#define C 5
+#define S 5
+#define Q 5
 #define DIGIT (int)(buffer[i] - 48)
+
+// Prompts for 5 quiz grades for 5 students, then computes:
+// total and average score for each student
+// average score, high score, and low score for each quiz
 
 int main(void)
 {
-	int matrix[R][C];
-	int i, j, k, temp, columnIndex = 0, columnNumberValue = 0, count = 0;
+	int matrix[S][Q];
+	int i, j, k, temp, quizIndex = 0, quizScore = 0, count = 0;
 	char buffer[100];
 	char c; 
 
-	for (k = 0; k < R; k++)
+	for (k = 0; k < S; k++)
 	{
-		printf("Enter row %d: ", k + 1);
+		printf("Student %d quiz scores: ", k + 1);
 		while (1)
 		{
 			c = getchar();
@@ -28,36 +32,42 @@ int main(void)
 		{
 			if (isdigit(buffer[i]))
 			{
-				if (columnNumberValue == 0)	
-					columnNumberValue += DIGIT;
+				if (quizScore == 0)	
+					quizScore += DIGIT;
 				else
-					columnNumberValue = columnNumberValue * 10 + DIGIT;
+					quizScore = quizScore * 10 + DIGIT;
 				continue;
 			}
-			matrix[k][columnIndex] = columnNumberValue;
-			columnNumberValue = 0;
-			columnIndex++;
+			matrix[k][quizIndex] = quizScore;
+			quizScore = 0;
+			quizIndex++;
 		}
-		columnIndex = 0;
+		quizIndex = 0;
 		count = 0;
 	}
-	printf("Row totals: ");
-	for (i = 0; i < R; i++)
+
+	// total scores for each student 
+	printf("\n");
+	for (i = 0; i < S; i++)
 	{
+		printf("Student %d total scores (all quizzes): ", i + 1);
 		temp = 0;
-		for (j = 0; j < C; j++)
+		for (j = 0; j < Q; j++)
 		{
 			temp += matrix[i][j];
 		}
-		printf("%d ", temp);
+		printf("%d\n", temp);
 	}
 	temp = 0;
 	printf("\n");
+
+
+	/*
 	printf("Column totals: ");
-	for (i = 0; i < C; i++)
+	for (i = 0; i < Q; i++)
 	{
 		temp = 0;
-		for (j = 0; j < R; j++)
+		for (j = 0; j < S; j++)
 		{
 			temp += matrix[j][i];
 		}
@@ -65,4 +75,5 @@ int main(void)
 	}
 	printf("\n");
 	return 0;
+	*/
 }
