@@ -23,6 +23,7 @@ int main(void)
 			buffer[count] = c;
 			count++;
 		}
+		buffer[count] = '\0';
 		for (i = 0; i <= count; i++)
 		{
 			if (isdigit(buffer[i]))
