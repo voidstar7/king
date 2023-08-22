@@ -6,37 +6,49 @@
 
 int main(void)
 {
-	int matrix[R];
+	int matrix[R][C];
+	int i, j, k, columnIndex = 0, columnNumberValue = 0, count = 0;
 	char buffer[100];
-	int i, columnIndex = 0, columnNumberValue = 0, count = 0;
-	printf("Enter 5 numbers: ");
 	char c; 
-	while (1)
+
+	for (k = 0; k < R; k++)
 	{
-		c = getchar();
-		if (c == 10)
-			break;
-		buffer[count] = c;
-		count++;
-	}
-	for (i = 0; i <= count; i++)
-	{
-		if (isdigit(buffer[i]))
+		printf("Enter row %d: ", k + 1);
+		while (1)
 		{
-			if (columnNumberValue == 0)  
-				columnNumberValue += DIGIT;
-			else
-				columnNumberValue = columnNumberValue * 10 + DIGIT;
-			continue;
+			c = getchar();
+			if (c == 10)
+				break;
+			buffer[count] = c;
+			count++;
 		}
-		matrix[columnIndex] = columnNumberValue;
-		columnNumberValue = 0;
-		columnIndex++;
+		for (i = 0; i <= count; i++)
+		{
+			if (isdigit(buffer[i]))
+			{
+				if (columnNumberValue == 0)	
+					columnNumberValue += DIGIT;
+				else
+					columnNumberValue = columnNumberValue * 10 + DIGIT;
+				continue;
+			}
+			matrix[k][columnIndex] = columnNumberValue;
+			columnNumberValue = 0;
+			columnIndex++;
+		}
+		columnIndex = 0;
+		count = 0;
 	}
-	for (i = 0; i < 5; i++)
+	
+
+	for (i = 0; i < R; i++)
 	{
-		printf("%d ", matrix[i]);
+		printf("row %d: ", i + 1);
+		for (j = 0; j < C; j++)
+		{
+			printf("%d ", matrix[i][j]);
+		}
+		printf("\n");
 	}
-	printf("\n");
 	return 0;
 }
