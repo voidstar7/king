@@ -59,15 +59,13 @@ int main(void)
 	printf("\n");
 
 
-	// lowest, highest, and average scores for each quiz
+	// average scores for each quiz
 	for (i = 0; i < Q; i++)
 	{
 		total = 0;
 		for (j = 0; j < S; j++)
-		{
 			total += matrix[j][i];
-		}
-		printf("%d ", total);
+		printf("Quiz %d average = %d\n", i + 1, total / Q);
 	}
 	printf("\n");
 	return 0;
