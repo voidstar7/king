@@ -52,9 +52,7 @@ int main(void)
 	{
 		total = 0;
 		for (j = 0; j < Q; j++)
-		{
 			total += matrix[i][j];
-		}
 		printf("Student %d: total = %d / average = %d\n", i + 1, total, total / Q);
 	}
 	total = 0;
