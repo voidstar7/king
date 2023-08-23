@@ -45,6 +45,7 @@ int main(void)
 		quizIndex = 0;
 		count = 0;
 	}
+	// this is way more complicated than it needed to be. Could have just used scanf(). See http://knking.com/books/c2/answers/c8.html
 
 	// total and average scores for each student 
 	printf("\n");
