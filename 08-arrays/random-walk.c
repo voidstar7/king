@@ -10,6 +10,7 @@
 int main(void)
 {
 	int i, j;
+	char start = 'A';
 
 	char grid[R][C];
 	for (i = 0; i < R; i++)
@@ -19,7 +20,15 @@ int main(void)
 	for (i = 0; i < R; i++)
 	{
 		for (j = 0; j < C; j++)
-			printf(" %c", grid[i][j]);
+		{
+			if (start <= 'Z')
+			{
+				printf(" %c", start);
+				start++;
+			}
+			else
+				printf(" %c", grid[i][j]);
+		}
 		printf("\n");
 	}
 }
