@@ -1,11 +1,14 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define R 10
 #define C 10
 
 // generates a 10x10 char array initialized to '.'
 // program walks randomly from element to element, using A - Z as labels for elements visited
-// terminates if the walk goes outside the bounds of the grid or is blocked from moving further
+// if the next step is 1) off the grid or 2) on top of an existing letter, try a different direction
+// if all directions are blocked, terminate the program
 
 int main(void)
 {
@@ -17,6 +20,11 @@ int main(void)
 		for (j = 0; j < C; j++)
 			grid[i][j] = '.';
 
+	srand((unsigned)time(NULL));
+	int direction = rand();
+	printf("%d", n % 4);
+
+	/*
 	for (i = 0; i < R; i++)
 	{
 		for (j = 0; j < C; j++)
@@ -31,4 +39,5 @@ int main(void)
 		}
 		printf("\n");
 	}
+	*/
 }
