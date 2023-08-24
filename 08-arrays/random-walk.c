@@ -146,9 +146,9 @@ int main(void)
 	}
 
 	// print grid
-	for (i = 0; i < R + 2; i++)
+	for (i = 1; i < R + 1; i++)
 	{
-		for (j = 0; j < C + 2; j++)
+		for (j = 1; j < C + 1; j++)
 			printf(" %4d", grid[i][j]);
 		printf("\n");
 	}
