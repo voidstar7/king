@@ -50,9 +50,9 @@ int main(void)
 		if (upBlocked == true && rightBlocked == true && downBlocked == true && leftBlocked == true)
 		{
 		#ifdef DEBUG_ENABLED
-			printf("Movement is blocked. Exiting after %d/25 moves\n", i);
+			printf("Movement is blocked after %d/25 moves\n", i);
 		#endif
-			return 1;
+			goto printGrid;
 		}
 		move = rand() % 4;
 		#ifdef DEBUG_ENABLED
@@ -141,15 +141,16 @@ int main(void)
 				break;
 			default:
 				printf("Unexpected error\n");
-				return 0;
+				return 1;
 		}
 	}
 
-	// print grid
+printGrid:
 	for (i = 1; i < R + 1; i++)
 	{
 		for (j = 1; j < C + 1; j++)
 			printf(" %4d", grid[i][j]);
 		printf("\n");
 	}
+	return 0;
 }
