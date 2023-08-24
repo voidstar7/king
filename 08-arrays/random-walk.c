@@ -52,7 +52,7 @@ int main(void)
 		#ifdef DEBUG_ENABLED
 			printf("Movement is blocked after %d/25 moves\n", i);
 		#endif
-			goto printGrid;
+			break;
 		}
 		move = rand() % 4;
 		#ifdef DEBUG_ENABLED
@@ -145,7 +145,6 @@ int main(void)
 		}
 	}
 
-printGrid:
 	for (i = 1; i < R + 1; i++)
 	{
 		for (j = 1; j < C + 1; j++)
