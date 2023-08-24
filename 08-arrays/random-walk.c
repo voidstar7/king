@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 
-#define DEBUG_ENABLED 1
+//#define DEBUG
 #define R 10
 #define C 10
 #define UP grid[rowPosition - 1][columnPosition]
@@ -49,13 +49,13 @@ int main(void)
 	{
 		if (upBlocked == true && rightBlocked == true && downBlocked == true && leftBlocked == true)
 		{
-		#ifdef DEBUG_ENABLED
+		#ifdef DEBUG
 			printf("Movement is blocked after %d/25 moves\n", i);
 		#endif
 			break;
 		}
 		move = rand() % 4;
-		#ifdef DEBUG_ENABLED
+		#ifdef DEBUG
 		if (move == 0)
 			printf("Attempting to move Up\n");
 		else if (move == 1)
@@ -70,14 +70,14 @@ int main(void)
 			case 0:
 				if (UP == 0 || (UP >= 65 && UP <= 90))
 				{
-				#ifdef DEBUG_ENABLED
+				#ifdef DEBUG
 					printf("Up is blocked\n");
 				#endif
 					upBlocked = true;
 					i--;
 					break;
 				}
-				#ifdef DEBUG_ENABLED
+				#ifdef DEBUG
 					printf("Successfully moved Up (%i/25)\n", i);
 				#endif
 				UP = letter;
@@ -88,14 +88,14 @@ int main(void)
 			case 1:
 				if (RIGHT == 0 || (RIGHT >= 65 && RIGHT <= 90))
 				{
-				#ifdef DEBUG_ENABLED
+				#ifdef DEBUG
 					printf("Right is blocked\n");
 				#endif
 					rightBlocked = true;
 					i--;
 					break;
 				}
-				#ifdef DEBUG_ENABLED
+				#ifdef DEBUG
 					printf("Successfully moved Right (%i/25)\n", i);
 				#endif
 				RIGHT = letter;
@@ -106,14 +106,14 @@ int main(void)
 			case 2:
 				if (DOWN == 0 || (DOWN >= 65 && DOWN <= 90))
 				{
-				#ifdef DEBUG_ENABLED
+				#ifdef DEBUG
 					printf("Down is blocked\n");
 				#endif
 					downBlocked = true;
 					i--;
 					break;
 				}
-				#ifdef DEBUG_ENABLED
+				#ifdef DEBUG
 					printf("Successfully moved Down (%i/25)\n", i);
 				#endif
 				DOWN = letter;
@@ -124,14 +124,14 @@ int main(void)
 			case 3:
 				if (LEFT == 0 || (LEFT >= 65 && LEFT <= 90))
 				{
-				#ifdef DEBUG_ENABLED
+				#ifdef DEBUG
 					printf("Left is blocked\n");
 				#endif
 					leftBlocked = true;
 					i--;
 					break;
 				}
-				#ifdef DEBUG_ENABLED
+				#ifdef DEBUG
 					printf("Successfully moved Left (%i/25)\n", i);
 				#endif
 				LEFT = letter;
@@ -148,7 +148,10 @@ int main(void)
 	for (i = 1; i < R + 1; i++)
 	{
 		for (j = 1; j < C + 1; j++)
-			printf(" %4d", grid[i][j]);
+		if (grid[i][j] >= 100)
+			printf(" . ");
+		else
+			printf(" %c ", (char)grid[i][j]);
 		printf("\n");
 	}
 	return 0;
