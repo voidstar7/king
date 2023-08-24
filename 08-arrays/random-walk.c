@@ -15,7 +15,7 @@
 // generates a 10x10 char array initialized to '.'
 // program walks randomly from element to element, using A - Z as labels for elements visited
 // if the next step is 1) off the grid or 2) on top of an existing letter, try a different direction
-// if all directions are blocked\n, terminate the program
+// if all directions are blocked, terminate the program
 
 int main(void)
 {
@@ -144,7 +144,6 @@ int main(void)
 				return 1;
 		}
 	}
-
 	for (i = 1; i < R + 1; i++)
 	{
 		for (j = 1; j < C + 1; j++)
