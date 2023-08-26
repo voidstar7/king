@@ -3,51 +3,20 @@
 
 int main(void)
 {
+	int alphabet[26] = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10 };
+	int score = 0, position;
 	char c;
-	int sum = 0;
 	printf("Enter a word: ");
 	while(1)
 	{
 		c = getchar();	
 		if (isalpha(c))
 		{
-			c = toupper(c);
-			switch(c)
-			{
-				case 'A': 
-				case 'E': 
-				case 'I': 
-				case 'L': 
-				case 'N': 
-				case 'O': 
-				case 'R': 
-				case 'S': 
-				case 'T': 
-				case 'U': sum += 1; 
-									break;
-				case 'D': 
-				case 'G': sum += 2;
-									break;
-				case 'B': 
-				case 'C': 
-				case 'M': 
-				case 'P': sum += 3;
-									break;
-				case 'F': 
-				case 'H': 
-				case 'V': 
-				case 'W': 
-				case 'Y': sum += 4;
-									break;
-				case 'K': sum += 5;
-									break;
-				case 'J': 
-				case 'X': sum += 8;
-									break;
-				case 'Q': 
-				case 'Z': sum += 10;
-									break;
-			}
+			if (isupper(c))
+				position = (int)c - 65;
+			else
+				position = (int)c - 97;
+			score += alphabet[position];
 		}
 		else if (c == '\x0a')
 			break;
@@ -57,6 +26,6 @@ int main(void)
 			return 1;
 		}
 	}
-	printf("Scrabble value: %d\n", sum);
+	printf("Scrabble value: %d\n", score);
 	return 0;
 }
