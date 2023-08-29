@@ -32,5 +32,13 @@ input:
 		goto input;
 	}
 	for (i = 0; i < 26; i++)
-		printf("%d ", word[i]);
+	{
+		if (word[i] != 0)
+		{
+			printf("The words are not anagrams\n");
+			return 0;
+		}
+	}
+	printf("The words are anagrams\n");
+	return 0;
 }
