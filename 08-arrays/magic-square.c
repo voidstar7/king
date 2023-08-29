@@ -39,10 +39,25 @@ int main(void)
 			m[i][j] = 0;
 
 	// start in the middle of first row of inner square
-	m[1][(R + 1) / 2] = RANGE - (RANGE - 1);
-	// for (i = 0; i < n; i++)
+	int row = 1, col = (R + 1) / 2;
+	m[row][col] = 1;
 
-
+	// populate remaining numbers
+	for (i = 2; i <= RANGE; i++)
+	{
+		if (m[row - 1][col + 1] < 0)
+		{
+			row = row + (R - 1);
+			col += 1;
+			m[row][col] = i;
+			continue;
+		}
+		row -= 1;
+		col += 1;
+		m[row][col] = i;
+		break;
+	}
+		
 
 
 	// print magic square
