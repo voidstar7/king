@@ -1,32 +1,36 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 int main(void)
 {
 	char c;
 	int i;
-	int firstWord[26] = { 0 };
+	bool firstWordEntered = false;
+	int word[26] = { 0 };
 
 	printf("Enter first word: ");
+input:
 	while (c != 10)
 	{
 		c = getchar();
 		if (!isalpha(c))
 			continue;
 		c = tolower(c);
-		firstWord[c - 'a'] += 1;
+		if (firstWordEntered == false)
+		{
+			word[c - 'a'] += 1;
+			continue;
+		}
+		word[c - 'a'] -= 1;
 	}
-	c = 0; // clears newline from input buffer
-	printf("Enter second word: ");
-	while (c != 10)
+	if (firstWordEntered == false)
 	{
-		c = getchar();
-		if (!isalpha(c))
-			continue;
-		c = tolower(c);
-		if (firstWord[c - 'a'] > 0)
-			firstWord[c - 'a'] -= 1;
+		c = 0; // clears newline from input buffer
+		firstWordEntered = true;
+		printf("Enter second word: ");
+		goto input;
 	}
 	for (i = 0; i < 26; i++)
-		printf("%d ", firstWord[i]);
+		printf("%d ", word[i]);
 }
