@@ -31,12 +31,20 @@ int main(void)
 
 	// initialize matrix with padding
 	int m[R + 2][C + 2];
+	
+	// set all elements to -1
 	for (i = 0; i < R + 2; i++)
 		for (j = 0; j < C + 2; j++)
 			m[i][j] = -1;
+
+	// set inner square elements to 0
 	for (i = 1; i < (R + 2) - 1; i++)
 		for (j = 1; j < (C + 2) - 1; j++)
 			m[i][j] = 0;
+
+	// set last column to -2
+	 for (i = 0; i < R + 2; i++)
+		 m[i][C + 1] = -2;
 
 	// start in the middle of first row of inner square
 	int row = 1, col = (R + 1) / 2;
@@ -45,6 +53,7 @@ int main(void)
 	// populate remaining numbers
 	for (i = 2; i <= RANGE; i++)
 	{
+		// if the destination is above first row, wrap to last row
 		if (m[row - 1][col + 1] < 0)
 		{
 			row = row + (R - 1);
@@ -56,6 +65,10 @@ int main(void)
 		col += 1;
 		m[row][col] = i;
 		break;
+
+	 // if the destination is to right of the last column, wrap to first column
+
+
 	}
 		
 
