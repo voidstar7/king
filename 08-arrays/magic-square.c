@@ -1,8 +1,12 @@
 #include <stdio.h>
 
+#define R n
+#define C n
+
 int main(void)
 {
-	int n;
+	int n, i, j;
+
 	printf("Enter size of magic square (odd number between 1 and 99): ");
 	scanf("%d", &n);
 	if (n % 2 == 0 || n < 0 || n > 99)
@@ -23,4 +27,22 @@ int main(void)
 	 10  12  19  21   3
 	 11  18  25   2   9
  */
+
+	// initialize matrix with padding
+	int m[R + 2][C + 2];
+	for (i = 0; i < R + 2; i++)
+		for (j = 0; j < C + 2; j++)
+			m[i][j] = -1;
+	for (i = 1; i < (R + 2) - 1; i++)
+		for (j = 1; j < (C + 2) - 1; j++)
+			m[i][j] = 0;
+
+
+	// print magic square
+	for (i = 0; i < R + 2; i++)
+	{
+		for (j = 0; j < C + 2; j++)
+			printf("%2d ", m[i][j]);
+		printf("\n");
+	}
 }
