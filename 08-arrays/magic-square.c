@@ -2,10 +2,11 @@
 
 #define R n
 #define C n
+#define RANGE n * n
 
 int main(void)
 {
-	int n, i, j;
+	int n, i, j, k;
 
 	printf("Enter size of magic square (odd number between 1 and 99): ");
 	scanf("%d", &n);
@@ -36,6 +37,12 @@ int main(void)
 	for (i = 1; i < (R + 2) - 1; i++)
 		for (j = 1; j < (C + 2) - 1; j++)
 			m[i][j] = 0;
+
+	// start in the middle of first row of inner square
+	m[1][(R + 1) / 2] = RANGE - (RANGE - 1);
+	// for (i = 0; i < n; i++)
+
+
 
 
 	// print magic square
