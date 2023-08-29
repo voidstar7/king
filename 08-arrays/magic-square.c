@@ -42,8 +42,8 @@ int main(void)
 		for (j = 1; j < (C + 2) - 1; j++)
 			m[i][j] = 0;
 
-	// set last column to -2
-	 for (i = 0; i < R + 2; i++)
+	// set last column between top and bottom rows to -2
+	 for (i = 1; i < R + 1; i++)
 		 m[i][C + 1] = -2;
 
 	// start in the middle of first row of inner square
@@ -66,7 +66,6 @@ int main(void)
 		m[row][col] = i;
 		break;
 
-	 // if the destination is to right of the last column, wrap to first column
 
 
 	}
