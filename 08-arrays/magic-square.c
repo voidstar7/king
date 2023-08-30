@@ -4,6 +4,17 @@
 #define C n
 #define RANGE n * n
 
+/*
+ * creates a "magic square" of n size where the rows, columns, and diagonal lines have the same sum
+ *
+	 17  24   1   8  15
+	 23   5   7  14  16
+	  4   6  13  20  22
+	 10  12  19  21   3
+	 11  18  25   2   9
+*
+*/
+
 int main(void)
 {
 	int n, i, j, k;
@@ -15,19 +26,6 @@ int main(void)
 		printf("Invalid input\n");
 		return 1;
 	}
-	/*
-	 place first number in the middle of row 0
-	 place subsequent numbers up 1 row and right 1 column
-		 if the destination is above first row, wrap to last row
-		 if the destination is to right of the last column, wrap to first column
-		 if the destination is occupied, place the next number immediately below the last one 
-
-	 17  24   1   8  15
-	 23   5   7  14  16
-	  4   6  13  20  22
-	 10  12  19  21   3
-	 11  18  25   2   9
- */
 
 	// initialize matrix with padding
 	int m[R + 2][C + 2];
