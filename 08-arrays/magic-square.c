@@ -43,8 +43,8 @@ int main(void)
 			m[i][j] = 0;
 
 	// set last column between top and bottom rows to -2
-	 for (i = 1; i < R + 1; i++)
-		 m[i][C + 1] = -2;
+	for (i = 1; i < R + 1; i++)
+		m[i][C + 1] = -2;
 
 	// start in the middle of first row of inner square
 	int row = 1, col = (C + 1) / 2;
@@ -68,7 +68,6 @@ int main(void)
 			m[row][col] = i;
 			continue;
 		}
-
 		// if the destination is to right of the last column, wrap to first column
 		else if (m[row - 1][col + 1] == -2)
 		{
@@ -77,8 +76,7 @@ int main(void)
 			m[row][col] = i;
 			continue;
 		}
-
-	 // if the destination is occupied, place the next number immediately below the last one 
+		// if the destination is occupied, place the next number immediately below the last one 
 		else
 		{
 			row += 1;
@@ -86,13 +84,10 @@ int main(void)
 			continue;
 		}
 	}
-		
-
-
 	// print magic square
-	for (i = 0; i < R + 2; i++)
+	for (i = 1; i <= R; i++)
 	{
-		for (j = 0; j < C + 2; j++)
+		for (j = 1; j <= C; j++)
 			printf("%2d ", m[i][j]);
 		printf("\n");
 	}
