@@ -54,7 +54,7 @@ int main(void)
 	for (i = 2; i <= RANGE; i++)
 	{
 		// if the destination is above first row, wrap to last row
-		if (m[row - 1][col + 1] == -1)
+		if (m[row - 1][col + 1] == -1 && m[row + (R - 1)][col + 1] == 0)
 		{
 			row = row + (R - 1);
 			col += 1;
@@ -75,14 +75,15 @@ int main(void)
 			row -= 1;
 			col = 1;
 			m[row][col] = i;
-			break;
+			continue;
 		}
+
+	 // if the destination is occupied, place the next number immediately below the last one 
 		else
 		{
-			row -= 1;
-			col += 1;
+			row += 1;
 			m[row][col] = i;
-			break;
+			continue;
 		}
 	}
 		
