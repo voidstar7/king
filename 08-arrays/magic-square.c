@@ -47,27 +47,43 @@ int main(void)
 		 m[i][C + 1] = -2;
 
 	// start in the middle of first row of inner square
-	int row = 1, col = (R + 1) / 2;
+	int row = 1, col = (C + 1) / 2;
 	m[row][col] = 1;
 
 	// populate remaining numbers
 	for (i = 2; i <= RANGE; i++)
 	{
 		// if the destination is above first row, wrap to last row
-		if (m[row - 1][col + 1] < 0)
+		if (m[row - 1][col + 1] == -1)
 		{
 			row = row + (R - 1);
 			col += 1;
 			m[row][col] = i;
 			continue;
 		}
-		row -= 1;
-		col += 1;
-		m[row][col] = i;
-		break;
+		else if (m[row - 1][col + 1] == 0)
+		{
+			row -= 1;
+			col += 1;
+			m[row][col] = i;
+			continue;
+		}
 
-
-
+		// if the destination is to right of the last column, wrap to first column
+		else if (m[row - 1][col + 1] == -2)
+		{
+			row -= 1;
+			col = 1;
+			m[row][col] = i;
+			break;
+		}
+		else
+		{
+			row -= 1;
+			col += 1;
+			m[row][col] = i;
+			break;
+		}
 	}
 		
 
