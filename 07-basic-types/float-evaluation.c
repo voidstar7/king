@@ -1,44 +1,42 @@
 #include <stdio.h>
 #include <ctype.h>
 
-// INCOMPLETE
-
 // evaluates an expression of from left to right regardless of operator precedence. Possible operators are +, -, *, and /
 
 int main(void)
 {
-	int i;
+	float f, value;
 	char c;
-	int value;
 	
 	printf("Enter an expression: ");
-	scanf("%d", &value);
+	scanf("%f", &value);
 	while (1)
 	{
 		scanf("%c", &c);
 		if (c == '\x0a')
 			break;
-		scanf("%d", &i);
+		scanf("%f", &f);
 		if (c == '+')
 		{
-			value += i;
+			value += f;
 			continue;
 		}
 		else if (c == '-')
 		{
-			value -= i;
+			value -= f;
 			continue;
 		}
 		else if (c == '*')
 		{
-			value *= i;
+			value *= f;
 			continue;
 		}
 		else if (c == '/')
 		{
-			value /= i;
+			value /= f;
 			continue;
 		}
 	}
-	printf("Value of expression: %d", value);
+	printf("Value of expression: %.1f\n", value);
+	printf("Operands evaluated from left to right, regardless of precedence\n");
 }
