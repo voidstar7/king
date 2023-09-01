@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ctype.h>
 
 int main(void)
 {
@@ -14,29 +15,27 @@ int main(void)
 		if (input == 10)
 			break;
 		sentence[length] = input;
-		printf("input is %c\n", input);
 		length++;
 	}
-	printf("length is %d\n", length);
 	for (i = length - 1; i >= 0; i--)
 	{
-		printf("i is %d\n", i);
-		if (sentence[i] != 32) 
+		printf("sentence[%d] is (%c)\n", i, sentence[i]);
+		if (isalpha(sentence[i])) 
 		{
 			wordLength++;
-			//printf("index %d is %c\n", i, sentence[i]);
 			printf("word length is %d\n", wordLength);
 			continue;
 		}
-		for (j = reverseIndex; j < wordLength; j++)
+		else if (sentence[i] == 32)
 		{
-			reverseSentence[reverseIndex] = sentence[(i + 1) + j];
-			printf("reverse sentence index %d is %c\n", j, reverseSentence[reverseIndex]);
-			reverseIndex++;
+			for (j = reverseIndex; j < wordLength; j++)
+			{
+				reverseSentence[reverseIndex] = sentence[(i + 1) - reverseIndex];
+				printf("reverseSentence[%d] is (%c)\n", j, reverseSentence[reverseIndex]);
+				reverseIndex++;
+			}
+			wordLength = 0;
+			printf("word length is %d\n", wordLength);
 		}
-		reverseSentence[reverseIndex + 1] = '\x20';
-		wordLength = 0;
 	}
-	for (i = 0; i < reverseIndex; i++)
-		printf("%c", reverseSentence[i]);
 }
