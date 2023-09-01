@@ -9,16 +9,36 @@ int main(void)
 {
 	int i;
 	char c;
-	int value = 0;
+	int value;
 	
 	printf("Enter an expression: ");
+	scanf("%d", &value);
 	while (1)
 	{
-		scanf("%d", &i);
-		value += i;
-		c = getchar();
-		if (c == 10)
+		scanf("%c", &c);
+		if (c == '\x0a')
 			break;
+		scanf("%d", &i);
+		if (c == '+')
+		{
+			value += i;
+			continue;
+		}
+		else if (c == '-')
+		{
+			value -= i;
+			continue;
+		}
+		else if (c == '*')
+		{
+			value *= i;
+			continue;
+		}
+		else if (c == '/')
+		{
+			value /= i;
+			continue;
+		}
 	}
-	printf("%d", value);
+	printf("Value of expression: %d", value);
 }
