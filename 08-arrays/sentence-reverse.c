@@ -11,6 +11,9 @@ int main(void)
 	char i, j, input;
 	int length = 0, wordLength = 0, reverseIndex = 0, wordStart;
 
+	sentence[0] = '\x02'; // assign STX to first element
+	length++;
+
 	printf("Enter a sentence: ");
 	while (1)
 	{
@@ -42,7 +45,17 @@ int main(void)
 			reverseIndex++;
 			wordLength = 0;
 		}
+		else if (sentence[i] == '\x02')
+		{
+			wordStart = i + 1;
+			for (j = 0; j < wordLength; j++)
+			{
+				reverseSentence[reverseIndex] = sentence[wordStart + j];
+				reverseIndex++;
+			}
+		}
 	}
 	for (i = 0; i < length; i++)
 		printf("%c", reverseSentence[i]);
+	printf("\n");
 }
