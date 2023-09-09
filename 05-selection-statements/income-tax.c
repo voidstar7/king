@@ -1,10 +1,20 @@
 #include <stdio.h>
 
 // prompts for taxable income and displays the tax paid in a flat tax system
-int main(void) {
-	float income, tax;
-	printf("Enter your income: "); scanf("%f", &income);	
 
+float calculate_tax(float income);
+
+int main(void) 
+{
+	float income, tax;
+	printf("Enter your income: "); 
+	scanf("%f", &income);	
+	printf("You pay $%.2f in tax on $%.2f of income\n", calculate_tax(income), income);
+}
+
+float calculate_tax(float income)
+{
+	float tax;
 	if (income <= 750.00f)
 		tax = (income * .01f);
 	else if (income <= 2250.00f)
@@ -17,6 +27,5 @@ int main(void) {
 		tax = (142.50f + ((income - 5250.00f) * .05f));
 	else
 		tax = (230.00f + ((income - 7000.00f) * .06f));
-
-	printf("You pay $%.2f in tax on $%.2f of income\n", tax, income);
+	return tax;
 }
