@@ -15,9 +15,12 @@
 *
 */
 
+void create_magic_square(int n, int m[R + 2][R + 2]);
+void print_magic_square(int n, int m[R + 2][R + 2]);
+
 int main(void)
 {
-	int n, i, j, k;
+	int n;
 
 	printf("Enter size of magic square (odd number between 1 and 99): ");
 	scanf("%d", &n);
@@ -26,10 +29,19 @@ int main(void)
 		printf("Invalid input\n");
 		return 1;
 	}
-
 	// initialize matrix with padding
 	int m[R + 2][C + 2];
-	
+
+	create_magic_square(n, m);
+	print_magic_square(n, m);
+
+	return 0;
+}
+
+void create_magic_square(int n, int m[R + 2][R + 2])
+{
+	int i, j;
+
 	// set all elements to -1
 	for (i = 0; i < R + 2; i++)
 		for (j = 0; j < C + 2; j++)
@@ -82,7 +94,11 @@ int main(void)
 			continue;
 		}
 	}
-	// print magic square
+}
+
+void print_magic_square(int n, int m[R + 2][R + 2])
+{
+	int i, j;
 	for (i = 1; i <= R; i++)
 	{
 		for (j = 1; j <= C; j++)
