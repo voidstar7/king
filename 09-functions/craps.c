@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 // on the first roll, the player wins if the sum is 7 or 11
 // they lose if the sum is 2, 3, or 12
@@ -16,6 +18,31 @@ int play_game(void);
 
 int main(void)
 {
+	int roll;
+	srand(time(NULL));
 
+	while (1)
+	{
+		roll = roll_dice();
+		printf("You rolled %d\n", roll);
+			if (roll == 7 || roll == 11)
+			{
+				printf("You win!");
+				return 0;
+			}
+			else if (roll == 2 || roll == 3 || roll == 12)
+			{
+				printf("You lose!");
+				return 0;
+			}
+			else
+				continue;
+	}
+}
 
+int roll_dice(void)
+{
+	int dice1 = rand() % 6 + 1;
+	int dice2 = rand() % 6 + 1;
+	return dice1 + dice2;
 }
