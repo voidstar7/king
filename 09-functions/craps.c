@@ -14,12 +14,14 @@
 // if yes, a new game is initiated
 // if no, the number of games won and lost is displayed, then the program exits
 
+int wins = 0, losses = 0, point = 0;
+bool firstRoll = true;
+
 int roll_dice(void);
 bool play_game(void);
 
 int main(void)
 {
-	int result, wins = 0, losses = 0;
 	char c;
 	srand(time(NULL));
 
@@ -34,6 +36,8 @@ int main(void)
 		if (c == 'y')
 		{
 			getchar(); // clears LF from input buffer
+			firstRoll = true;
+			point = 0;
 			continue;
 		}
 		else
@@ -53,21 +57,31 @@ int roll_dice(void)
 
 bool play_game(void)
 {
+	int roll;
 	while (1)
 	{
-		int roll = roll_dice();
+		roll = roll_dice();
 		printf("You rolled %d\n", roll);
-		if (roll == 7 || roll == 11)
+		if ((firstRoll == true && (roll == 7 || roll == 11)) || (firstRoll == false && roll == point))
 		{
 			printf("You win!\n");
 			return true;
 		}
-		else if (roll == 2 || roll == 3 || roll == 12)
+		else if ((firstRoll == true && (roll == 2 || roll == 3 || roll == 12)) || (firstRoll == false && roll == 7))
 		{
 			printf("You lose!\n");
 			return false;
 		}
 		else
+		{
+			if (firstRoll == true)
+			{
+				point = roll;
+				printf("** The point is %d **\n", point);
+				firstRoll = false;
+				continue;
+			}
 			continue;
+		}
 	}
 }
