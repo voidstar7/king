@@ -17,11 +17,20 @@
 // if the next step is 1) off the grid or 2) on top of an existing letter, try a different direction
 // if all directions are blocked, terminate the program
 
+void generate_random_walk(int grid[R + 2][C + 2]);
+void print_array(int grid[R + 2][C + 2]);
+
 int main(void)
 {
-	int i, j, move, rowPosition, columnPosition, letter = 'A', range = 100;
 	int grid[R + 2][C + 2];
+	generate_random_walk(grid);
+	print_array(grid);
+	return 0;
+}
 
+void generate_random_walk(int grid[R + 2][C + 2])
+{
+	int i, j, move, rowPosition, columnPosition, letter = 'A', range = 100;
 	// initialize grid values to 0
 	for (i = 0; i < R + 2; i++)
 		for (j = 0; j < C + 2; j++)
@@ -49,13 +58,13 @@ int main(void)
 	{
 		if (upBlocked == true && rightBlocked == true && downBlocked == true && leftBlocked == true)
 		{
-		#ifdef DEBUG
+#ifdef DEBUG
 			printf("Movement is blocked after %d/25 moves\n", i);
-		#endif
+#endif
 			break;
 		}
 		move = rand() % 4;
-		#ifdef DEBUG
+#ifdef DEBUG
 		if (move == 0)
 			printf("Attempting to move Up\n");
 		else if (move == 1)
@@ -64,22 +73,22 @@ int main(void)
 			printf("Attempting to move Down\n");
 		else
 			printf("Attempting to move Left\n");
-		#endif
+#endif
 		switch (move)
 		{
 			case 0:
 				if (UP == 0 || (UP >= 65 && UP <= 90))
 				{
-				#ifdef DEBUG
+#ifdef DEBUG
 					printf("Up is blocked\n");
-				#endif
+#endif
 					upBlocked = true;
 					i--;
 					break;
 				}
-				#ifdef DEBUG
-					printf("Successfully moved Up (%i/25)\n", i);
-				#endif
+#ifdef DEBUG
+				printf("Successfully moved Up (%i/25)\n", i);
+#endif
 				UP = letter;
 				letter++;
 				rowPosition--;
@@ -88,16 +97,16 @@ int main(void)
 			case 1:
 				if (RIGHT == 0 || (RIGHT >= 65 && RIGHT <= 90))
 				{
-				#ifdef DEBUG
+#ifdef DEBUG
 					printf("Right is blocked\n");
-				#endif
+#endif
 					rightBlocked = true;
 					i--;
 					break;
 				}
-				#ifdef DEBUG
-					printf("Successfully moved Right (%i/25)\n", i);
-				#endif
+#ifdef DEBUG
+				printf("Successfully moved Right (%i/25)\n", i);
+#endif
 				RIGHT = letter;
 				letter++;
 				columnPosition++;
@@ -106,16 +115,16 @@ int main(void)
 			case 2:
 				if (DOWN == 0 || (DOWN >= 65 && DOWN <= 90))
 				{
-				#ifdef DEBUG
+#ifdef DEBUG
 					printf("Down is blocked\n");
-				#endif
+#endif
 					downBlocked = true;
 					i--;
 					break;
 				}
-				#ifdef DEBUG
-					printf("Successfully moved Down (%i/25)\n", i);
-				#endif
+#ifdef DEBUG
+				printf("Successfully moved Down (%i/25)\n", i);
+#endif
 				DOWN = letter;
 				letter++;
 				rowPosition++;
@@ -124,16 +133,16 @@ int main(void)
 			case 3:
 				if (LEFT == 0 || (LEFT >= 65 && LEFT <= 90))
 				{
-				#ifdef DEBUG
+#ifdef DEBUG
 					printf("Left is blocked\n");
-				#endif
+#endif
 					leftBlocked = true;
 					i--;
 					break;
 				}
-				#ifdef DEBUG
-					printf("Successfully moved Left (%i/25)\n", i);
-				#endif
+#ifdef DEBUG
+				printf("Successfully moved Left (%i/25)\n", i);
+#endif
 				LEFT = letter;
 				letter++;
 				columnPosition--;
@@ -141,17 +150,21 @@ int main(void)
 				break;
 			default:
 				printf("Unexpected error\n");
-				return 1;
+				;
 		}
 	}
+}
+
+void print_array(int grid[R + 2][C + 2])
+{
+	int i, j;
 	for (i = 1; i < R + 1; i++)
 	{
 		for (j = 1; j < C + 1; j++)
-		if (grid[i][j] >= 100)
-			printf(" . ");
-		else
-			printf(" %c ", (char)grid[i][j]);
+			if (grid[i][j] >= 100)
+				printf(" . ");
+			else
+				printf(" %c ", (char)grid[i][j]);
 		printf("\n");
 	}
-	return 0;
 }
