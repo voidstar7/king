@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
 // on the first roll, the player wins if the sum is 7 or 11
 // they lose if the sum is 2, 3, or 12
@@ -14,29 +15,32 @@
 // if no, the number of games won and lost is displayed, then the program exits
 
 int roll_dice(void);
-int play_game(void);
+bool play_game(void);
 
 int main(void)
 {
-	int roll;
+	int result, wins = 0, losses = 0;
+	char c;
 	srand(time(NULL));
 
 	while (1)
 	{
-		roll = roll_dice();
-		printf("You rolled %d\n", roll);
-			if (roll == 7 || roll == 11)
-			{
-				printf("You win!");
-				return 0;
-			}
-			else if (roll == 2 || roll == 3 || roll == 12)
-			{
-				printf("You lose!");
-				return 0;
-			}
-			else
-				continue;
+		if (play_game())
+			wins++;
+		else 
+			losses++;
+		printf("Play again? (y / n)\n");
+		c = getchar();
+		if (c == 'y')
+		{
+			getchar(); // clears LF from input buffer
+			continue;
+		}
+		else
+		{
+			printf("Wins: %d | Losses: %d\n", wins, losses);
+			return 0;
+		}
 	}
 }
 
@@ -45,4 +49,25 @@ int roll_dice(void)
 	int dice1 = rand() % 6 + 1;
 	int dice2 = rand() % 6 + 1;
 	return dice1 + dice2;
+}
+
+bool play_game(void)
+{
+	while (1)
+	{
+		int roll = roll_dice();
+		printf("You rolled %d\n", roll);
+		if (roll == 7 || roll == 11)
+		{
+			printf("You win!\n");
+			return true;
+		}
+		else if (roll == 2 || roll == 3 || roll == 12)
+		{
+			printf("You lose!\n");
+			return false;
+		}
+		else
+			continue;
+	}
 }
