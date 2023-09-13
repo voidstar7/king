@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #define STACK_SIZE 100 
+//#define debug
 
 void stack_overflow(void);
 void make_empty(void);
@@ -23,10 +24,41 @@ int main(void)
 	while (input != '\x0a')
 	{
 		scanf("%c", &input);
-		push(input);	
+		if (input == '{' || input == '(')
+		{
+			push(input);	
+#if debug
+			printf("Pushed %c to stack (top is %d)\n", input, top);
+#endif
+		}
+		else if (input == '}')
+		{
+			if (pop() == '{')
+			{
+#if debug
+				printf("Popped %c off the stack (top is %d)\n", contents[top], top);
+#endif
+				contents[top] = 0;
+			}
+		}
+		else if (input == ')')
+		{
+			if (pop() == '(')
+			{
+#if debug
+				printf("Popped %c off the stack (top is %d)\n", contents[top], top);
+#endif
+				contents[top] = 0;
+			}
+		}
 	}
-	for (int i = 0; i < STACK_SIZE; i++)
-		printf("%c", contents[i]);
+	if (!is_empty())
+	{
+		printf("Parentheses/braces are NOT nested correctly\n");
+		return 0;
+	}
+	printf("Parentheses/braces are nested correctly\n");
+	return 0;
 }
 
 void make_empty(void)
@@ -66,9 +98,11 @@ int pop(void)
 void stack_overflow(void)
 {
 	printf("Stack overflow\n");
+	exit(1);
 }
 
 void stack_underflow(void)
 {
-	printf("Stack underflow\n");
+	printf("Parentheses/braces are NOT nested correctly\n");
+	exit(1);
 }
