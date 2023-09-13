@@ -2,13 +2,13 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#define STACK_SIZE 5 
+#define STACK_SIZE 100 
 
 void stack_overflow(void);
 void make_empty(void);
 bool is_empty(void);
 bool is_full(void);
-void push(int i);
+void push(char c);
 int pop(void);
 void stack_overflow(void);
 void stack_underflow(void);
@@ -18,30 +18,15 @@ int top = 0;
 
 int main(void)
 {
-	int n, count;
-	char c = 0;
-
-	make_empty();
-	printf("Enter numbers to push onto the stack: ");
-	while (c != '\x0a')
+	char input = 0;
+	printf("Enter parentheses and/or braces: ");
+	while (input != '\x0a')
 	{
-		scanf("%d", &n);
-		push(n);
-		printf("Pushed %d onto stack\n", n);
-		c = getchar();
+		scanf("%c", &input);
+		push(input);	
 	}
-	printf("*** Top is %d ***\n", top);
 	for (int i = 0; i < STACK_SIZE; i++)
-		printf("[%d]%d ", i, contents[i]);
-	printf("\n");
-	for (int i = 0; i < STACK_SIZE; i++)
-	{
-		printf("Popped %d off stack\n", pop());
-	}
-	printf("*** Top is %d ***\n", top);
-	if (is_empty())
-		printf("Stack is empty\n");
-	return 0;
+		printf("%c", contents[i]);
 }
 
 void make_empty(void)
@@ -59,12 +44,12 @@ bool is_full(void)
 	return top == STACK_SIZE;
 }
 
-void push(int i)
+void push(char c)
 {
 	if (is_full())
 		stack_overflow();
 	else
-		contents[top++] = i;
+		contents[top++] = c;
 }
 
 int pop(void)
