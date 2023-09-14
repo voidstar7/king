@@ -6,26 +6,26 @@
 #define NUM_SUITS 4
 #define NUM_CARDS 5
 
-int num_in_rank[NUM_RANKS];
-int num_in_suit[NUM_SUITS];
 bool straight, flush, four, three;
 int pairs;
 
-void read_cards(void);
-void analyze_hand(void);
+void read_cards(int num_in_rank[NUM_RANKS], int num_in_suit[NUM_SUITS]);
+void analyze_hand(int num_in_rank[NUM_RANKS], int num_in_suit[NUM_SUITS]);
 void print_result(void);
 
 int main (void)
 {
+	int num_in_rank[NUM_RANKS];
+	int num_in_suit[NUM_SUITS];
 	for (;;)
 	{
-		read_cards();
-		analyze_hand();
+		read_cards(num_in_rank, num_in_suit);
+		analyze_hand(num_in_rank, num_in_suit);
 		print_result();
 	}
 }
 
-void read_cards(void)
+void read_cards(int num_in_rank[NUM_RANKS], int num_in_suit[NUM_SUITS])
 {
 	bool card_exists[NUM_RANKS][NUM_SUITS];
 	char ch, rank_ch, suit_ch;
@@ -97,7 +97,7 @@ void read_cards(void)
 	}
 }
 
-void analyze_hand(void)
+void analyze_hand(int num_in_rank[NUM_RANKS], int num_in_suit[NUM_SUITS])
 {
 	int num_consec = 0;
 	int rank, suit;
