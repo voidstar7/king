@@ -79,7 +79,7 @@ void read_cards(void)
 			default: bad_card = true;
 		}
 
-		while ((ch = getchar() != '\n'))
+		while ((ch = getchar()) != '\n')
 			if (ch != ' ')
 				bad_card = true;
 
@@ -125,9 +125,12 @@ void analyze_hand(void)
 	}
 
 	// check for four of a kind, three of a kind, and pairs
-	if (num_in_rank[rank] == 4) four = true;
-	if (num_in_rank[rank] == 3) three = true;
-	if (num_in_rank[rank] == 3) pairs++;
+	for (rank = 0; rank < NUM_RANKS; rank++)
+	{
+		if (num_in_rank[rank] == 4) four = true;
+		if (num_in_rank[rank] == 3) three = true;
+		if (num_in_rank[rank] == 3) pairs++;
+	}
 }
 
 void print_result(void)
@@ -138,8 +141,9 @@ void print_result(void)
 	else if (flush) printf("Flush");
 	else if (straight) printf("Straight");
 	else if (three) printf("Three of a kind");
-	else if (pairs == 2) printf("Pair");
-	else if (pairs == 1) printf("High card");
+	else if (pairs == 2) printf("Two pairs");
+	else if (pairs == 1) printf("Pair");
+	else printf("High card");
 
 	printf("\n\n");
 }
