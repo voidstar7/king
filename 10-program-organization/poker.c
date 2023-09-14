@@ -129,7 +129,7 @@ void analyze_hand(void)
 	{
 		if (num_in_rank[rank] == 4) four = true;
 		if (num_in_rank[rank] == 3) three = true;
-		if (num_in_rank[rank] == 3) pairs++;
+		if (num_in_rank[rank] == 2) pairs++;
 	}
 }
 
