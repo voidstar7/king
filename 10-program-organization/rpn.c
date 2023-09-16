@@ -27,13 +27,11 @@ int main(void)
 void prompt(void)
 {
 	int n;
-	char c, input;
+	char input;
 	printf(">>> ");
 	scanf(" %c", &input);
 	push(input);
-	printf("Pushed %d onto stack\n", input);
-
-	printf("*** Top is %d ***\n", top);
+	printf("Pushed %d onto stack (top: %d)\n", input, top);
 
 	for (int i = 0; i < STACK_SIZE; i++)
 		printf("[%d]%c ", i, stack[i]);
