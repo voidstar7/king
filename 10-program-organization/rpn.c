@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #define STACK_SIZE 5 
 
 // a RPC calculator that accepts single digit operands
 
-void prompt(void);
+char prompt(void);
+void calculate(char pushed);
 bool is_empty(void);
 bool is_full(void);
 void push(int i);
@@ -18,13 +20,28 @@ int total = 0;
 
 int main(void)
 {
+	char c, pushed;
 	while (1)
 	{
-		prompt();
+		pushed = prompt();
+		if (isdigit(pushed))
+			continue;
+		else if (ispunct(pushed))
+		{
+			calculate(pushed);
+			printf("total = %d\n", total);
+			pop();
+			for (int i = 0; i < STACK_SIZE; i++)
+				printf("[%d]%c ", i, stack[i]);
+			printf("\n");
+			return 0;
+		}
+		else
+			return 0;
 	}
 }
 
-void prompt(void)
+char prompt(void)
 {
 	int n;
 	char input;
@@ -36,7 +53,36 @@ void prompt(void)
 	for (int i = 0; i < STACK_SIZE; i++)
 		printf("[%d]%c ", i, stack[i]);
 	printf("\n");
-	return;
+	return input;
+}
+
+void calculate(char pushed)
+{
+	switch (pushed)
+	{
+		case '+':
+			total = 
+				(stack[top - 2] - 48)+
+				(stack[top - 3] - 48);
+			break;
+		case '-':
+			total = 
+				(stack[top - 2] - 48)-
+				(stack[top - 3] - 48);
+			break;
+		case '*':
+			total = 
+				(stack[top - 2] - 48)*
+				(stack[top - 3] - 48);
+			break;
+		case '/':
+			total = 
+				(stack[top - 2] - 48)/
+				(stack[top - 3] - 48);
+			break;
+		default:
+			exit(1);
+	}
 }
 
 bool is_empty(void)
@@ -62,6 +108,7 @@ void push(int i)
 
 int pop(void)
 {
+	int i;
 	if (is_empty())
 	{
 		printf("Stack underflow\n");
@@ -69,7 +116,8 @@ int pop(void)
 	}
 	else
 	{
-		stack[--top] = 0;
+		for (i = 1; i <= 3; i++)
+			stack[top - i] = 0;
 		return top;
 	}
 }
