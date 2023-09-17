@@ -68,26 +68,47 @@ char prompt(void)
 
 void calculate(char pushed)
 {
-	switch (pushed)
+	if (top == 3)
 	{
-		case '+':
-			if (top == 3)
-			{
+		switch (pushed)
+		{
+			case '+':
 				printf("top is 3 after push\n");
 				total = total + 
 					(stack[top - 3] - 48)+
 					(stack[top - 2] - 48);
 				printf("%d\n", total);
 				exit(1);
-			}
-			else if (top == 2)
-			{
+			case '-':
+				printf("top is 3 after push\n");
+				total = total - 
+					(stack[top - 3] - 48)-
+					(stack[top - 2] - 48);
+				printf("%d\n", total);
+				exit(1);
+		}
+	}
+	else if (top == 2)
+	{
+		switch (pushed)
+		{
+			case '+':
 				printf("top is 2 after push\n");
 				total = total + 
 					(stack[top - 2] - 48);
 				printf("%d\n", total);
 				exit(1);
-			}
+			case '-':
+				printf("top is 2 after push\n");
+				total = total - 
+					(stack[top - 2] - 48);
+				printf("%d\n", total);
+				exit(1);
+		}
+	}
+	switch (pushed)
+	{
+		case '+':
 			total = total + 
 				(stack[top - 2] - 48)+
 				(stack[top - 3] - 48);
@@ -95,25 +116,14 @@ void calculate(char pushed)
 			printf("+ detected (top: %d total: %d)\n",
 					top,
 					total);
-			break;
 		case '-':
-			total = 
+			total = total - 
 				(stack[top - 2] - 48)-
 				(stack[top - 3] - 48);
-			break;
-		case '*':
-			total = 
-				(stack[top - 2] - 48)*
-				(stack[top - 3] - 48);
-			break;
-		case '/':
-			total = 
-				(stack[top - 2] - 48)/
-				(stack[top - 3] - 48);
-			break;
-		default:
-			printf("Error: illegal char pushed\n");
-			exit(EXIT_FAILURE);
+			pop();
+			printf("+ detected (top: %d total: %d)\n",
+					top,
+					total);
 	}
 }
 
