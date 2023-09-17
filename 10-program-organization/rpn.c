@@ -58,8 +58,8 @@ char prompt(void)
 	if (input == 'p')
 		return 'p';
 	push(input);
-	printf("Pushed %d onto stack (top: %d)\n",
-			input - 48, top);
+	printf("Pushed %d onto stack (top: %d, total: %d)\n",
+			input - 48, top, total);
 	for (int i = 0; i < STACK_SIZE; i++)
 		printf("[%d]%c ", i, stack[i]);
 	printf("\n");
@@ -73,14 +73,22 @@ void calculate(char pushed)
 		case '+':
 			if (top == 3)
 			{
-				printf("top is 2\n");
+				printf("top is 3 after push\n");
 				total = total + 
 					(stack[top - 3] - 48)+
 					(stack[top - 2] - 48);
 				printf("%d\n", total);
 				exit(1);
 			}
-			total = 
+			else if (top == 2)
+			{
+				printf("top is 2 after push\n");
+				total = total + 
+					(stack[top - 2] - 48);
+				printf("%d\n", total);
+				exit(1);
+			}
+			total = total + 
 				(stack[top - 2] - 48)+
 				(stack[top - 3] - 48);
 			pop();
