@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define STACK_SIZE 5 
+#define STACK_SIZE 8 
 
 // a RPC calculator that accepts single digit operands
 
@@ -71,11 +71,22 @@ void calculate(char pushed)
 	switch (pushed)
 	{
 		case '+':
+			if (top == 3)
+			{
+				printf("top is 2\n");
+				total = total + 
+					(stack[top - 3] - 48)+
+					(stack[top - 2] - 48);
+				printf("%d\n", total);
+				exit(1);
+			}
 			total = 
 				(stack[top - 2] - 48)+
 				(stack[top - 3] - 48);
 			pop();
-			printf("+ detected (top: %d)\n", top);
+			printf("+ detected (top: %d total: %d)\n",
+					top,
+					total);
 			break;
 		case '-':
 			total = 
