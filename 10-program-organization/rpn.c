@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define STACK_SIZE 10 
+#define STACK_SIZE 50 
 //#define debug
 
 // a RPC calculator that accepts single digit operands
