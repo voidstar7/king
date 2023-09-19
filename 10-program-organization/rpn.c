@@ -21,7 +21,6 @@ int top = 0;
 int main(void)
 {
 	char input;
-	int count = 0;
 	printf(">>> ");
 	while (1)
 	{
