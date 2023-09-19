@@ -3,128 +3,51 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define STACK_SIZE 8 
+#define STACK_SIZE 10 
+//#define debug
 
 // a RPC calculator that accepts single digit operands
 
-char prompt(void);
-void calculate(char pushed);
 bool is_empty(void);
 bool is_full(void);
 void push(int i);
 int pop(void);
-void stack_underflow(void);
-void stack_overflow(void);
+void print_stack(void);
+void calculate(char operator);
 
-char stack[STACK_SIZE];
+int stack[STACK_SIZE];
 int top = 0; 
-int total = 0;
 
 int main(void)
 {
-	char c, pushed;
+	char input;
+	int count = 0;
+	printf(">>> ");
 	while (1)
 	{
-		pushed = prompt();
-		if (isdigit(pushed))
+		scanf(" %c", &input);
+		if (isdigit(input))
+		{
+			stack[top++] = input - 48;
+		}
+		else if (
+				input == '+' ||
+				input == '-' ||
+				input == '*' ||
+				input == '/' 
+				)
+			calculate(input);
+		else if (input == 'p')
+			break;
+		else
 			continue;
-		else if (ispunct(pushed))
-		{
-			calculate(pushed);
-			for (int i = 0; i < STACK_SIZE; i++)
-				printf("[%d]%c ", i, stack[i]);
-			printf("\n");
-			continue;
-		}
-		else if (pushed == 'p')
-		{
-			if (is_empty())
-			{
-				printf("total = %d\n", total);
-				return 0;
-			}
-			stack_underflow();
-			return 1;
-		}
 	}
-}
-
-char prompt(void)
-{
-	int n;
-	char input;
-	printf(">>> ");
-	scanf(" %c", &input);
-	if (input == 'p')
-		return 'p';
-	push(input);
-	printf("Pushed %d onto stack (top: %d, total: %d)\n",
-			input - 48, top, total);
-	for (int i = 0; i < STACK_SIZE; i++)
-		printf("[%d]%c ", i, stack[i]);
-	printf("\n");
-	return input;
-}
-
-void calculate(char pushed)
-{
-	if (top == 3)
-	{
-		switch (pushed)
-		{
-			case '+':
-				printf("top is 3 after push\n");
-				total = total + 
-					(stack[top - 3] - 48)+
-					(stack[top - 2] - 48);
-				printf("%d\n", total);
-				exit(1);
-			case '-':
-				printf("top is 3 after push\n");
-				total = total - 
-					(stack[top - 3] - 48)-
-					(stack[top - 2] - 48);
-				printf("%d\n", total);
-				exit(1);
-		}
-	}
-	else if (top == 2)
-	{
-		switch (pushed)
-		{
-			case '+':
-				printf("top is 2 after push\n");
-				total = total + 
-					(stack[top - 2] - 48);
-				printf("%d\n", total);
-				exit(1);
-			case '-':
-				printf("top is 2 after push\n");
-				total = total - 
-					(stack[top - 2] - 48);
-				printf("%d\n", total);
-				exit(1);
-		}
-	}
-	switch (pushed)
-	{
-		case '+':
-			total = total + 
-				(stack[top - 2] - 48)+
-				(stack[top - 3] - 48);
-			pop();
-			printf("+ detected (top: %d total: %d)\n",
-					top,
-					total);
-		case '-':
-			total = total - 
-				(stack[top - 2] - 48)-
-				(stack[top - 3] - 48);
-			pop();
-			printf("+ detected (top: %d total: %d)\n",
-					top,
-					total);
-	}
+#ifdef debug
+	print_stack();
+	printf("top: %d\n", top);
+#endif
+	printf("%d\n", stack[top - 1]);
+	return 0;
 }
 
 bool is_empty(void)
@@ -141,7 +64,7 @@ void push(int i)
 {
 	if (is_full())
 	{
-		stack_overflow();
+		printf("Stack overflow\n");
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -150,29 +73,58 @@ void push(int i)
 
 int pop(void)
 {
-	int i;
 	if (is_empty())
 	{
-		stack_underflow();
+		printf("Stack underflow\n");
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		for (i = 1; i <= 3; i++)
-		{
-			stack[top - i] = 0;
-		}
-		top -= 3;
+		stack[--top] = 0;
 		return top;
 	}
 }
 
-void stack_underflow(void)
+void calculate(char operator)
 {
-	printf("Error: stack underflow\n");
+	int temp;
+	switch (operator)
+	{
+		case '+':
+			{
+				temp = stack[top - 2] + stack[top - 1];
+				pop(); pop();
+				push(temp);
+				break;
+			}
+		case '-':
+			{
+				temp = stack[top - 2] - stack[top - 1];
+				pop(); pop();
+				push(temp);
+				break;
+			}
+		case '*':
+			{
+				temp = stack[top - 2] * stack[top - 1];
+				pop(); pop();
+				push(temp);
+				break;
+			}
+		case '/':
+			{
+				temp = stack[top - 2] / stack[top - 1];
+				pop(); pop();
+				push(temp);
+				break;
+			}
+		default:
+			exit(EXIT_FAILURE);
+	}
 }
 
-void stack_overflow(void)
+void print_stack(void)
 {
-	printf("Error: stack overflow\n");
+	for (int i = STACK_SIZE - 1; i >= 0; i--)
+		printf("[%d]%d\n", i, stack[i]);
 }
