@@ -10,6 +10,8 @@ bool straight, flush, four, three;
 int pairs;
 
 void read_cards(void);
+void print_array(void);
+bool check_for_duplicate(int rank, int suit);
 //void analyze_hand(int num_in_rank[NUM_RANKS], int num_in_suit[NUM_SUITS]);
 //void print_result(void);
 
@@ -20,12 +22,7 @@ int main (void)
 	for (;;)
 	{
 		read_cards();
-		for (int i = 0; i < 5; i++)
-		{
-			for (int j = 0; j < 2; j++)
-				printf("[%d][%d]%d ", i, j, hand[i][j]);
-			printf("\n");
-		}
+		//print_array();
 		return 0;
 		//analyze_hand(num_in_rank, num_in_suit);
 		//print_result();
@@ -35,39 +32,40 @@ int main (void)
 void read_cards(void)
 {
 	char ch, rank_ch, suit_ch;
-	bool bad_card;
-	int cards_read = 0;
+	bool bad_card, first_card = true;
+	int cards_read = 0, rank, suit;
 
 	while (cards_read < NUM_CARDS)
 	{
+		print_array();
 		bad_card = false;
 		printf("Enter a card: ");
 		rank_ch = getchar();
 		switch (rank_ch)
 		{
 			case '0': exit(EXIT_SUCCESS);
-			case '2': hand[cards_read][0] = 0; break;
-			case '3': hand[cards_read][0] = 1; break;
-			case '4': hand[cards_read][0] = 2; break;
-			case '5': hand[cards_read][0] = 3; break;
-			case '6': hand[cards_read][0] = 4; break;
-			case '7': hand[cards_read][0] = 5; break;
-			case '8': hand[cards_read][0] = 6; break;
-			case '9': hand[cards_read][0] = 7; break;
-			case 't': case 'T': hand[cards_read][0] = 8; break;
-			case 'j': case 'J': hand[cards_read][0] = 9; break;
-			case 'q': case 'Q': hand[cards_read][0] = 10; break;
-			case 'k': case 'K': hand[cards_read][0] = 11; break;
-			case 'a': case 'A': hand[cards_read][0] = 12; break;
+			case '2': rank = 0; break;
+			case '3': rank = 1; break;
+			case '4': rank = 2; break;
+			case '5': rank = 3; break;
+			case '6': rank = 4; break;
+			case '7': rank = 5; break;
+			case '8': rank = 6; break;
+			case '9': rank = 7; break;
+			case 't': case 'T': rank = 8; break;
+			case 'j': case 'J': rank = 9; break;
+			case 'q': case 'Q': rank = 10; break;
+			case 'k': case 'K': rank = 11; break;
+			case 'a': case 'A': rank = 12; break;
 			default: bad_card = true;
 		}
 		suit_ch = getchar();
 		switch (suit_ch) 
 		{
-			case 'c': case 'C': hand[cards_read][1] = 0; break;
-			case 'd': case 'D': hand[cards_read][1] = 1; break;
-			case 'h': case 'H': hand[cards_read][1] = 2; break;
-			case 's': case 'S': hand[cards_read][1] = 3; break;
+			case 'c': case 'C': suit = 0; break;
+			case 'd': case 'D': suit = 1; break;
+			case 'h': case 'H': suit = 2; break;
+			case 's': case 'S': suit = 3; break;
 			default: bad_card = true;
 		}
 		while ((ch = getchar()) != '\n')
@@ -75,10 +73,48 @@ void read_cards(void)
 				bad_card = true;
 		if (bad_card)
 			printf("Bad card; ignored\n");
-		else 
+		if (first_card)
+		{
+			hand[cards_read][0] = rank;
+			hand[cards_read][1] = suit;
+			first_card = false;
 			cards_read++;
+			continue;
+		}
+		if (check_for_duplicate(rank, suit))
+		{
+			printf("Duplicate card\n");
+			hand[cards_read][0] = 0;
+			hand[cards_read][1] = 0;
+			continue;
+		}
+		hand[cards_read][0] = rank;
+		hand[cards_read][1] = suit;
+		cards_read++;
 	}
 }
+
+bool check_for_duplicate(int rank, int suit)
+{
+	int i, j;
+	printf("rank is %d suit is %d\n", rank, suit);
+	for (i = 0; i < 5; i++)
+		if (hand[i][0] == rank && hand[i][1] == suit)
+			return true;
+	return false;
+}
+
+void print_array(void)
+{
+	int i, j;
+	for (i = 0; i < 5; i++)
+	{
+		for (j = 0; j < 2; j++)
+			printf("[%d][%d]%d ", i, j, hand[i][j]);
+		printf("\n");
+	}
+}
+
 /*
 void analyze_hand(int num_in_rank[NUM_RANKS], int num_in_suit[NUM_SUITS])
 {
