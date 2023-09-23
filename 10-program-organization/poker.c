@@ -12,8 +12,8 @@ int pairs;
 void read_cards(void);
 void print_array(void);
 bool check_for_duplicate(int rank, int suit);
-//void analyze_hand(int num_in_rank[NUM_RANKS], int num_in_suit[NUM_SUITS]);
-//void print_result(void);
+void analyze_hand(void);
+void print_result(void);
 
 int hand[5][2];
 
@@ -22,10 +22,8 @@ int main (void)
 	for (;;)
 	{
 		read_cards();
-		//print_array();
-		return 0;
-		//analyze_hand(num_in_rank, num_in_suit);
-		//print_result();
+		analyze_hand();
+		print_result();
 	}
 }
 
@@ -115,11 +113,10 @@ void print_array(void)
 	}
 }
 
-/*
-void analyze_hand(int num_in_rank[NUM_RANKS], int num_in_suit[NUM_SUITS])
+void analyze_hand(void)
 {
-	int num_consec = 0;
-	int rank, suit;
+	int num_consec = 1, suit_consec = 1;
+	int suit, i, j;
 	straight = false;
 	flush = false;
 	four = false;
@@ -127,22 +124,24 @@ void analyze_hand(int num_in_rank[NUM_RANKS], int num_in_suit[NUM_SUITS])
 	pairs = 0;
 
 	// check for flush
-	for (suit = 0; suit < NUM_SUITS; suit++)
-		if (num_in_suit[suit] == NUM_CARDS)
-			flush = true;
+	suit = hand[0][1];
+	for (i = 1; i < NUM_CARDS; i++)
+		if (hand[i][1] == suit)
+				suit_consec++;
+	if (suit_consec == NUM_CARDS)
+		flush = true;
 
 	// check for straight
-	rank = 0;
-	while (num_in_rank[rank] == 0)
-		rank++;
-	for (; rank < NUM_RANKS && num_in_rank[rank] > 0; rank++)
-		num_consec++;
+	for (i = 1; i < NUM_CARDS; i++)
+		if (hand[i][0] - 1 == hand[i - 1][0])
+			num_consec++;
 	if (num_consec == NUM_CARDS)
 	{
 		straight = true;
 		return;
 	}
 
+	/*
 	// check for four of a kind, three of a kind, and pairs
 	for (rank = 0; rank < NUM_RANKS; rank++)
 	{
@@ -150,6 +149,7 @@ void analyze_hand(int num_in_rank[NUM_RANKS], int num_in_suit[NUM_SUITS])
 		if (num_in_rank[rank] == 3) three = true;
 		if (num_in_rank[rank] == 2) pairs++;
 	}
+	*/
 }
 
 void print_result(void)
@@ -166,4 +166,3 @@ void print_result(void)
 
 	printf("\n\n");
 }
-*/
