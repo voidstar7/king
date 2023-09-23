@@ -10,10 +10,10 @@ bool straight, flush, four, three;
 int pairs;
 
 void read_cards(void);
-void print_array(void);
 bool check_for_duplicate(int rank, int suit);
 void analyze_hand(void);
 void print_result(void);
+void print_array(int array[][2], int row);
 
 int hand[5][2];
 
@@ -35,7 +35,7 @@ void read_cards(void)
 
 	while (cards_read < NUM_CARDS)
 	{
-		print_array();
+		print_array(hand, 5);
 		bad_card = false;
 		printf("Enter a card: ");
 		rank_ch = getchar();
@@ -102,17 +102,6 @@ bool check_for_duplicate(int rank, int suit)
 	return false;
 }
 
-void print_array(void)
-{
-	int i, j;
-	for (i = 0; i < 5; i++)
-	{
-		for (j = 0; j < 2; j++)
-			printf("[%d][%d]%d ", i, j, hand[i][j]);
-		printf("\n");
-	}
-}
-
 void analyze_hand(void)
 {
 	int num_consec = 1, suit_consec = 1;
@@ -141,15 +130,7 @@ void analyze_hand(void)
 		return;
 	}
 
-	/*
 	// check for four of a kind, three of a kind, and pairs
-	for (rank = 0; rank < NUM_RANKS; rank++)
-	{
-		if (num_in_rank[rank] == 4) four = true;
-		if (num_in_rank[rank] == 3) three = true;
-		if (num_in_rank[rank] == 2) pairs++;
-	}
-	*/
 }
 
 void print_result(void)
@@ -165,4 +146,14 @@ void print_result(void)
 	else printf("High card");
 
 	printf("\n\n");
+}
+
+void print_array(int array[][2], int row)
+{
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 2; j++)
+			printf("[%d][%d]%d ", i, j, array[i][j]);
+		printf("\n");
+	}
 }
