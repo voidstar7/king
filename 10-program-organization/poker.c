@@ -13,8 +13,9 @@ void read_cards(void);
 bool check_for_duplicate(int rank, int suit);
 void analyze_hand(void);
 void print_result(void);
-void print_hand();
-void clear_hand();
+void print_hand(void);
+void clear_hand(void);
+void sort_hand(int ranks[], int rows);
 
 int hand[5][2];
 
@@ -87,6 +88,7 @@ void read_cards(void)
 		if (check_for_duplicate(rank, suit))
 		{
 			printf("Duplicate card\n");
+			// check bug with 2 of clubs
 			hand[cards_read][0] = 0;
 			hand[cards_read][1] = 0;
 			continue;
@@ -108,6 +110,8 @@ bool check_for_duplicate(int rank, int suit)
 
 void analyze_hand(void)
 {
+	print_hand();
+	int ranks[5];
 	int num_consec = 1, suit_consec = 1;
 	int suit, i, j;
 	straight = false;
@@ -123,6 +127,9 @@ void analyze_hand(void)
 				suit_consec++;
 	if (suit_consec == NUM_CARDS)
 		flush = true;
+
+	// sort by rank
+	sort_hand(ranks, 5);
 
 	// check for straight
 	for (i = 1; i < NUM_CARDS; i++)
@@ -152,7 +159,33 @@ void print_result(void)
 	printf("\n\n");
 }
 
-void print_hand()
+void sort_hand(int ranks[], int rows)
+{
+	int i, j, temp;
+	for (int i = 0; i < 5; i++)
+		 ranks[i] = hand[i][0];
+
+	printf("unsorted\n");
+	for (int i = 0; i < 5; i++)
+			printf("[%d]%d\n", i, ranks[i]);
+		printf("\n");
+
+	for (i = 0; i < 4; i++)
+		for (j = i + 1; j < 5; j++)
+			if (ranks[i] > ranks[j])
+			{
+				temp = ranks[i];
+				ranks[i] = ranks[j];
+				ranks[j] = temp;
+			}
+
+	printf("sorted\n");
+	for (int i = 0; i < 5; i++)
+			printf("[%d]%d\n", i, ranks[i]);
+		printf("\n");
+}
+
+void print_hand(void)
 {
 	for (int i = 0; i < 5; i++)
 	{
@@ -162,7 +195,7 @@ void print_hand()
 	}
 }
 
-void clear_hand()
+void clear_hand(void)
 {
 	for (int i = 0; i < 5; i++)
 		for (int j = 0; j < 2; j++)
