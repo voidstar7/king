@@ -128,7 +128,7 @@ void analyze_hand(void)
 
 	// check for straight
 	for (i = 1; i < 5; i++)
-		if (hand[i][0] - 1 == hand[i - 1][0])
+		if (ranks[i] - 1 == ranks[i - 1])
 			num_consec++;
 	if (num_consec == 5)
 	{
