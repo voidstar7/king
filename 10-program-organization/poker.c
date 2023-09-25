@@ -2,10 +2,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#define NUM_RANKS 13
-#define NUM_SUITS 4
-#define NUM_CARDS 5
-
 bool straight, flush, four, three;
 int pairs;
 
@@ -36,7 +32,7 @@ void read_cards(void)
 	bool bad_card, first_card = true;
 	int cards_read = 0, rank, suit;
 
-	while (cards_read < NUM_CARDS)
+	while (cards_read < 5)
 	{
 		print_hand();
 		bad_card = false;
@@ -112,8 +108,8 @@ void analyze_hand(void)
 {
 	print_hand();
 	int ranks[5];
-	int num_consec = 1, suit_consec = 1;
-	int suit, i, j;
+	int suit, i, j, 
+			num_consec = 1, suit_consec = 1;
 	straight = false;
 	flush = false;
 	four = false;
@@ -122,20 +118,20 @@ void analyze_hand(void)
 
 	// check for flush
 	suit = hand[0][1];
-	for (i = 1; i < NUM_CARDS; i++)
+	for (i = 1; i < 5; i++)
 		if (hand[i][1] == suit)
 				suit_consec++;
-	if (suit_consec == NUM_CARDS)
+	if (suit_consec == 5)
 		flush = true;
 
 	// sort by rank
 	sort_hand(ranks, 5);
 
 	// check for straight
-	for (i = 1; i < NUM_CARDS; i++)
+	for (i = 1; i < 5; i++)
 		if (hand[i][0] - 1 == hand[i - 1][0])
 			num_consec++;
-	if (num_consec == NUM_CARDS)
+	if (num_consec == 5)
 	{
 		straight = true;
 		return;
