@@ -41,28 +41,28 @@ void read_cards(void)
 		switch (rank_ch)
 		{
 			case '0': exit(EXIT_SUCCESS);
-			case '2': rank = 0; break;
-			case '3': rank = 1; break;
-			case '4': rank = 2; break;
-			case '5': rank = 3; break;
-			case '6': rank = 4; break;
-			case '7': rank = 5; break;
-			case '8': rank = 6; break;
-			case '9': rank = 7; break;
-			case 't': case 'T': rank = 8; break;
-			case 'j': case 'J': rank = 9; break;
-			case 'q': case 'Q': rank = 10; break;
-			case 'k': case 'K': rank = 11; break;
-			case 'a': case 'A': rank = 12; break;
+			case '2': rank = 1; break;
+			case '3': rank = 2; break;
+			case '4': rank = 3; break;
+			case '5': rank = 4; break;
+			case '6': rank = 5; break;
+			case '7': rank = 6; break;
+			case '8': rank = 7; break;
+			case '9': rank = 8; break;
+			case 't': case 'T': rank = 9; break;
+			case 'j': case 'J': rank = 10; break;
+			case 'q': case 'Q': rank = 11; break;
+			case 'k': case 'K': rank = 12; break;
+			case 'a': case 'A': rank = 13; break;
 			default: bad_card = true;
 		}
 		suit_ch = getchar();
 		switch (suit_ch) 
 		{
-			case 'c': case 'C': suit = 0; break;
-			case 'd': case 'D': suit = 1; break;
-			case 'h': case 'H': suit = 2; break;
-			case 's': case 'S': suit = 3; break;
+			case 'c': case 'C': suit = 1; break;
+			case 'd': case 'D': suit = 2; break;
+			case 'h': case 'H': suit = 3; break;
+			case 's': case 'S': suit = 4; break;
 			default: bad_card = true;
 		}
 		while ((ch = getchar()) != '\n')
@@ -84,7 +84,6 @@ void read_cards(void)
 		if (check_for_duplicate(rank, suit))
 		{
 			printf("Duplicate card\n");
-			// check bug with 2 of clubs
 			hand[cards_read][0] = 0;
 			hand[cards_read][1] = 0;
 			continue;
