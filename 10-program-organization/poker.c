@@ -11,7 +11,8 @@ void analyze_hand(void);
 void print_result(void);
 void print_hand(void);
 void clear_hand(void);
-void sort_hand(int ranks[], int rows);
+void sort_hand(int ranks[5][2]);
+int sum_ranks(int ranks[5][2]);
 
 int hand[5][2];
 
@@ -106,8 +107,8 @@ bool check_for_duplicate(int rank, int suit)
 void analyze_hand(void)
 {
 	print_hand();
-	int ranks[5];
-	int suit, i, j, 
+	int ranks[5][2];
+	int suit, i, j, sum,
 			num_consec = 1, suit_consec = 1;
 	straight = false;
 	flush = false;
@@ -124,7 +125,9 @@ void analyze_hand(void)
 		flush = true;
 
 	// sort by rank
-	sort_hand(ranks, 5);
+	sort_hand(ranks);
+	sum = sum_ranks(ranks);
+	printf("the sum is %d\n", sum);
 
 	// check for straight
 	for (i = 1; i < 5; i++)
@@ -154,30 +157,62 @@ void print_result(void)
 	printf("\n\n");
 }
 
-void sort_hand(int ranks[], int rows)
+void sort_hand(int ranks[5][2])
 {
 	int i, j, temp;
 	for (int i = 0; i < 5; i++)
-		 ranks[i] = hand[i][0];
+		 ranks[i][0] = hand[i][0];
+
+	for (int i = 0; i < 5; i++)
+		 ranks[i][1] = 0;
 
 	printf("unsorted\n");
 	for (int i = 0; i < 5; i++)
-			printf("[%d]%d\n", i, ranks[i]);
+	{
+		for (int j = 0; j < 2; j++)
+			printf("[%d][%d]%d ", i, j, ranks[i][j]);
 		printf("\n");
+	}
 
 	for (i = 0; i < 4; i++)
+	{
 		for (j = i + 1; j < 5; j++)
-			if (ranks[i] > ranks[j])
+			if (ranks[i][0] > ranks[j][0])
 			{
-				temp = ranks[i];
-				ranks[i] = ranks[j];
-				ranks[j] = temp;
+				temp = ranks[i][0];
+				ranks[i][0] = ranks[j][0];
+				ranks[j][0] = temp;
 			}
+	}
 
 	printf("sorted\n");
 	for (int i = 0; i < 5; i++)
-			printf("[%d]%d\n", i, ranks[i]);
+	{
+		for (int j = 0; j < 2; j++)
+			printf("[%d][%d]%d ", i, j, ranks[i][j]);
 		printf("\n");
+	}
+}
+
+int sum_ranks(int ranks[5][2])
+{
+	int i, j, sum = 0;
+	for (i = 0; i < 5; i++)
+		for (j = 0; j < 5; j++)
+			if (hand[i][0] == ranks[j][0])
+				ranks[j][1]++;
+
+	for (i = 0; i < 5; i++)
+		sum += ranks[i][1];
+
+	printf("rank sums\n");
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 2; j++)
+			printf("[%d][%d]%d ", i, j, ranks[i][j]);
+		printf("\n");
+	}
+	return sum;
 }
 
 void print_hand(void)
