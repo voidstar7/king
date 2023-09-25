@@ -13,7 +13,8 @@ void read_cards(void);
 bool check_for_duplicate(int rank, int suit);
 void analyze_hand(void);
 void print_result(void);
-void print_array(int array[][2], int row);
+void print_hand();
+void clear_hand();
 
 int hand[5][2];
 
@@ -24,6 +25,7 @@ int main (void)
 		read_cards();
 		analyze_hand();
 		print_result();
+		clear_hand();
 	}
 }
 
@@ -35,7 +37,7 @@ void read_cards(void)
 
 	while (cards_read < NUM_CARDS)
 	{
-		print_array(hand, 5);
+		print_hand();
 		bad_card = false;
 		printf("Enter a card: ");
 		rank_ch = getchar();
@@ -70,7 +72,10 @@ void read_cards(void)
 			if (ch != ' ')
 				bad_card = true;
 		if (bad_card)
+		{
 			printf("Bad card; ignored\n");
+			continue;
+		}
 		if (first_card)
 		{
 			hand[cards_read][0] = rank;
@@ -95,7 +100,6 @@ void read_cards(void)
 bool check_for_duplicate(int rank, int suit)
 {
 	int i, j;
-	printf("rank is %d suit is %d\n", rank, suit);
 	for (i = 0; i < 5; i++)
 		if (hand[i][0] == rank && hand[i][1] == suit)
 			return true;
@@ -148,12 +152,19 @@ void print_result(void)
 	printf("\n\n");
 }
 
-void print_array(int array[][2], int row)
+void print_hand()
 {
 	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 2; j++)
-			printf("[%d][%d]%d ", i, j, array[i][j]);
+			printf("[%d][%d]%d ", i, j, hand[i][j]);
 		printf("\n");
 	}
+}
+
+void clear_hand()
+{
+	for (int i = 0; i < 5; i++)
+		for (int j = 0; j < 2; j++)
+			hand[i][j] = 0;
 }
