@@ -2,8 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-bool straight, flush, four, three;
-int pairs;
+bool straight, flush, four, fullHouse, three, twoPair, onePair;
 
 void read_cards(void);
 bool check_for_duplicate(int rank, int suit);
@@ -112,9 +111,11 @@ void analyze_hand(void)
 			num_consec = 1, suit_consec = 1;
 	straight = false;
 	flush = false;
+	fullHouse = false;
 	four = false;
 	three = false;
-	pairs = 0;
+	twoPair = false;
+	onePair = false;
 
 	// check for flush
 	suit = hand[0][1];
@@ -131,7 +132,7 @@ void analyze_hand(void)
 
 	// check for straight
 	for (i = 1; i < 5; i++)
-		if (ranks[i] - 1 == ranks[i - 1])
+		if (ranks[i][0] - 1 == ranks[i - 1][0])
 			num_consec++;
 	if (num_consec == 5)
 	{
@@ -139,19 +140,32 @@ void analyze_hand(void)
 		return;
 	}
 
-	// check for four of a kind, three of a kind, and pairs
+	if (flush == true)
+		return;
+
+	// check for four of a kind, full house, three of a kind, and pairs
+	if (sum == 7)
+		onePair = true;
+	if (sum == 9)
+		twoPair = true;
+	if (sum == 11)
+		three = true;
+	if (sum == 13)
+		fullHouse = true;
+	if (sum == 17)
+		four = true;
 }
 
 void print_result(void)
 {
 	if (straight && flush) printf("Straight flush");
 	else if (four) printf("Four of a kind");
-	else if (three && pairs == 1) printf("Full house");
+	else if (fullHouse) printf("Full house");
 	else if (flush) printf("Flush");
 	else if (straight) printf("Straight");
 	else if (three) printf("Three of a kind");
-	else if (pairs == 2) printf("Two pairs");
-	else if (pairs == 1) printf("Pair");
+	else if (twoPair) printf("Two pairs");
+	else if (onePair) printf("Pair");
 	else printf("High card");
 
 	printf("\n\n");
