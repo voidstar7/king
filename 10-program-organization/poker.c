@@ -145,7 +145,14 @@ void analyze_hand(void)
 	for (i = 1; i < 5; i++)
 		if (ranks[i][0] - 1 == ranks[i - 1][0])
 			num_consec++;
-	if (num_consec == 5)
+	// check for ace low straight
+	if (num_consec == 5 || (
+			 ranks[0][0] == 1 &&
+			 ranks[1][0] == 2 &&
+			 ranks[2][0] == 3 &&
+			 ranks[3][0] == 4 &&
+			 ranks[4][0] == 13 
+			))
 	{
 		straight = true;
 		// check for royal flush 
@@ -153,7 +160,6 @@ void analyze_hand(void)
 			royalFlush = true;
 		return;
 	}
-
 	if (flush == true)
 		return;
 
