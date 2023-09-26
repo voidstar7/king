@@ -2,9 +2,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-//#define debug
+#define debug
 
-bool straight, flush, four, fullHouse, three, twoPair, onePair;
+bool straight, flush, four, fullHouse, three, twoPair, onePair, royalFlush;
 
 void read_cards(void);
 bool check_for_duplicate(int rank, int suit);
@@ -117,6 +117,7 @@ void analyze_hand(void)
 	int ranks[5][2];
 	int suit, i, j, sum,
 			num_consec = 1, suit_consec = 1;
+	royalFlush = false;
 	straight = false;
 	flush = false;
 	fullHouse = false;
@@ -147,6 +148,9 @@ void analyze_hand(void)
 	if (num_consec == 5)
 	{
 		straight = true;
+		// check for royal flush 
+		if (ranks[0][0] == 9 && flush == true)
+			royalFlush = true;
 		return;
 	}
 
@@ -168,7 +172,8 @@ void analyze_hand(void)
 
 void print_result(void)
 {
-	if (straight && flush) printf("Straight flush");
+	if (royalFlush) printf("Royal flush");
+	else if (straight && flush) printf("Straight flush");
 	else if (four) printf("Four of a kind");
 	else if (fullHouse) printf("Full house");
 	else if (flush) printf("Flush");
