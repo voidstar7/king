@@ -1,14 +1,6 @@
 #include <stdio.h>
 
 /*
-			 0	
-			___
-	5	 |   |  1
-		 |_6_|
-  	 |   |  
-  4	 |___|  2
-			 3
-
  _ 
 |_|
 |_|
@@ -19,6 +11,7 @@
 //void process_digit(int digit, int position);
 //void print_digits_array(void);
 
+char digits[10][4];
 char segments[10][3][3] =
 {
 	{ { ' ', '_', ' ' }, { '|', ' ', '|' }, { '|', '_', '|' } }, // 0
@@ -35,6 +28,21 @@ char segments[10][3][3] =
 
 int main(void)
 {
-	printf("%c", segments[0][0][1]);
+	char input[10], ch;
+	int i, count = 0;
+	printf("Enter digits (10 max): ");
+	while (1)
+	{
+		if (count > 10)
+		{
+			printf("Too many digits\n");
+			return 1;
+		}
+		ch = getchar();
+		if (ch == '\n')
+			break;
+		input[count] = ch;
+		count++;
+	}
 }
 
