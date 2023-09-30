@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#define debug
+
 /*
  _ 
 |_|
@@ -7,8 +9,8 @@
 
 */
 
-void prompt_for_digits(void);
-void process_digits(void);
+int prompt_for_digits(void);
+void process_digits(int digitCount);
 void print_digits(void);
 
 char input[10];
@@ -29,12 +31,11 @@ char segments[10][3][3] =
 
 int main(void)
 {
-	prompt_for_digits();
-	process_digits();
+	process_digits(prompt_for_digits());
 	print_digits();
 }
 
-void prompt_for_digits(void)
+int prompt_for_digits(void)
 {
 	char ch;
 	int i, j, count = 0;
@@ -52,24 +53,17 @@ void prompt_for_digits(void)
 		input[count] = ch;
 		count++;
 	}
+
+	printf("count is %d\ninput: ", count);
+	for (i = 0; i < 10; i++)
+		printf("%c", input[i]);
+	printf("\n");
+
+	return count;
 }
 
-void process_digits(void)
+void process_digits(int digitCount)
 {
-
-}
-
-
-void print_digits(void)
-{
-	for (i = 0; i < 3; i++)
-	{
-		for (j = 0; j < 27; j++)
-			printf("%c", digits[i][j]);
-		printf("\n");
-	}
-}
-
 /*
 	digits[0][0] = segments[3][0][0];
 	digits[0][1] = segments[3][0][1];
@@ -95,3 +89,40 @@ void print_digits(void)
 	digits[2][4] = segments[5][2][1];
 	digits[2][5] = segments[5][2][2];
 */
+	
+	int i, j, k, pointer = 0;
+	printf("digitCount is %d\n", digitCount);
+	printf("p = %d\n", pointer);
+	for (i = 0; i < digitCount; i++)
+	{
+		printf(" i = %d\n", i);
+		for (j = 0; j < 3; j++)
+		{
+			printf("  j = %d\n", j);
+			for (k = 0; k < 3; k++)
+			{
+				printf("   k = %d\n", k);
+				printf("    p + k = %d\n", pointer + k);
+				printf("      input[i] = %d\n", input[i] - '0');
+
+				digits[j][pointer + k] = 
+				segments[input[i] - '0'][j][k];
+			}
+		}
+		pointer += 3;
+		printf("p = %d\n", pointer);
+	}
+}
+
+void print_digits(void)
+{
+	int i, j;
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 27; j++)
+			printf("%c", digits[i][j]);
+		printf("\n");
+	}
+}
+
+
