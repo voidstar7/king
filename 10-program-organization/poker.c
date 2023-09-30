@@ -2,8 +2,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#define debug
-
 bool straight, flush, four, fullHouse, three, twoPair, onePair, royalFlush;
 
 void read_cards(void);
@@ -13,9 +11,6 @@ void print_result(void);
 void clear_hand(void);
 void sort_hand(int ranks[5][2]);
 int sum_ranks(int ranks[5][2]);
-#ifdef debug
-void print_hand(void);
-#endif
 
 int hand[5][2];
 
@@ -38,9 +33,6 @@ void read_cards(void)
 
 	while (cards_read < 5)
 	{
-#ifdef debug
-		print_hand();
-#endif
 		bad_card = false;
 		printf("Enter a card: ");
 		rank_ch = getchar();
@@ -111,9 +103,6 @@ bool check_for_duplicate(int rank, int suit)
 
 void analyze_hand(void)
 {
-#ifdef debug
-	print_hand();
-#endif
 	int ranks[5][2];
 	int suit, i, j, sum,
 			num_consec = 1, suit_consec = 1;
@@ -137,9 +126,6 @@ void analyze_hand(void)
 	// sort by rank
 	sort_hand(ranks);
 	sum = sum_ranks(ranks);
-#ifdef debug
-	printf("the sum is %d\n", sum);
-#endif
 
 	// check for straight
 	for (i = 1; i < 5; i++)
@@ -201,16 +187,6 @@ void sort_hand(int ranks[5][2])
 	for (int i = 0; i < 5; i++)
 		 ranks[i][1] = 0;
 
-#ifdef debug
-	printf("unsorted\n");
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 2; j++)
-			printf("[%d][%d]%d ", i, j, ranks[i][j]);
-		printf("\n");
-	}
-#endif
-
 	for (i = 0; i < 4; i++)
 	{
 		for (j = i + 1; j < 5; j++)
@@ -221,16 +197,6 @@ void sort_hand(int ranks[5][2])
 				ranks[j][0] = temp;
 			}
 	}
-
-#ifdef debug
-	printf("sorted\n");
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 2; j++)
-			printf("[%d][%d]%d ", i, j, ranks[i][j]);
-		printf("\n");
-	}
-#endif
 }
 
 int sum_ranks(int ranks[5][2])
@@ -244,29 +210,8 @@ int sum_ranks(int ranks[5][2])
 	for (i = 0; i < 5; i++)
 		sum += ranks[i][1];
 
-#ifdef debug
-	printf("rank sums\n");
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 2; j++)
-			printf("[%d][%d]%d ", i, j, ranks[i][j]);
-		printf("\n");
-	}
-#endif
 	return sum;
 }
-
-#ifdef debug
-void print_hand(void)
-{
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 2; j++)
-			printf("[%d][%d]%d ", i, j, hand[i][j]);
-		printf("\n");
-	}
-}
-#endif
 
 void clear_hand(void)
 {
