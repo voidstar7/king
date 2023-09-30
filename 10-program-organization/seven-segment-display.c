@@ -7,10 +7,11 @@
 
 */
 
-//void clear digits_array(void);
-//void process_digit(int digit, int position);
-//void print_digits_array(void);
+void prompt_for_digits(void);
+void process_digits(void);
+void print_digits(void);
 
+char input[10];
 char digits[3][27];
 char segments[10][3][3] =
 {
@@ -28,9 +29,15 @@ char segments[10][3][3] =
 
 int main(void)
 {
-	/*
-	char input[10], ch;
-	int i, count = 0;
+	prompt_for_digits();
+	process_digits();
+	print_digits();
+}
+
+void prompt_for_digits(void)
+{
+	char ch;
+	int i, j, count = 0;
 	printf("Enter digits (10 max): ");
 	while (1)
 	{
@@ -45,9 +52,25 @@ int main(void)
 		input[count] = ch;
 		count++;
 	}
-	*/
-	int i, j;
+}
 
+void process_digits(void)
+{
+
+}
+
+
+void print_digits(void)
+{
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 27; j++)
+			printf("%c", digits[i][j]);
+		printf("\n");
+	}
+}
+
+/*
 	digits[0][0] = segments[3][0][0];
 	digits[0][1] = segments[3][0][1];
 	digits[0][2] = segments[3][0][2];
@@ -71,12 +94,4 @@ int main(void)
 	digits[2][3] = segments[5][2][0];
 	digits[2][4] = segments[5][2][1];
 	digits[2][5] = segments[5][2][2];
-
-	for (i = 0; i < 3; i++)
-	{
-		for (j = 0; j < 27; j++)
-			printf("%c", digits[i][j]);
-		printf("\n");
-	}
-}
-
+*/
