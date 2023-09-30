@@ -1,6 +1,5 @@
 #include <stdio.h>
-
-#define debug
+#include <ctype.h>
 
 /*
  _ 
@@ -14,7 +13,7 @@ void process_digits(int digitCount);
 void print_digits(void);
 
 char input[10];
-char digits[3][27];
+char digits[3][36];
 char segments[10][3][3] =
 {
 	{ { ' ', '_', ' ' }, { '|', ' ', '|' }, { '|', '_', '|' } }, // 0
@@ -33,6 +32,7 @@ int main(void)
 {
 	process_digits(prompt_for_digits());
 	print_digits();
+	return 0;
 }
 
 int prompt_for_digits(void)
@@ -44,12 +44,14 @@ int prompt_for_digits(void)
 	{
 		if (count > 10)
 		{
-			printf("Too many digits\n");
-			return 1;
+			count--;
+			break;
 		}
 		ch = getchar();
 		if (ch == '\n')
 			break;
+		else if (!isdigit(ch))
+			continue;
 		input[count] = ch;
 		count++;
 	}
@@ -119,7 +121,7 @@ void print_digits(void)
 	int i, j;
 	for (i = 0; i < 3; i++)
 	{
-		for (j = 0; j < 27; j++)
+		for (j = 0; j < 36; j++)
 			printf("%c", digits[i][j]);
 		printf("\n");
 	}
