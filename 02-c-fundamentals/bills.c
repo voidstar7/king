@@ -2,24 +2,33 @@
 
 // asks the user to enter a U.S. dollar amount and then shows how to pay that amount using the smallest number of $20, $10, $5, and $1 bills
 
+void pay_amount(int dollars, int *twenties, int *tens, int *fives, int *ones);
+
 int main(void)
 {
-	int amount, remainder, twentyBills, tenBills, fiveBills, oneBills;
-	printf("Enter a US dollar amount: ");
-	scanf("%i", &amount);
+	int i, dollars, twentyBills, tenBills, fiveBills, oneBills,
+	*twenties = &twentyBills, 
+	*tens = &tenBills, 
+	*fives = &fiveBills, 
+	*ones = &oneBills;
 
-	twentyBills = amount / 20; 
-	amount = amount - (twentyBills * 20);
-	tenBills = amount / 10;
-	amount = amount - (tenBills * 10);
-	fiveBills = amount / 5;
-	amount = amount - (fiveBills * 5);
-	oneBills = amount / 1;
-
-	printf("$20 bills: %i\n", twentyBills);
-	printf("$10 bills: %i\n", tenBills);
-	printf("$5 bills: %i\n", fiveBills);
-	printf("$1 bills: %i\n", oneBills);
-
+	printf("Enter a US dollar amount: $");
+	scanf("%i", &dollars);
+	pay_amount(dollars, twenties, tens, fives, ones);
+		printf("$20 bills: %i\n", *twenties);
+		printf("$10 bills: %i\n", *tens);
+		printf("$5 bills: %i\n", *fives);
+		printf("$1 bills: %i\n", *ones);
 	return 0;
+}
+
+void pay_amount(int dollars, int *twenties, int *tens, int *fives, int *ones)
+{
+	*twenties = dollars / 20; 
+		dollars = dollars - (*twenties * 20);
+	*tens = dollars / 10;
+		dollars = dollars - (*tens * 10);
+	*fives = dollars / 5;
+		dollars = dollars - (*fives * 5);
+	*ones = dollars / 1;
 }
