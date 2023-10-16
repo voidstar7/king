@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <stdbool.h>
+
+void palindrome_check(char *message, int len);
 
 int main(void)
 {
@@ -16,6 +19,16 @@ int main(void)
 			continue;
 		message[len++] = c;
 	}
-	for (i = 0; i < len; i++)
-		printf("%c", message[i]);
+	palindrome_check(message, len);
+}
+
+void palindrome_check(char *message, int len)
+{
+	char *ptr;
+	for( ptr = (message + len);
+			 ptr >= message;
+			 ptr--)
+	{
+		printf("%c", *ptr);
+	}
 }
