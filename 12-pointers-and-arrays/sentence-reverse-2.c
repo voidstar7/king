@@ -2,15 +2,17 @@
 
 int main(void)
 {
-	int len = 0, max = 100, i;
+	int max = 100, len = 0, i;
 	char message[max], c;
+	char *ptrMessage = &message[0];
+
 	printf("Enter a message: ");
 	while (1)
 	{
 		c = getchar();
-		if (len > max || c == '\n')
+		if (ptrMessage > (message + max) || c == '\n')
 			break;
-		message[len] = c;
+		*(ptrMessage++) = c;
 		len++;
 	}
 	printf("Reversed: ");
