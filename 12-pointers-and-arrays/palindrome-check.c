@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
-void palindrome_check(char *message, int len);
+bool palindrome_check(char message[], int len);
 
 int main(void)
 {
@@ -17,18 +18,42 @@ int main(void)
 			break;
 		else if (!isalpha(c))
 			continue;
-		message[len++] = c;
+		message[len++] = tolower(c);
 	}
-	palindrome_check(message, len);
+	if (palindrome_check(message, len))
+		printf("Message is a palindrome\n");
+	else
+		printf("Message is not a palindrome\n");
+	return 0;
 }
 
-void palindrome_check(char *message, int len)
+bool palindrome_check(char message[], int len)
 {
-	char *ptr;
-	for( ptr = (message + len);
-			 ptr >= message;
-			 ptr--)
+	char *p = &message[0];
+	bool odd;
+	int mid = len / 2;
+	int end = len - 1;
+
+	if (len % 2 == 1)
+		odd = true;
+	if (odd)
 	{
-		printf("%c", *ptr);
+		while ((p - message) < mid)
+		{
+			if (*p == *(message + end--))
+				p++;
+			else
+				return false;
+		}
+		return true;
 	}
+	// else if len = even
+	while ((p - message) <= mid)
+	{
+		if (*p == *(message + end--))
+			p++;
+		else
+			return false;
+	}
+	return true;
 }
