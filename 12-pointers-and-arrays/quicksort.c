@@ -42,14 +42,12 @@ int *split(int a[], int *low, int *high)
 		if (low >= high)
 			break;
 		*low++ = *high;
-		//low++;
 
 		while (low < high && *low <= part_element)
 			low++;
 		if (low >= high)
 			break;
 		*high-- = *low;
-		//high--;
 	}
 	*high = part_element;
 	return high;
