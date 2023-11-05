@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
 bool straight, flush, four, fullHouse, three, twoPair, onePair, royalFlush;
 
@@ -13,6 +14,7 @@ void sort_hand(int ranks[5][2]);
 int sum_ranks(int ranks[5][2]);
 
 int hand[5][2];
+char printHand[5][30];
 
 int main (void)
 {
@@ -39,28 +41,71 @@ void read_cards(void)
 		switch (rank_ch)
 		{
 			case '0': exit(EXIT_SUCCESS);
-			case '2': rank = 1; break;
-			case '3': rank = 2; break;
-			case '4': rank = 3; break;
-			case '5': rank = 4; break;
-			case '6': rank = 5; break;
-			case '7': rank = 6; break;
-			case '8': rank = 7; break;
-			case '9': rank = 8; break;
-			case 't': case 'T': rank = 9; break;
-			case 'j': case 'J': rank = 10; break;
-			case 'q': case 'Q': rank = 11; break;
-			case 'k': case 'K': rank = 12; break;
-			case 'a': case 'A': rank = 13; break;
+			case '2': rank = 1; 
+								strcpy(printHand[cards_read], "Two of ");
+								break;
+			case '3': rank = 2;
+								strcpy(printHand[cards_read], "Three of "); 
+								break;
+			case '4': rank = 3;
+								strcpy(printHand[cards_read], "Four of ");  
+								break;
+			case '5': rank = 4;
+								strcpy(printHand[cards_read], "Five of ");  
+								break;
+			case '6': rank = 5;
+								strcpy(printHand[cards_read], "Six of ");  
+								break;
+			case '7': rank = 6;
+								strcpy(printHand[cards_read], "Seven of ");  
+								break;
+			case '8': rank = 7;
+								strcpy(printHand[cards_read], "Eight of ");  
+								break;
+			case '9': rank = 8;
+								strcpy(printHand[cards_read], "Nine of ");  
+								break;
+			case 't': 
+			case 'T': rank = 9;
+								strcpy(printHand[cards_read], "Ten of ");  
+								break;
+			case 'j': 
+			case 'J': rank = 10;
+								strcpy(printHand[cards_read], "Jack of ");  
+								break;
+			case 'q': 
+			case 'Q': rank = 11;
+								strcpy(printHand[cards_read], "Queen of ");  
+								break;
+			case 'k': 
+			case 'K': rank = 12;
+								strcpy(printHand[cards_read], "King of ");  
+								break;
+			case 'a': 
+			case 'A': rank = 13;
+								strcpy(printHand[cards_read], "Ace of ");  
+								break;
 			default: bad_card = true;
 		}
 		suit_ch = getchar();
 		switch (suit_ch) 
 		{
-			case 'c': case 'C': suit = 1; break;
-			case 'd': case 'D': suit = 2; break;
-			case 'h': case 'H': suit = 3; break;
-			case 's': case 'S': suit = 4; break;
+			case 'c': 
+			case 'C': suit = 1; 
+								strcat(printHand[cards_read], "Clubs");
+								break;
+			case 'd': 
+			case 'D': suit = 2;
+								strcat(printHand[cards_read], "Diamonds");
+								break;
+			case 'h': 
+			case 'H': suit = 3; 
+								strcat(printHand[cards_read], "Hearts");
+								break;
+			case 's': 
+			case 'S': suit = 4; 
+								strcat(printHand[cards_read], "Spades");
+								break;
 			default: bad_card = true;
 		}
 		while ((ch = getchar()) != '\n')
@@ -164,6 +209,11 @@ void analyze_hand(void)
 
 void print_result(void)
 {
+	printf("Your hand:\n");
+	for (int i = 0; i < 5; i++)
+		printf("%s\n", printHand[i]);
+	printf("*** ");
+
 	if (royalFlush) printf("Royal flush");
 	else if (straight && flush) printf("Straight flush");
 	else if (four) printf("Four of a kind");
@@ -175,7 +225,7 @@ void print_result(void)
 	else if (onePair) printf("Pair");
 	else printf("High card");
 
-	printf("\n\n");
+	printf(" ***\n\n");
 }
 
 void sort_hand(int ranks[5][2])
