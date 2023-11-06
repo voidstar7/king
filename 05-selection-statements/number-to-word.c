@@ -23,14 +23,15 @@ int main(void)
 		}
 		else if (number >= 10 && number < 20) 
 		{
-			printf("%s", elevenToNineteen[(number - 10) - 1]);
+			puts(elevenToNineteen[(number - 10) - 1]);
 			break;
 		}
 		else if (number >= 20) 
 		{
-			strcpy(s, twentyToNinety[(number / 10) - 2]);
-			strcat(s, "-");
-			strcat(s, oneToNine[(number % 10) - 1]);
+			sprintf(
+					s, "%s-%s",
+					twentyToNinety[(number / 10) - 2],
+					oneToNine[(number % 10) - 1]);
 			puts(s);
 			break;
 		}
