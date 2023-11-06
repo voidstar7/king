@@ -1,8 +1,14 @@
 #include <stdio.h>
+#include <string.h>
 
 // prompts for a two digit number then prints the number in English
 int main(void) 
 {
+	char *oneToNine[] = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+	char *elevenToNineteen[] = { "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+	char *twentyToNinety[] = { "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+	char *s[25];
+
 	int number;
 	while (1)
 	{
@@ -15,46 +21,17 @@ int main(void)
 		}
 		else if (number >= 10 && number < 20) 
 		{
-			switch (number % 10) 
-			{
-				case 1: printf("Eleven\n"); break;
-				case 2: printf("Twelve\n"); break;
-				case 3: printf("Thirteen\n"); break;
-				case 4: printf("Fourteen\n"); break;
-				case 5: printf("Fifteen\n"); break;
-				case 6: printf("Sixteen\n"); break;
-				case 7: printf("Seventeen\n"); break;
-				case 8: printf("Eighteen\n"); break;
-				case 9: printf("Nineteen\n"); break;
-			}
-			return 0;
+			printf("%s", elevenToNineteen[(number - 10) - 1]);
+			break;
 		}
 		else if (number >= 20) 
 		{
-			switch (number / 10) 
-			{
-				case 2: printf("Twenty-"); break;
-				case 3: printf("Thirty-"); break;
-				case 4: printf("Forty-"); break;
-				case 5: printf("Fifty-"); break;
-				case 6: printf("Sixty-"); break;
-				case 7: printf("Seventy-"); break;
-				case 8: printf("Eighty-"); break;
-				case 9: printf("Ninety-"); break;
-			}
-			switch (number % 10) 
-			{
-				case 1: printf("one\n"); break;	
-				case 2: printf("two\n"); break;	
-				case 3: printf("three\n"); break;	
-				case 4: printf("four\n"); break;	
-				case 5: printf("five\n"); break;	
-				case 6: printf("six\n"); break;	
-				case 7: printf("seven\n"); break;	
-				case 8: printf("eight\n"); break;	
-				case 9: printf("nine\n"); break;	
-			}
-			return 0;
+			strcpy(s, twentyToNinety[(number / 10) - 2]);
+			strcat(s, "-");
+			strcat(s, oneToNine[(number % 10) - 1]);
+			puts(s);
+			break;
 		}
 	}
+	return 0;
 }
