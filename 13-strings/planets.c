@@ -12,7 +12,8 @@ int main(int argc, char *argv[])
 		{
 			for (j = 0; j < NUM_PLANETS; j++) 
 			{
-				if (strcmp(argv[i], planets[j]) == 0) 
+				if (strcmp(argv[i], planets[j]) == 0 ||
+						strcmp(argv[i], planets[j]) == 32) 
 				{
           printf("%s is planet %d\n", argv[i], j + 1);
 					break;
