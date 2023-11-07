@@ -1,35 +1,36 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#define MAX 128
+
+int compute_vowel_count(const char *sentence);
+
 int main(void)
 {
 	int count = 0;
-	char c;
+	char sentence[MAX];
+
 	printf("Enter a sentence: ");
-	while (c != '\x0a')
-	{
-		c = getchar();
-		switch(tolower(c))
-		{
-			case 'a':
-				count += 1;
-				break;
-			case 'e':
-				count += 1;
-				break;
-			case 'i':
-				count += 1;
-				break;
-			case 'o':
-				count += 1;
-				break;
-			case 'u':
-				count += 1;
-				break;
-			default:
-				break;
-		}
-	}
-	printf("Your sentence contains %d vowel(s)\n", count);
+		fgets(sentence, MAX, stdin);
+	printf("Your sentence contains %d vowel(s)\n",
+			compute_vowel_count(sentence));
 	return 0;
 }
+
+int compute_vowel_count(const char *sentence)
+{
+	int count = 0;
+	char c;
+	for (; *sentence; sentence++)
+	{
+		c = tolower(*sentence);
+		if (c == 'a' ||
+				c == 'e' ||
+				c == 'i' ||
+				c == 'o' ||
+				c == 'u' )
+			count++;
+	}
+	return count;
+}
+
