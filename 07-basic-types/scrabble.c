@@ -1,31 +1,28 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
+
+int compute_scrabble_value(const char *word);
 
 int main(void)
 {
-	int alphabet[26] = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10 };
-	int score = 0, position;
-	char c;
+	char word[25];
 	printf("Enter a word: ");
-	while(1)
-	{
-		c = getchar();	
-		if (isalpha(c))
-		{
-			if (isupper(c))
-				position = (int)c - 65;
-			else
-				position = (int)c - 97;
-			score += alphabet[position];
-		}
-		else if (c == '\x0a')
-			break;
-		else
-		{
-			printf("Invalid entry\n");
-			return 1;
-		}
-	}
-	printf("Scrabble value: %d\n", score);
+		scanf("%s", word);
+	printf("Scrabble value: %d\n", compute_scrabble_value(word));
 	return 0;
+}
+
+int compute_scrabble_value(const char *word)
+{
+	int alphabet[26] = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10 };
+	int i, score = 0;
+	const char *p;
+
+	for (p = word; p < word + strlen(word); p++)
+	{
+		printf("%d\n", alphabet[(tolower(*p) - 'a')]);
+		score += alphabet[(tolower(*p) - 'a')];
+	}
+	return score;
 }
