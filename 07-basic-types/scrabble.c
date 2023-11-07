@@ -20,9 +20,6 @@ int compute_scrabble_value(const char *word)
 	const char *p;
 
 	for (p = word; p < word + strlen(word); p++)
-	{
-		printf("%d\n", alphabet[(tolower(*p) - 'a')]);
 		score += alphabet[(tolower(*p) - 'a')];
-	}
 	return score;
 }
