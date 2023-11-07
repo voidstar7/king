@@ -24,7 +24,8 @@ int compute_vowel_count(const char *sentence)
 	for (; *sentence; sentence++)
 	{
 		c = tolower(*sentence);
-		if (c == 'a' ||
+		if (
+				c == 'a' ||
 				c == 'e' ||
 				c == 'i' ||
 				c == 'o' ||
