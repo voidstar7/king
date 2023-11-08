@@ -18,10 +18,11 @@ int main(void)
 
 void reverse_name(char *name)
 {
-	char buffer[MAX];
-	char initial;
-	char *pl = name,
-			 *pr = name + ((int)strlen(name) - 2);
+	char 
+		buffer[MAX],
+		initial,
+		*pl = name,
+		*pr = name + ((int)strlen(name) - 2);
 
 	for (;; pl++)
 	{
