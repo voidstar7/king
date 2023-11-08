@@ -1,36 +1,40 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
-#define LENGTH 20
+#define MAX 30
+
+void reverse_name(char *name);
 
 int main(void)
 {
-	char lastName[LENGTH];
-	char c, initial;
-	int i, count = 0;
+	char name[MAX];
+
 	printf("Enter a first and last name: ");
-	initial = getchar();
-	while (1)
+	fgets(name, MAX, stdin);
+	reverse_name(name);
+	puts(name);
+}
+
+void reverse_name(char *name)
+{
+	char buffer[MAX];
+	char initial;
+	char *pl = name,
+			 *pr = name + ((int)strlen(name) - 2);
+
+	for (;; pl++)
 	{
-		c = getchar();
-		if (c == 32) // space
-			break;
-		else
+		if (*pl == ' ')
 			continue;
+		initial = *pl;
+		break;
 	}
-	for (i = 0; i < LENGTH; i++)
-	{
-		c = getchar();
-		if (c == 10) // return
-			break;
-		else
-		{
-			lastName[i] = c;
-			count++;
-		}
-	}
-	for (i = 0; i < count; i++)
-		printf("%c", lastName[i]);
-	printf(", %c.\n", initial);
-	return 0;
+
+	while (*--pr != ' ')
+		;
+	pr++;
+	strcpy(buffer, pr);
+	*(buffer + ((int)strlen(buffer) - 1)) = '\0';
+	sprintf(name, "%s, %c.", buffer, initial);
 }
