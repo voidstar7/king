@@ -15,9 +15,8 @@ int main(void)
 	printf("Enter a sentence: ");
 	fgets(sentence, MAX, stdin);
 	trim_initial_white_space(sentence);
-	puts(sentence);
-	//printf("Average word length: %.1lf\n",
-	//		compute_average(sentence));
+	printf("Average word length: %.1lf\n",
+			compute_average(sentence));
 }
 
 void trim_initial_white_space(char *sentence)
@@ -39,6 +38,32 @@ void trim_initial_white_space(char *sentence)
 
 double compute_average(const char *sentence)
 {
+	//this is a   test
+	int letters = 0, words = 0;
+	char *p = sentence;
 
+	while (*p)
+	{
+		if (isdigit(*p))
+		{
+			*p++;
+			continue;
+		}
+		else if (*p == ' ')
+		{
+			if (*p + 1 == ' ')
+			{
+				*p++;
+				continue
+			}
+			words++;
+			*p++;
+			continue;
+		}
+		else
+			letters++;
+	}
+	words++;
+	return double(letters / words);
 }
 
