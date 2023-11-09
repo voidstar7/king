@@ -1,28 +1,44 @@
 #include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+#define MAX 50
 
 // calculates the average word length of a sentence to a single decimal point. Punctuation is considered part of a word.
 
+void trim_initial_white_space(char *sentence);
+double compute_average(const char *sentence);
+
 int main(void)
 {
-	int letters = 0, words = 0; 
-	float average;
-	char c;
+	char sentence[MAX];
 	printf("Enter a sentence: ");
-	while (1)
+	fgets(sentence, MAX, stdin);
+	trim_initial_white_space(sentence);
+	puts(sentence);
+	//printf("Average word length: %.1lf\n",
+	//		compute_average(sentence));
+}
+
+void trim_initial_white_space(char *sentence)
+{
+	char *p = sentence;
+	char trimmed[MAX];
+
+	while (*p)
 	{
-		c = getchar();
-		if (c == 10) // enter
+		if (*p == ' ')
 		{
-			words += 1;
-			break;
-		}
-		else if (c != 32 && c != 10) // any char except space or enter
-		{
-			letters += 1;
+			p++;
 			continue;
 		}
-		words += 1; // space
+		break;
 	}
-	printf("Average word length: %.1f\n", (float)letters / (float)words);
-	return 0;
+	strcpy(sentence, strcpy(trimmed, p));
 }
+
+double compute_average(const char *sentence)
+{
+
+}
+
