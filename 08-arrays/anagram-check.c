@@ -1,45 +1,55 @@
 #include <stdio.h>
-#include <ctype.h>
 #include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
 
-void read_word(int counts[26]);
-bool equal_array(int counts1[26], int counts2[26]);
+bool are_anagrams(const char *word1, const char *word2);
+void sort_letters(char *word);
 
 int main(void)
 {
-	int counts1[26] = { 0 };
-	int counts2[26] = { 0 };
+	char word1[32], word2[32];
 
 	printf("Enter first word: ");
-	read_word(counts1);
-
+	scanf("%s", word1);
 	printf("Enter second word: ");
-	read_word(counts2);
+	scanf("%s", word2);
 
-	if (equal_array(counts1, counts2))
+	if (are_anagrams(word1, word2))
 		printf("The words are anagrams\n");
 	else
 		printf("The words are not anagrams\n");
+
 	return 0;
 }
 
-void read_word(int counts[26])
+bool are_anagrams(const char *word1, const char *word2)
 {
-	char c = 0;
-	while (c != 10)
-	{
-		c = getchar();
-		if (!isalpha(c))
-			continue;
-		c = tolower(c);
-		counts[c - 'a'] += 1;
-	}
+	char *pw1 = (char *)word1,
+			 *pw2 = (char *)word2;
+
+	sort_letters(pw1);
+	sort_letters(pw2);
+
+	if (strcmp(pw1, pw2) == 0)
+		return true;
+	return false;
 }
 
-bool equal_array(int counts1[26], int counts2[26])
+void sort_letters(char *word)
 {
-	for (int i = 0; i < 26; i++)
-		if (counts1[i] != counts2[i])
-			return false;
-		return true;
+	int i, j, tmp,
+			len = strlen(word);
+
+	for (i = 0; i < len; i++)
+		word[i] = tolower(word[i]);
+
+	for (i = 0; i < len; i++)
+		for (j = i + 1; j < len; j++)
+			if (word[i] > word[j])
+			{
+				tmp = word[i];
+				word[i] = word[j];
+				word[j] = tmp; 
+			}
 }
