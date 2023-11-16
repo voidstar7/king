@@ -1,67 +1,64 @@
 #include <stdio.h>
+#include <string.h>
 #include <ctype.h>
-#include <stdbool.h>
+
+#define MAX_WORDS 30
+#define MAX_LEN 20
+
+char terminator;
+
+int process_sentence(char *input, char words[][MAX_LEN]);
 
 int main(void)
 {
-	char sentence[100];
-	char reverseSentence[100];
-	char i, j, input, terminator;
-	bool hasTerminator;
-	int length = 0, wordLength = 0, reverseIndex = 0, wordStart;
+	int count, i;
+	char words[MAX_WORDS][MAX_LEN];
+	char input[MAX_WORDS * MAX_LEN];
 
-	sentence[0] = '\x02'; // assign STX to first element
-	length++;
 	printf("Enter a sentence: ");
-	while (1)
-	{
-		input = getchar();
-		if (input == '\x0a')
-			break;
-		sentence[length] = input;
-		length++;
-	}
-	if (ispunct(sentence[length - 1]))
-	{
-		terminator = sentence[length - 1];
-		hasTerminator = true;
-	}
-	for (i = length; i >= 0; i--)
-	{
-		if (isalpha(sentence[i]) || ispunct(sentence[i])) 
-		{
-			wordLength++;
-			continue;
-		}
-		else if (sentence[i] == '\x20')
-		{
-			wordStart = i + 1;
-			for (j = 0; j < wordLength; j++)
-			{
-				reverseSentence[reverseIndex] = sentence[wordStart + j];
-				reverseIndex++;
-			}
-			reverseSentence[reverseIndex] = '\x20';
-			reverseIndex++;
-			wordLength = 0;
-		}
-		else if (sentence[i] == '\x02')
-		{
-			wordStart = i + 1;
-			for (j = 0; j < wordLength; j++)
-			{
-				reverseSentence[reverseIndex] = sentence[wordStart + j];
-				reverseIndex++;
-			}
-		}
-	}
-	printf("Reversal of sentence: ");
-	for (i = 0; i < length; i++)
-	{
-		if (reverseSentence[i] == terminator && reverseSentence[i + 1] == '\x20')
-			continue;
-		printf("%c", reverseSentence[i]);
-	}
-	printf("%c", terminator);
+	fgets(input, MAX_WORDS * MAX_LEN, stdin);
+	count = process_sentence(input, words);
+
+	if (terminator)
+		words[0][strlen(words[0])] = terminator;
+
+	for (i = count; i >= 0; i--)
+		printf("%s ", words[i]);
 	printf("\n");
+	return 0;
+}
+
+int process_sentence(char *input, char words[][MAX_LEN])
+{
+
+	if (ispunct(*(input + (strlen(input) - 2))))
+	{
+		terminator = *(input + (strlen(input) - 2));
+		*(input + (strlen(input) - 2)) = '\0';
+	}
+	else
+		*(input + (strlen(input) - 1)) = '\0';
+
+	if (terminator)
+		printf("terminator: %c\n", terminator);
+	for (int i = 0; i <= strlen(input); i++)
+		printf("%p - %d\n", &input[i], input[i]);
+
+	int i = 0;
+	char 
+		*p = input,
+		*q = input;
+	while (*p)
+	{
+		if (*p == ' ')
+		{
+			*p = '\0';
+			strcpy(words[i++], q);
+			q += ((p - q) + 1);
+			//printf("%p\n", &*q);
+		}
+		p++;
+	}
+	strcpy(words[i], q);
+	return i;
 }
