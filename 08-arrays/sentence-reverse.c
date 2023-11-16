@@ -30,6 +30,10 @@ int main(void)
 
 int process_sentence(char *input, char words[][MAX_LEN])
 {
+	int i = 0;
+	char 
+		*p = input,
+		*q = input;
 
 	if (ispunct(*(input + (strlen(input) - 2))))
 	{
@@ -39,10 +43,6 @@ int process_sentence(char *input, char words[][MAX_LEN])
 	else
 		*(input + (strlen(input) - 1)) = '\0';
 
-	int i = 0;
-	char 
-		*p = input,
-		*q = input;
 	while (*p)
 	{
 		if (*p == ' ')
