@@ -39,11 +39,6 @@ int process_sentence(char *input, char words[][MAX_LEN])
 	else
 		*(input + (strlen(input) - 1)) = '\0';
 
-	if (terminator)
-		printf("terminator: %c\n", terminator);
-	for (int i = 0; i <= strlen(input); i++)
-		printf("%p - %d\n", &input[i], input[i]);
-
 	int i = 0;
 	char 
 		*p = input,
@@ -55,7 +50,6 @@ int process_sentence(char *input, char words[][MAX_LEN])
 			*p = '\0';
 			strcpy(words[i++], q);
 			q += ((p - q) + 1);
-			//printf("%p\n", &*q);
 		}
 		p++;
 	}
