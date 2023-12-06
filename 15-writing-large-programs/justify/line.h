@@ -8,7 +8,7 @@ void clear_line(void);
 void add_word(const char *word);
 
 // returns the number of characters left in the current line
-void space_remaining(void);
+int space_remaining(void);
 
 // writes the current line with justification
 void write_line(void);
