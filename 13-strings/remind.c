@@ -5,6 +5,7 @@
 #define MSG_LEN 60
 	
 int read_line(char str[], int n);
+int get_day(char day_str[], char msg_str[]);
 
 int main(void)
 {
@@ -20,12 +21,14 @@ int main(void)
 			break;
 		}
 		 
-		printf("Enter day and reminder: ");
-		scanf("%2d", &day);
+		day = get_day(day_str, msg_str);
 		if (day == 0)
 			break;
-		sprintf(day_str, "%2d", day);
-		read_line(msg_str, MSG_LEN);
+		if (day < 0 || day > 31)
+		{
+			printf("Invalid day\n");
+			continue;
+		}
 
 		for (i = 0; i < num_remind; i++)
 			if (strcmp(day_str, reminders[i]) < 0)
@@ -56,3 +59,14 @@ int read_line(char str[], int n)
 	str[i] = '\0';
 	return i;
 }	
+
+int get_day(char day_str[], char msg_str[])
+{
+	int input;
+
+	printf("Enter day and reminder: ");
+	scanf("%d", &input);
+	sprintf(day_str, "%2d", input);
+	read_line(msg_str, MSG_LEN);
+	return input;
+}
