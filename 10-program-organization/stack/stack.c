@@ -2,8 +2,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#define DEBUG
 #define STACK_SIZE 100 
-//#define debug
 
 void stack_overflow(void);
 void make_empty(void);
@@ -27,7 +27,7 @@ int main(void)
 		if (input == '{' || input == '(')
 		{
 			push(input);	
-#if debug
+#ifdef DEBUG
 			printf("Pushed %c to stack (top is %d)\n", input, top);
 #endif
 		}
@@ -35,7 +35,7 @@ int main(void)
 		{
 			if (pop() == '{')
 			{
-#if debug
+#ifdef DEBUG
 				printf("Popped %c off the stack (top is %d)\n", contents[top], top);
 #endif
 				contents[top] = 0;
@@ -45,7 +45,7 @@ int main(void)
 		{
 			if (pop() == '(')
 			{
-#if debug
+#ifdef DEBUG
 				printf("Popped %c off the stack (top is %d)\n", contents[top], top);
 #endif
 				contents[top] = 0;
