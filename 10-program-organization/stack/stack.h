@@ -1,4 +1,7 @@
 #define STACK_SIZE 100 
+#define DEBUG
+#define DEBUG_PUSH(x, y) printf("Pushed %c to stack (top is %d)\n", (x), (y));
+#define DEBUG_POP(x, y) printf("Popped %c off the stack (top is %d)\n", x, y);
 
 void make_empty(void);
 bool is_empty(void);

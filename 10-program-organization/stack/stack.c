@@ -14,7 +14,7 @@ int main(void)
 		{
 			push(input);	
 #ifdef DEBUG
-			printf("Pushed %c to stack (top is %d)\n", input, top);
+			DEBUG_PUSH(input, top);
 #endif
 		}
 		else if (input == '}')
@@ -22,7 +22,7 @@ int main(void)
 			if (pop() == '{')
 			{
 #ifdef DEBUG
-				printf("Popped %c off the stack (top is %d)\n", contents[top], top);
+				DEBUG_POP(contents[top], top);
 #endif
 				contents[top] = 0;
 			}
@@ -32,7 +32,7 @@ int main(void)
 			if (pop() == '(')
 			{
 #ifdef DEBUG
-				printf("Popped %c off the stack (top is %d)\n", contents[top], top);
+				DEBUG_POP(contents[top], top);
 #endif
 				contents[top] = 0;
 			}
