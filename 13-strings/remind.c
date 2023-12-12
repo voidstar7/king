@@ -8,7 +8,6 @@
 int read_line(char str[], int n);
 int get_day_time(
 		char day_str[], 
-		char time_str[], 
 		char msg_str[],
 		int *hours,
 		int *minutes
@@ -19,9 +18,9 @@ int main(void)
 	char 
 		reminders[MAX_REMIND][MSG_LEN + 3], 
 		day_str[3], 
-		time_str[6],
 		msg_str[MSG_LEN + 1];
-	int day, hours, minutes, i, j, num_remind = 0,
+	int day, hours, minutes, i, j, 
+			num_remind = 0,
 			*ph = &hours,
 			*pm = &minutes;
 
@@ -32,8 +31,7 @@ int main(void)
 			printf("-- No space left --\n"); 
 			break;
 		}
-		 
-		day = get_day_time(day_str, time_str, msg_str, ph, pm);
+		day = get_day_time(day_str, msg_str, ph, pm);
 		if (day == 0)
 			break;
 		if ((day < 0 || day > 31) ||
@@ -43,14 +41,6 @@ int main(void)
 			printf("Invalid input\n");
 			continue;
 		}
-		// debug statements
-		printf("day = %d\n", day);
-		printf("hours = %d\n", hours);
-		printf("minutes = %d\n", minutes);
-		// how to persist the 0s with time input like 05:03?why are only the last 2 digits being saved in time_str?
-		printf("%s\n", time_str);
-		return 1;
-
 		for (i = 0; i < num_remind; i++)
 			if (strcmp(day_str, reminders[i]) < 0)
 				break;
@@ -83,7 +73,6 @@ int read_line(char str[], int n)
 
 int get_day_time(
 		char day_str[],
-		char time_str[], 
 		char msg_str[],
 		int *ph,
 		int *pm
@@ -92,21 +81,18 @@ int get_day_time(
 	int dayInput;
 
 	printf("Enter day, time (24hr format), and reminder: ");
-	scanf("%d %02d:%02d", &dayInput, ph, pm);
-
-	sprintf(day_str, "%2d", dayInput);
-
-	if (*ph < 10)
-		sprintf(time_str, "0%d:", *ph);
-	else
-		sprintf(time_str, "%2d:", *ph);
-
-	if (*pm < 10)
-		sprintf(time_str, "0%d", *pm);
-	else
-		sprintf(time_str, "%2d", *pm);
-
-	read_line(msg_str, MSG_LEN);
+	scanf("%d", &dayInput);
+	for (;;)
+	{
+		if (dayInput == 0)
+			return dayInput;
+		{
+			scanf("%02d:%02d", ph, pm);
+			sprintf(day_str, "%2d", dayInput);
+			read_line(msg_str, MSG_LEN);
+			break;
+		}
+	}
 	return dayInput;
 }
 
