@@ -20,6 +20,8 @@ int main(void)
 		day_str[3], 
 		hours_str[4],
 		minutes_str[3],
+		day_hours_minutes_str[9],
+		//15 23:30 msg goes here 
 		msg_str[MSG_LEN + 1];
 	int day, hours, minutes, i, j, 
 			num_remind = 0,
@@ -43,20 +45,33 @@ int main(void)
 			printf("Invalid input\n");
 			continue;
 		}
+		sprintf(hours_str, " %02d", hours);
+		sprintf(minutes_str, "%02d", minutes);
+		strcpy(day_hours_minutes_str, day_str);
+		strcat(day_hours_minutes_str, hours_str);
+		strcat(day_hours_minutes_str, ":");
+		strcat(day_hours_minutes_str, minutes_str);
+
+		/*
+		printf("%s\n", day_hours_minutes_str);
+		printf("day_str: %s\n", day_str);
+		printf("hours: %d\n", hours);
+		printf("minutes: %d\n", minutes);
+		printf("hours_str: %s\n", hours_str);
+		printf("minutes_str: %s\n", minutes_str);
+		*/
+
 		for (i = 0; i < num_remind; i++)
-			if (strcmp(day_str, reminders[i]) < 0)
+			if (strcmp(day_hours_minutes_str, reminders[i]) < 0)
 				break;
 		for (j = num_remind; j > i; j--)
 			strcpy(reminders[j], reminders[j - 1]);
 
-		// use a single sprintf()?
-		sprintf(hours_str, " %02d", hours);
-		sprintf(minutes_str, "%02d", minutes);
-		strcpy(reminders[i], day_str);
-		strcat(reminders[i], hours_str);
-		strcat(reminders[i], ":");
-		strcat(reminders[i], minutes_str);
+		strcpy(reminders[i], day_hours_minutes_str);
 		strcat(reminders[i], msg_str);
+		
+		//printf("%s\n", reminders[i]);
+		//return 1;
 
 		num_remind++;
 	}
