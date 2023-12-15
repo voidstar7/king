@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "readline.h"
 
 #define MAX_REMIND 50 
 #define MSG_LEN 60
 	
-int read_line(char str[], int n);
 int get_year_day_time(
 		char msg_str[],
 		int *year,
@@ -73,17 +73,6 @@ int main(void)
 	return 0;
 }
 
-int read_line(char str[], int n) 
-{
-	int ch, i = 0;
-	
-	while ((ch = getchar()) != '\n')
-		if (i < n)
-			str[i++] = ch;
-	str[i] = '\0';
-	return i;
-}	
-
 int get_year_day_time(
 		char msg_str[],
 		int *py,
@@ -100,4 +89,3 @@ int get_year_day_time(
 	read_line(msg_str, MSG_LEN);
 	return 0;
 }
-
