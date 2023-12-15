@@ -22,10 +22,9 @@ int main(void)
 		msg_str[MSG_LEN + 1],
 		year_str[5],
 		day_str[4], 
-		hours_str[4],
-		minutes_str[3],
+		hours_str[5],
+		minutes_str[4],
 		year_day_hours_minutes_str[16];
-		// 2023 15 23:30 msg goes here 
 
 	int year, day, hours, minutes, i, j, 
 			num_remind = 0,
@@ -45,7 +44,6 @@ int main(void)
 		if (get_year_day_time(msg_str, py, pd, ph, pm) == 1)
 			break;
 
-		//printf("year: %d\nday: %d\nhours: %d\nminutes: %d\n", year, day, hours, minutes);
 		if ((year < 0) ||
 				(day < 0 || day > 31) ||
 				(hours >= 24 || hours < 0) ||
@@ -55,20 +53,14 @@ int main(void)
 			continue;
 		}
 		sprintf(year_str, "%4d", year);
-		//printf("%d\n", year);
-		//return 1;
-
-		sprintf(day_str, " %02d", day);
-		sprintf(hours_str, " %02d", hours);
+		sprintf(day_str, "%2d", day);
+		sprintf(hours_str, "%02d", hours);
 		sprintf(minutes_str, "%02d", minutes);
 		strcpy(year_day_hours_minutes_str, year_str);
 		strcat(year_day_hours_minutes_str, day_str);
 		strcat(year_day_hours_minutes_str, hours_str);
 		strcat(year_day_hours_minutes_str, ":");
 		strcat(year_day_hours_minutes_str, minutes_str);
-
-		//printf("%s\n", year_day_hours_minutes_str);
-		//return 1;
 
 		for (i = 0; i < num_remind; i++)
 			if (strcmp(year_day_hours_minutes_str, reminders[i]) < 0)
@@ -79,32 +71,12 @@ int main(void)
 		strcpy(reminders[i], year_day_hours_minutes_str);
 		strcat(reminders[i], msg_str);
 		
-		//printf("%s\n", reminders[i]);
-		//return 1;
-
 		num_remind++;
 	}
 
-	printf("\nYear Day  Time Reminder\n");
+	printf("\nYear  Day Time Reminder\n");
 	for (i = 0; i < num_remind; i++) 
-		printf(" %s\n", reminders[i]);
-
-	/*
-		Enter year, day, time (24hr format), and reminder: 2023 15 12:50 test
-Enter year, day, time (24hr format), and reminder: 2023 15 12:49 test2
-Enter year, day, time (24hr format), and reminder: 2023 15 12:48 test3
-Enter year, day, time (24hr format), and reminder: 2023 15 11:51 test4
-Enter year, day, time (24hr format), and reminder: 2020 4 10:30 test5
-Enter year, day, time (24hr format), and reminder: 0
-
-Year Day  Time Reminder
- 2020 04 10:30 test5
- 2023 15 11:51 test4
- 2023 15 12:48 test3
- 2023 15 12:49 test2
- 2023 15 12:50 test
-*/
-
+		printf("%s\n", reminders[i]);
 	return 0;
 }
 
@@ -127,7 +99,7 @@ int get_year_day_time(
 		int *pm
 		)
 {
-		printf("Enter year, day, time (24hr format), and reminder: ");
+	printf("Enter year, day, time (24hr format), and reminder: ");
 	scanf("%d", py);
 	if (*py == 0)
 		return 1;
