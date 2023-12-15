@@ -20,7 +20,7 @@ int main(void)
 		input,
 		reminders[MAX_REMIND][MSG_LEN + 3], 
 		msg_str[MSG_LEN + 1],
-		year_day_hours_minutes_str[16];
+		year_day_hours_minutes_str[17];
 
 	int year, day, hours, minutes, i, j, 
 			num_remind = 0,
@@ -49,7 +49,7 @@ int main(void)
 			continue;
 		}
 
-		sprintf(year_day_hours_minutes_str, "%4d %2d %02d:%02d",
+		sprintf(year_day_hours_minutes_str, "%4d   %2d %02d:%02d ",
 				year,
 				day,
 				hours,
@@ -67,7 +67,7 @@ int main(void)
 		num_remind++;
 	}
 
-	printf("\nYear  Day Time Reminder\n");
+	printf("\nYear  Day  Time  Reminder\n");
 	for (i = 0; i < num_remind; i++) 
 		printf("%s\n", reminders[i]);
 	return 0;
