@@ -20,10 +20,6 @@ int main(void)
 		input,
 		reminders[MAX_REMIND][MSG_LEN + 3], 
 		msg_str[MSG_LEN + 1],
-		year_str[5],
-		day_str[4], 
-		hours_str[5],
-		minutes_str[4],
 		year_day_hours_minutes_str[16];
 
 	int year, day, hours, minutes, i, j, 
@@ -52,15 +48,12 @@ int main(void)
 			printf("Invalid input\n");
 			continue;
 		}
-		sprintf(year_str, "%4d", year);
-		sprintf(day_str, "%2d", day);
-		sprintf(hours_str, "%02d", hours);
-		sprintf(minutes_str, "%02d", minutes);
-		strcpy(year_day_hours_minutes_str, year_str);
-		strcat(year_day_hours_minutes_str, day_str);
-		strcat(year_day_hours_minutes_str, hours_str);
-		strcat(year_day_hours_minutes_str, ":");
-		strcat(year_day_hours_minutes_str, minutes_str);
+
+		sprintf(year_day_hours_minutes_str, "%4d %2d %02d:%02d",
+				year,
+				day,
+				hours,
+				minutes);
 
 		for (i = 0; i < num_remind; i++)
 			if (strcmp(year_day_hours_minutes_str, reminders[i]) < 0)
