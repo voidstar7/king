@@ -19,4 +19,7 @@ void flush_line(void);
 // counts the number of spaces in a line
 int count_spaces(char line[], int len);
 
+// copies original line into updated line with extra spaces to justify
+void copy_line(int extra_spaces);
+
 #endif

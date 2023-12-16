@@ -65,6 +65,64 @@ void write_line(void)
 	for (i = 0; i < MAX_LINE_LEN; i++)
 		putchar(updated_line[i]);
 	putchar('\n');
+
+	copy_line(extra_spaces);
+}
+
+void copy_line(int extra_spaces)
+{
+	char
+		*oldLeft = line,
+		*oldRight = line + (line_len - 1),
+		*newLeft = updated_line,
+		*newRight = updated_line + (MAX_LINE_LEN - 1);
+	printf("oldLeft = %c\n", *oldLeft);
+	printf("oldRight = %c\n", *oldRight);
+	printf("newLeft = %c\n", *newLeft);
+	printf("newRight = %c\n", *newRight);
+
+	while (newLeft <= newRight)
+	{
+		if (*oldLeft != ' ')
+		{
+			*newLeft++ = *oldLeft++;
+		}
+		else if (*oldLeft == ' ' && extra_spaces > 0)
+		{
+			*newLeft++ = ' ';
+			*newLeft++ = ' ';
+			oldLeft++;
+			extra_spaces--;
+		}
+		else
+		{
+			*newLeft++ = ' ';
+			oldLeft++;
+		}
+
+		if (*oldRight != ' ')
+		{
+			*newRight-- = *oldRight--;
+		}
+		else if (*oldRight == ' ' && extra_spaces > 0)
+		{
+			*newRight-- = ' ';
+			*newRight-- = ' ';
+			oldRight--;
+			extra_spaces--;
+		}
+		else
+		{
+			*newRight-- = ' ';
+			oldRight--;
+		}
+	}
+
+
+
+
+	puts(updated_line);
+
 }
 
 void flush_line(void)
