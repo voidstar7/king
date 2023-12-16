@@ -16,7 +16,8 @@ int main(void)
 		word_len = strlen(word);
 		if (word_len == 0)
 		{
-			flush_line();
+			write_line();
+			//flush_line();
 			return 0;
 		}
 		if (word_len > MAX_WORD_LEN)

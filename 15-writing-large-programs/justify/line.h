@@ -16,4 +16,7 @@ void write_line(void);
 // writes the current line without justification. If the line is empty, does nothing
 void flush_line(void);
 
+// counts the number of spaces in a line
+int count_spaces(char line[], int len);
+
 #endif

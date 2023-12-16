@@ -5,8 +5,10 @@
 #define MAX_LINE_LEN 60
 
 char line[MAX_LINE_LEN + 1];
+char updated_line[MAX_LINE_LEN + 1];
 int line_len = 0;
 int num_words = 0;
+int i;
 
 void clear_line(void)
 {
@@ -33,24 +35,35 @@ int space_remaining(void)
 	return MAX_LINE_LEN - line_len;
 }
 
+int count_spaces(char line[], int len)
+{
+	int spaces = 0;
+	while (*(line++))
+		if (*line == ' ')
+			spaces++;
+	return spaces;
+}
+
 void write_line(void)
 {
-	int extra_spaces, spaces_to_insert, i, j;
+	for (i = 0; i < MAX_LINE_LEN; i++)
+		updated_line[i] = '.';
+	updated_line[MAX_LINE_LEN] = '\0';
+
+	printf("\nline_len = %d\n", line_len);
+	printf("spaces = %d\n", count_spaces(line, line_len));
+	int extra_spaces, i, j;
 
 	extra_spaces = MAX_LINE_LEN - line_len;
+
+	printf("extra_spaces: %d\n", extra_spaces);
+
 	for (i = 0; i < line_len; i++)
-	{
-		if (line[i] != ' ')
-			putchar(line[i]);
-		else
-		{
-			spaces_to_insert = extra_spaces / (num_words - 1);
-			for (j = 1; j <= spaces_to_insert + 1; j++)
-				putchar(' ');
-			extra_spaces -= spaces_to_insert;
-			num_words--;
-		}
-	}
+		putchar(line[i]);
+	putchar('\n');
+
+	for (i = 0; i < MAX_LINE_LEN; i++)
+		putchar(updated_line[i]);
 	putchar('\n');
 }
 
