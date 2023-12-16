@@ -44,8 +44,13 @@ int count_spaces(char line[], int len)
 	return spaces;
 }
 
-void write_line(void)
+void write_line(bool lastLine)
 {
+	if (lastLine == true)
+	{
+		puts(line);
+		return;
+	}
 	for (i = 0; i < MAX_LINE_LEN; i++)
 		updated_line[i] = '.';
 	updated_line[MAX_LINE_LEN] = '\0';
@@ -117,12 +122,7 @@ void copy_line(int extra_spaces)
 			oldRight--;
 		}
 	}
-
-
-
-
 	puts(updated_line);
-
 }
 
 void flush_line(void)

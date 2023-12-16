@@ -1,6 +1,8 @@
 #ifndef LINE_H
 #define LINE_H
 
+#include <stdbool.h>
+
 // clears the current line
 void clear_line(void);
 
@@ -11,7 +13,7 @@ void add_word(const char *word);
 int space_remaining(void);
 
 // writes the current line with justification
-void write_line(void);
+void write_line(bool lastLine);
 
 // writes the current line without justification. If the line is empty, does nothing
 void flush_line(void);

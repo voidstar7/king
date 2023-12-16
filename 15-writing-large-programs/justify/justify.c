@@ -4,6 +4,8 @@
 
 #define MAX_WORD_LEN 20
 
+bool lastLine = false;
+
 int main(void)
 {
 	char word[MAX_WORD_LEN + 2];
@@ -16,7 +18,8 @@ int main(void)
 		word_len = strlen(word);
 		if (word_len == 0)
 		{
-			write_line();
+			lastLine = true;
+			write_line(lastLine);
 			//flush_line();
 			return 0;
 		}
@@ -24,7 +27,7 @@ int main(void)
 			word[MAX_WORD_LEN] = '*';
 		if (word_len + 1 > space_remaining())
 		{
-			write_line();
+			write_line(lastLine);
 			clear_line();
 		}
 		add_word(word);
