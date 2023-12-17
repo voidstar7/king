@@ -6,6 +6,8 @@
 
 bool lastLine = false;
 
+// usage: ./justify <quote where quote = the name of the file to be justified
+
 int main(void)
 {
 	char word[MAX_WORD_LEN + 2];
@@ -20,7 +22,6 @@ int main(void)
 		{
 			lastLine = true;
 			write_line(lastLine);
-			//flush_line();
 			return 0;
 		}
 		if (word_len > MAX_WORD_LEN)

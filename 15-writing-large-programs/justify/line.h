@@ -21,7 +21,7 @@ void flush_line(void);
 // counts the number of spaces in a line
 int count_spaces(char line[], int len);
 
-// copies original line into updated line with extra spaces to justify
+// copies original line into updated line. The updated line alternates between adding spaces at the beginning and the end of each line to evenly spread the gaps. 
 void copy_line(int extra_spaces);
 
 #endif

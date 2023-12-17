@@ -46,31 +46,18 @@ int count_spaces(char line[], int len)
 
 void write_line(bool lastLine)
 {
+	int extra_spaces, i, j;
+
 	if (lastLine == true)
 	{
 		puts(line);
 		return;
 	}
 	for (i = 0; i < MAX_LINE_LEN; i++)
-		updated_line[i] = '.';
+		updated_line[i] = ' ';
 	updated_line[MAX_LINE_LEN] = '\0';
 
-	printf("\nline_len = %d\n", line_len);
-	printf("spaces = %d\n", count_spaces(line, line_len));
-	int extra_spaces, i, j;
-
 	extra_spaces = MAX_LINE_LEN - line_len;
-
-	printf("extra_spaces: %d\n", extra_spaces);
-
-	for (i = 0; i < line_len; i++)
-		putchar(line[i]);
-	putchar('\n');
-
-	for (i = 0; i < MAX_LINE_LEN; i++)
-		putchar(updated_line[i]);
-	putchar('\n');
-
 	copy_line(extra_spaces);
 }
 
@@ -81,17 +68,11 @@ void copy_line(int extra_spaces)
 		*oldRight = line + (line_len - 1),
 		*newLeft = updated_line,
 		*newRight = updated_line + (MAX_LINE_LEN - 1);
-	printf("oldLeft = %c\n", *oldLeft);
-	printf("oldRight = %c\n", *oldRight);
-	printf("newLeft = %c\n", *newLeft);
-	printf("newRight = %c\n", *newRight);
 
 	while (newLeft <= newRight)
 	{
 		if (*oldLeft != ' ')
-		{
 			*newLeft++ = *oldLeft++;
-		}
 		else if (*oldLeft == ' ' && extra_spaces > 0)
 		{
 			*newLeft++ = ' ';
@@ -106,9 +87,7 @@ void copy_line(int extra_spaces)
 		}
 
 		if (*oldRight != ' ')
-		{
 			*newRight-- = *oldRight--;
-		}
 		else if (*oldRight == ' ' && extra_spaces > 0)
 		{
 			*newRight-- = ' ';
