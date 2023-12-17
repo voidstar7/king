@@ -2,8 +2,6 @@
 #include "line.h"
 #include "word.h"
 
-#define MAX_WORD_LEN 20
-
 bool lastLine = false;
 
 // usage: ./justify <quote where quote = the name of the file to be justified
@@ -24,8 +22,7 @@ int main(void)
 			write_line(lastLine);
 			return 0;
 		}
-		if (word_len > MAX_WORD_LEN)
-			word[MAX_WORD_LEN] = '*';
+
 		if (word_len + 1 > space_remaining())
 		{
 			write_line(lastLine);
