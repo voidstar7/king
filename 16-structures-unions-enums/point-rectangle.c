@@ -3,6 +3,8 @@
 struct point { int x, y; };
 struct rectangle { struct point upperLeft, lowerRight; };
 
+void operate(struct rectangle r);
+
 int main(void)
 {
 	struct point ul, lr;
@@ -18,4 +20,15 @@ int main(void)
 	printf("Lower left (y): ");
 	scanf("%d", &r.lowerRight.y);
 
+	operate(r);
+	return 0;
+}
+
+void operate(struct rectangle r)
+{
+	int width, height;
+
+	width = r.lowerRight.x - r.upperLeft.x;
+	height = r.upperLeft.y - r.lowerRight.y;
+	printf("Area: %d\n", width * height);
 }
