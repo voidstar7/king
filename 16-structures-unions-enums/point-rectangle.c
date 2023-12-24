@@ -27,8 +27,17 @@ int main(void)
 void operate(struct rectangle r)
 {
 	int width, height;
+	struct point center;
 
 	width = r.lowerRight.x - r.upperLeft.x;
 	height = r.upperLeft.y - r.lowerRight.y;
+
+	center.x = r.lowerRight.x - (width / 2);
+	center.y = r.upperLeft.y - (height / 2);
+
+	printf("Width: %d\n", width);
+	printf("Height: %d\n", height);
 	printf("Area: %d\n", width * height);
+	printf("Center: (%d, %d)\n", center.x, center.y);
+
 }
