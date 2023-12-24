@@ -88,63 +88,45 @@ struct color brighter(struct color c)
 {
 	/*
 	 return struct with all members / .7
-
 	 if all members == 0, return all members = 3
-
 	 if any member > 0 && < 3 replace member with 3 before division
-
 	 if division causes member to be > 255, member = 255
 	*/
-	
-	
 	for (;;)
 	{
+		if (c.red == 0 &&
+				c.green == 0 &&
+				c.blue == 0)
 		{
-			if 
-				(
-				 c.red == 0 &&
-				 c.green == 0 &&
-				 c.blue == 0
-				)
-				{
-					c.red = 3; 
-					c.green = 3; 
-					c.blue = 3;
-					break;
-				}
-
-			if
-				(
-				 c.red > 0 && c.red < 3 ||
-				 c.green > 0 && c.green < 3 ||
-				 c.blue > 0 && c.blue < 3
-				)
-				{
-					if (c.red > 0 && c.red < 3)
-						c.red = 3 / .7;
-					if (c.green > 0 && c.green < 3)
-						c.green = 3 / .7;
-					if (c.blue > 0 && c.blue < 3)
-						c.blue = 3 / .7;
-					break;
-				}
-
-			if 
-				(
-				 (c.red / .7) > 255 ||
-				 (c.green / .7) > 255 ||
-				 (c.blue / .07) > 255 
-				)
-				{
-					if ((c.red / .07) > 255)
-						c.red = 255;
-					if ((c.red / .07) > 255)
-						c.green = 255;
-					if ((c.red / .07) > 255)
-						c.blue = 255;
-					break;
-				}
+			c.red = 3; 
+			c.green = 3; 
+			c.blue = 3;
+			break;
 		}
+		else
+		{
+			if (c.red > 0 && c.red < 3)
+				c.red = 3 / .70;
+			else if ((c.red / .70) > 255)
+				c.red = 255;
+			else
+				c.red /= .70;
+
+			if (c.green > 0 && c.green < 3)
+				c.green = 3 / .70;
+			else if ((c.green / .70) > 255)
+				c.green = 255;
+			else
+				c.green /= .70;
+
+			if (c.blue > 0 && c.blue < 3)
+				c.blue = 3 / .70;
+			else if ((c.blue / .70) > 255)
+				c.blue = 255;
+			else
+				c.blue /= .70;
+		}
+		break;
 	}
 	return c;
 }
