@@ -12,6 +12,7 @@ struct color make_color(int red, int green, int blue);
 int get_red(struct color c);
 bool equal_color(struct color color1, struct color color2);
 struct color brighter(struct color c);
+struct color darker(struct color c);
 
 int main(void)
 {
@@ -20,7 +21,8 @@ int main(void)
 	struct color 
 		color1, 
 		color2,
-		color1bright;
+		color1bright,
+		color2dark;
 
 	printf("color1: Enter RGB value (R G B): ");
 	scanf(" %d %d %d", &r1, &g1, &b1);
@@ -34,7 +36,8 @@ int main(void)
 			color1.red,
 			color1.green,
 			color1.blue);
-	//printf("color1: red: %d\n", get_red(color1));
+
+	printf("color1: red: %d\n", get_red(color1));
 	
 	printf("color2: %d, %d, %d\n",
 			color2.red,
@@ -51,6 +54,12 @@ int main(void)
 			color1bright.red,
 			color1bright.green,
 			color1bright.blue);
+
+	color2dark = darker(color2);
+	printf("color2 (darker): %d, %d, %d\n",
+			color2dark.red,
+			color2dark.green,
+			color2dark.blue);
 
 	return 0;
 }
@@ -86,12 +95,6 @@ bool equal_color(struct color color1, struct color color2)
 
 struct color brighter(struct color c)
 {
-	/*
-	 return struct with all members / .7
-	 if all members == 0, return all members = 3
-	 if any member > 0 && < 3 replace member with 3 before division
-	 if division causes member to be > 255, member = 255
-	*/
 	for (;;)
 	{
 		if (c.red == 0 &&
@@ -128,5 +131,13 @@ struct color brighter(struct color c)
 		}
 		break;
 	}
+	return c;
+}
+
+struct color darker(struct color c)
+{
+	c.red *= .70;
+	c.green *= .70;
+	c.blue *= .70;
 	return c;
 }
