@@ -13,15 +13,10 @@ int main(void)
 	struct point ul, lr, isInRectangle;
 	struct rectangle r;
 
-	printf("Upper left (x): ");
-	scanf("%d", &r.upperLeft.x);
-	printf("Upper left (y): ");
-	scanf("%d", &r.upperLeft.y);
-
-	printf("Lower right (x): ");
-	scanf("%d", &r.lowerRight.x);
-	printf("Lower left (y): ");
-	scanf("%d", &r.lowerRight.y);
+	printf("Upper left (x, y): ");
+	scanf("%d, %d", &r.upperLeft.x, &r.upperLeft.y);
+	printf("Lower right (x, y): ");
+	scanf("%d, %d", &r.lowerRight.x, &r.lowerRight.y);
 
 	operate(r);
 	return 0;
@@ -41,14 +36,17 @@ void operate(struct rectangle r)
 
 	printf("Width: %d\nHeight: %d\nArea: %d\nCenter: (%d, %d)\n", width, height, width * height, center.x, center.y);
 
-	printf("Shift up/down (+/-): ");
-	scanf("%d", &upDown);
-	printf("Shift right/left (+/-): ");
-	scanf("%d", &rightLeft);
-
 	printf("Rectangle upper left: (%d, %d)\nRectangle lower right: (%d, %d)\n",
 			r.upperLeft.x, r.upperLeft.y,
 			r.lowerRight.x, r.lowerRight.y);
+
+	// positive = up, negative = down
+	printf("Shift up/down (+/-): ");
+	scanf("%d", &upDown);
+
+	// positive = right, negative = left
+	printf("Shift right/left (+/-): ");
+	scanf("%d", &rightLeft);
 
 	s = shift(r, upDown, rightLeft);
 	printf("Shifted rectangle upper left: (%d, %d)\nShifted rectangle lower right: (%d, %d)\n",
@@ -58,7 +56,7 @@ void operate(struct rectangle r)
 	printf("Enter coordinates (x, y): ");
 	scanf("%d, %d", &isInRectangle.x, &isInRectangle.y);
 	if (check_coordinates(s, isInRectangle))
-		printf("Coordinates are within the shifted rectangle\ns");
+		printf("Coordinates are within the shifted rectangle\n");
 	else
 		printf("Coordinates are not within the shifted rectangle\n");
 }
