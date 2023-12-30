@@ -159,11 +159,24 @@ void update(void)
  **********************************************************/
 void print(void)
 {
-  int i;
+  int i, j;
+	struct part tmp;
 
   printf("Part Number   Part Name                  "
          "Quantity on Hand\n");
+
   for (i = 0; i < num_parts; i++)
-    printf("%7d       %-25s%11d\n", inventory[i].number,
-           inventory[i].name, inventory[i].on_hand);
+		for (j = i + 1; j < num_parts; j++)
+			if (inventory[j].number < inventory[i].number)
+			{
+				tmp = inventory[i];
+				inventory[i] = inventory[j];
+				inventory[j] = tmp;
+			}
+
+  for (i = 0; i < num_parts; i++)
+    printf("%7d       %-25s%11d\n", 
+				inventory[i].number, 
+				inventory[i].name, 
+				inventory[i].on_hand);
 }
