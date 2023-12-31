@@ -16,19 +16,17 @@
 #define NAME_LEN 25
 #define MAX_PARTS 100
 
-struct part {
-  int number;
-  char name[NAME_LEN+1];
-  int on_hand;
-} inventory[MAX_PARTS];
+typedef struct {
+	int number;
+	char name[NAME_LEN+1];
+	int on_hand;
+} Part;
 
-int num_parts = 0;   /* number of parts currently stored */
-
-int find_part(int number);
-void insert(void);
-void search(void);
-void update(void);
-void print(void);
+int find_part(Part inventory[], int number, int num_parts);
+int insert(Part inventory[], int num_parts);
+void search(Part inventory[], int num_parts);
+void update(Part inventory[], int num_parts);
+void print(Part inventory[], int num_parts);
 
 /**********************************************************
  * main: Prompts the user to enter an operation code,     *
@@ -39,6 +37,8 @@ void print(void);
  **********************************************************/
 int main(void)
 {
+	Part inventory[MAX_PARTS];
+	int num_parts = 0;   /* number of parts currently stored */
   char code;
 
   for (;;) {
@@ -47,13 +47,13 @@ int main(void)
     while (getchar() != '\n')   /* skips to end of line */
       ;
     switch (code) {
-      case 'i': insert();
+      case 'i': num_parts += insert(inventory, num_parts);
                 break;
-      case 's': search();
+      case 's': search(inventory, num_parts);
                 break;
-      case 'u': update();
+      case 'u': update(inventory, num_parts);
                 break;
-      case 'p': print();
+      case 'p': print(inventory, num_parts);
                 break;
       case 'q': return 0;
       default:  printf("Illegal code\n");
@@ -67,7 +67,7 @@ int main(void)
  *            array. Returns the array index if the part  *
  *            number is found; otherwise, returns -1.     *
  **********************************************************/
-int find_part(int number)
+int find_part(Part inventory[], int number, int num_parts)
 {
   int i;
 
@@ -84,20 +84,22 @@ int find_part(int number)
  *         prematurely if the part already exists or the  *
  *         database is full.                              *
  **********************************************************/
-void insert(void)
+int insert(Part inventory[], int num_parts)
 {
   int part_number;
 
   if (num_parts == MAX_PARTS) {
     printf("Database is full; can't add more parts.\n");
-    return;
+    return 0;
   }
 
   printf("Enter part number: ");
   scanf("%d", &part_number);
-  if (find_part(part_number) >= 0) {
-    printf("Part already exists.\n");
-    return;
+	if (num_parts > 0) {
+		if (find_part(inventory, part_number, num_parts) >= 0) {
+			printf("Part already exists.\n");
+			return 0;
+		}
   }
 
   inventory[num_parts].number = part_number;
@@ -105,7 +107,7 @@ void insert(void)
   read_line(inventory[num_parts].name, NAME_LEN);
   printf("Enter quantity on hand: ");
   scanf("%d", &inventory[num_parts].on_hand);
-  num_parts++;
+	return 1;
 }
 
 /**********************************************************
@@ -114,13 +116,13 @@ void insert(void)
  *         exists, prints the name and quantity on hand;  *
  *         if not, prints an error message.               *
  **********************************************************/
-void search(void)
+void search(Part inventory[], int num_parts)
 {
   int i, number;
 
   printf("Enter part number: ");
   scanf("%d", &number);
-  i = find_part(number);
+  i = find_part(inventory, number, num_parts);
   if (i >= 0) {
     printf("Part name: %s\n", inventory[i].name);
     printf("Quantity on hand: %d\n", inventory[i].on_hand);
@@ -135,13 +137,13 @@ void search(void)
  *         change in quantity on hand and updates the     *
  *         database.                                      *
  **********************************************************/
-void update(void)
+void update(Part inventory[], int num_parts)
 {
   int i, number, change;
 
   printf("Enter part number: ");
   scanf("%d", &number);
-  i = find_part(number);
+  i = find_part(inventory, number, num_parts);
   if (i >= 0) {
     printf("Enter change in quantity on hand: ");
     scanf("%d", &change);
@@ -157,10 +159,10 @@ void update(void)
  *        order in which they were entered into the       *
  *        database.                                       *
  **********************************************************/
-void print(void)
+void print(Part inventory[], int num_parts)
 {
   int i, j;
-	struct part tmp;
+	Part tmp;
 
   printf("Part Number   Part Name                  "
          "Quantity on Hand\n");
