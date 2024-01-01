@@ -181,7 +181,6 @@ void print(Part inventory[], int num_parts)
 			}
 
   for (i = 0; i < num_parts; i++)
-    //printf("%7d       %-25s$%.2lf%11d\n", 
     printf("%-14d%-25s$%-19.2lf%-11d\n", 
 				inventory[i].number, 
 				inventory[i].name, 
