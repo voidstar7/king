@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define FLIGHTS 8 
+#define NUM_FLIGHTS 8 
 #define DEPART_HOUR departure[i] / 60 % 12 
 #define DEPART_MINUTES departure[i] % 60
 #define ARRIVE_HOUR arrival[i] / 60 % 12 
@@ -15,7 +15,7 @@ int main(void)
 	printf("Enter a time (24 hour format xx:xx): ");
 	scanf("%d:%d", &inputHour, &inputMinutes);
 	time = inputHour * 60 + inputMinutes;
-	int departure[FLIGHTS] = 
+	int departure[NUM_FLIGHTS] = 
 	{
 		8 * 60 + 0,
 		9 * 60 + 43,
@@ -26,7 +26,7 @@ int main(void)
 		19 * 60 + 0,
 		21 * 60 + 45
 	};
-	int arrival[FLIGHTS] =
+	int arrival[NUM_FLIGHTS] =
 	{
 		10 * 60 + 16,
 		11 * 60 + 52,
@@ -37,7 +37,7 @@ int main(void)
 		21 * 60 + 20,
 		23 * 60 + 58
 	};
-	for (i = 0; i < FLIGHTS; i++)
+	for (i = 0; i < NUM_FLIGHTS; i++)
 	{
 		if (time < departure[0])
 		{
@@ -46,7 +46,7 @@ int main(void)
 			arrivalMeridiem = 'a';
 			goto print;
 		}
-		else if (time > departure[FLIGHTS - 1])
+		else if (time > departure[NUM_FLIGHTS - 1])
 		{
 			printf("There are no more departures scheduled for today\n");
 			return 0;
