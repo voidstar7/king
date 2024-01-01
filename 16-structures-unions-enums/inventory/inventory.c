@@ -26,7 +26,8 @@ typedef struct {
 int find_part(Part inventory[], int number, int num_parts);
 int insert(Part inventory[], int num_parts);
 void search(Part inventory[], int num_parts);
-void update(Part inventory[], int num_parts);
+void update_quantity(Part inventory[], int num_parts);
+void update_price(Part inventory[], int num_parts);
 void print(Part inventory[], int num_parts);
 
 /**********************************************************
@@ -52,7 +53,9 @@ int main(void)
                 break;
       case 's': search(inventory, num_parts);
                 break;
-      case 'u': update(inventory, num_parts);
+      case 'u': update_quantity(inventory, num_parts);
+                break;
+      case '$': update_price(inventory, num_parts);
                 break;
       case 'p': print(inventory, num_parts);
                 break;
@@ -141,7 +144,7 @@ void search(Part inventory[], int num_parts)
  *         change in quantity on hand and updates the     *
  *         database.                                      *
  **********************************************************/
-void update(Part inventory[], int num_parts)
+void update_quantity(Part inventory[], int num_parts)
 {
   int i, number, change;
 
@@ -152,6 +155,21 @@ void update(Part inventory[], int num_parts)
     printf("Enter change in quantity on hand: ");
     scanf("%d", &change);
     inventory[i].on_hand += change;
+  } else
+    printf("Part not found.\n");
+}
+
+// updates the price of a part
+void update_price(Part inventory[], int num_parts)
+{
+  int i, number;
+
+  printf("Enter part number: ");
+  scanf("%d", &number);
+  i = find_part(inventory, number, num_parts);
+  if (i >= 0) {
+    printf("Enter new price: ");
+    scanf("%lf", &inventory[i].price);
   } else
     printf("Part not found.\n");
 }
