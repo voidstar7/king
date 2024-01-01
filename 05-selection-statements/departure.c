@@ -1,10 +1,16 @@
 #include <stdio.h>
 
 #define NUM_FLIGHTS 8 
-#define DEPART_HOUR departure[i] / 60 % 12 
-#define DEPART_MINUTES departure[i] % 60
-#define ARRIVE_HOUR arrival[i] / 60 % 12 
-#define ARRIVE_MINUTES arrival[i] % 60
+#define DEPART_HOUR schedule[i].departure / 60 % 12 
+#define DEPART_MINUTES schedule[i].departure % 60
+#define ARRIVE_HOUR schedule[i].arrival / 60 % 12 
+#define ARRIVE_MINUTES schedule[i].arrival % 60
+
+typedef struct
+{
+	int departure;
+	int arrival;
+} Flights;
 
 // prompts for a time in 24 hour format, then displays (in standard format) the departure and arrival times of the flight whose departure time is closest to the user input
 
@@ -12,50 +18,42 @@ int main(void)
 {
 	int inputHour, inputMinutes, time, i;
 	char departureMeridiem, arrivalMeridiem;
+
 	printf("Enter a time (24 hour format xx:xx): ");
 	scanf("%d:%d", &inputHour, &inputMinutes);
 	time = inputHour * 60 + inputMinutes;
-	int departure[NUM_FLIGHTS] = 
+
+	Flights schedule[NUM_FLIGHTS] =
 	{
-		8 * 60 + 0,
-		9 * 60 + 43,
-		11 * 60 + 19,
-		12 * 60 + 47,
-		14 * 60 + 0,
-		15 * 60 + 45,
-		19 * 60 + 0,
-		21 * 60 + 45
+			{8 * 60 + 0, 10 * 60 + 16},
+			{9 * 60 + 43, 11 * 60 + 52},
+			{11 * 60 + 19, 13 * 60 + 31},
+			{12 * 60 + 47, 15 * 60 + 0},
+			{14 * 60 + 0, 16 * 60 + 8},
+			{15 * 60 + 45, 17 * 60 + 55},
+			{19 * 60 + 0, 21 * 60 + 20},
+			{21 * 60 + 45, 23 * 60 + 58}
 	};
-	int arrival[NUM_FLIGHTS] =
-	{
-		10 * 60 + 16,
-		11 * 60 + 52,
-		13 * 60 + 31,
-		15 * 60 + 0,
-		16 * 60 + 8,
-		17 * 60 + 55,
-		21 * 60 + 20,
-		23 * 60 + 58
-	};
+
 	for (i = 0; i < NUM_FLIGHTS; i++)
 	{
-		if (time < departure[0])
+		if (time < schedule[0].departure)
 		{
 			i = 0;
 			departureMeridiem = 'a';
 			arrivalMeridiem = 'a';
 			goto print;
 		}
-		else if (time > departure[NUM_FLIGHTS - 1])
+		else if (time > schedule[NUM_FLIGHTS - 1].departure)
 		{
 			printf("There are no more departures scheduled for today\n");
 			return 0;
 		}
-		else if (time >= departure[i] && time <= departure[i + 1])
+		else if (time >= schedule[i].departure && time <= schedule[i + 1].departure)
 		{
-			departureMeridiem = (departure[i] < 720) ? 'a' : 'p';
-			arrivalMeridiem = (arrival[i] < 720) ? 'a' : 'p';
-			if (time - departure[i] < departure[i + 1] - time)
+			departureMeridiem = (schedule[i].departure < 720) ? 'a' : 'p';
+			arrivalMeridiem = (schedule[i].arrival < 720) ? 'a' : 'p';
+			if (time - schedule[i].departure < schedule[i + 1].departure - time)
 			{
 			print:
 				if (DEPART_HOUR == 0)
