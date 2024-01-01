@@ -20,6 +20,7 @@ typedef struct {
 	int number;
 	char name[NAME_LEN+1];
 	int on_hand;
+	double price;
 } Part;
 
 int find_part(Part inventory[], int number, int num_parts);
@@ -107,6 +108,8 @@ int insert(Part inventory[], int num_parts)
   read_line(inventory[num_parts].name, NAME_LEN);
   printf("Enter quantity on hand: ");
   scanf("%d", &inventory[num_parts].on_hand);
+  printf("Enter price: ");
+  scanf("%lf", &inventory[num_parts].price);
 	return 1;
 }
 
@@ -126,6 +129,7 @@ void search(Part inventory[], int num_parts)
   if (i >= 0) {
     printf("Part name: %s\n", inventory[i].name);
     printf("Quantity on hand: %d\n", inventory[i].on_hand);
+    printf("Price: $%lf\n", inventory[i].price);
   } else
     printf("Part not found.\n");
 }
@@ -164,7 +168,7 @@ void print(Part inventory[], int num_parts)
   int i, j;
 	Part tmp;
 
-  printf("Part Number   Part Name                  "
+  printf("Part Number   Part Name                Price         "
          "Quantity on Hand\n");
 
   for (i = 0; i < num_parts; i++)
@@ -177,8 +181,10 @@ void print(Part inventory[], int num_parts)
 			}
 
   for (i = 0; i < num_parts; i++)
-    printf("%7d       %-25s%11d\n", 
+    //printf("%7d       %-25s$%.2lf%11d\n", 
+    printf("%-14d%-25s$%-19.2lf%-11d\n", 
 				inventory[i].number, 
 				inventory[i].name, 
+				inventory[i].price, 
 				inventory[i].on_hand);
 }
