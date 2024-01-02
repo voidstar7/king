@@ -1,75 +1,42 @@
 #include <stdio.h>
 
+typedef struct { int day, month, year; } Date;
+
+int total_days(Date d);
+
 // prompts for calendar dates then returns the earliest one
-
-int main(void) 
+int main(void)
 {
-	int month, day, year, earlyMonth, earlyDay, earlyYear;
+	int count = 0;
+	Date earliest = { 0, 0, 0 }, input;
 
-	printf("Enter a date (mm/dd/yy) - 0/0/0 to stop: "); 
-	scanf("%d/%d/%d", &month, &day, &year);
+	for (;;count++)
+	{
+		printf("Enter a date (mm/dd/yy) - 0/0/0 to stop: "); 
+		scanf("%d/%d/%d", &input.month, &input.day, &input.year);
 
-	if (month > 12 || day > 31 || year < 0) 
-	{ 
-			printf("Invalid entry\n");
-			return 1;
+		if (total_days(input) == 0)
+			break;
+
+		if (count == 0 || total_days(input) < total_days(earliest))
+			earliest = input;
 	}
-	else if (month == 0 && day == 0 && year == 0) 
-	{ 
-		goto zeroInit;
-	}	
-	else 
-	{ 
-		earlyMonth = month;
-		earlyDay = day;
-		earlyYear = year;
-		while (1) 
-		{
-			printf("Enter a date (mm/dd/yy) - 0/0/0 to stop: "); 
-			scanf("%d/%d/%d", &month, &day, &year);
-			if (month > 12 || day > 31 || year < 0) 
-			{ 
-				printf("Invalid entry\n");
-				return 1;
-			}
-			else if (month == 0 && day == 0 && year == 0) 
-				break;
-			else 
-			{ 
-				if (year < earlyYear) 
-				{
-					earlyYear = year;
-					earlyMonth = month;
-					earlyDay = day;
-					continue;
-				}
-				else if (year == earlyYear) 
-				{ 
-					if (month < earlyMonth) 
-					{
-						earlyYear = year;
-						earlyMonth = month;
-						earlyDay = day;
-						continue;
-					}
-					else if (month == earlyMonth) 
-					{ 
-						if (day < earlyDay) 
-						{ 
-							earlyYear = year;
-							earlyMonth = month;
-							earlyDay = day;
-							continue;
-						}
-					}
-				}
-			}
-		}	
-	}	
-	printf("Earliest date: %d/%d/%d\n", earlyMonth, earlyDay, earlyYear);
+	printf("The earliest date is %d/%d/%d\n", earliest.month, earliest.day, earliest.year);
 	return 0;
+}
 
-zeroInit:
-	printf("Earliest date 0/0/0\n");
-	return 2;
+int total_days(Date d)
+{
+  int i, daysInYear = 0, daysInMonth[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+	if (d.day == 0 && d.month == 0 && d.year == 0)
+		return 0;
+
+	for (i = 0; i < d.month; i++)
+		daysInYear += daysInMonth[i];
+
+	if (d.day != daysInMonth[d.month])
+		daysInYear -= daysInMonth[d.month] - d.day;
+
+	return daysInYear += (d.year * 365);
 }
