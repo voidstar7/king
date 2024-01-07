@@ -10,10 +10,21 @@ struct node {
 struct node *add_to_list(struct node *head, int n);
 struct node *read_numbers(void);
 void print_list(struct node *head);
+struct node *delete_from_list(struct node *list, int n);
+
+int p = 0;
 
 int main(void) {
-	struct node *head = read_numbers();
-	print_list(head);
+	int del;
+
+	for (;;) {
+		struct node *head = read_numbers();
+		print_list(head);
+		printf("Which node value do you want to delete? ");
+			scanf("%d", &del);
+		delete_from_list(head, del);
+		print_list(head);
+	}
 }
 
 struct node *read_numbers(void) {
@@ -30,7 +41,6 @@ struct node *read_numbers(void) {
 }
 
 struct node *add_to_list(struct node *head, int n) {
-	static int p = 0;
 	struct node *newNode;
 
 	newNode = malloc(sizeof(struct node));
@@ -51,4 +61,22 @@ void print_list(struct node *head) {
 	for (p = head; p != NULL; p = p->next)
 		printf("[%d]%d ", p->position, p->value);
 	printf("\n");
+}
+
+struct node *delete_from_list(struct node *list, int n) {
+	struct node *cur, *prev;
+
+	for (cur = list, prev = NULL;
+			cur != NULL && cur->value != n;
+			prev = cur, cur = cur->next)
+		;
+
+	if (cur == NULL)
+		return list;
+	if (prev == NULL)
+		list = list->next;
+	else
+		prev->next = cur->next;
+	free(cur);
+	return list;
 }
