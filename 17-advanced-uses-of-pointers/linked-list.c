@@ -66,17 +66,18 @@ void print_list(struct node *head) {
 struct node *delete_from_list(struct node *list, int n) {
 	struct node *cur, *prev;
 
-	for (cur = list, prev = NULL;
+	for (
+			cur = list;
 			cur != NULL && cur->value != n;
-			prev = cur, cur = cur->next)
+			cur = cur->next)
 		;
 
 	if (cur == NULL)
 		return list;
-	if (prev == NULL)
+	if (cur + 1 == NULL)
 		list = list->next;
 	else
-		prev->next = cur->next;
+		(cur + 1)->next = cur->next;
 	free(cur);
 	return list;
 }
