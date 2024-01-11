@@ -13,25 +13,36 @@ int numNodes = 0;
 
 int main(void) {
 	struct node *head, *listItem;
-
-	// first node = head
-	head = listItem = create_node(listItem);
-	printf("%d %p\n", listItem->data, listItem);
-	printf("%d %p\n", head->data, head);
-
-	listItem = create_node(listItem);
-	printf("%d %p\n", listItem->data, listItem);
-	printf("%d %p\n", head->data, head);
-
-	listItem = create_node(listItem);
-	printf("%d %p\n", listItem->data, listItem);
-	printf("%d %p\n", head->data, head);
-
-	// last node = tail
-	listItem->next = NULL;
-
-	print_list(head);
+	char op;
+	
+	for (;;){
+		printf("(a) add item\n(p) print list\n(e) exit\n>>> ");
+		scanf(" %c", &op);
+		switch(op) {
+			case 'a': 
+				if (numNodes == 0)
+					head = listItem = create_node(listItem);
+				else
+					listItem = create_node(listItem);
+				break;
+			case 'p':
+				if (numNodes > 0){
+					listItem->next = NULL;
+					print_list(head);
+					printf("\n");
+				}
+				else
+					printf("List is empty\n\n");
+				break;
+			case 'e':
+				return 0;
+			default:
+				printf("Invalid input\n\n");
+				continue;
+		} 
+	}
 	free(listItem);
+	return 0;
 }
 
 struct node *create_node(struct node *listItem) {
