@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define FLUSH_INPUT	while ((c = getchar()) != '\n' && c != EOF);
+
 struct node {
 	int data;
 	struct node *next;
 };
 
-char get_operation(char *input);
 struct node *create_node(struct node *listItem);
 void print_list(struct node *head);
 
@@ -15,11 +16,12 @@ int numNodes = 0;
 
 int main(void) {
 	struct node *head, *listItem;
-	char *input, op;
+	char *input, op, c;
 	
 	for (;;) {
 		printf("(a) add item\n(p) print list\n(e) exit\n>>> ");
-		op = get_operation(fgets(input, 100, stdin));
+		scanf(" %c", &op);
+		FLUSH_INPUT
 		switch(op) {
 			case 'a': 
 				if (numNodes == 0)
@@ -45,10 +47,6 @@ int main(void) {
 	}
 	free(listItem);
 	return 0;
-}
-
-char get_operation(char *input) {
-	return input[0];
 }
 
 struct node *create_node(struct node *listItem) {
@@ -79,5 +77,3 @@ void print_list(struct node *head) {
 		printf("%d\n", p->data);
 	printf("%d\n", p->data);
 }
-
-
