@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define FLUSH_INPUT	while ((c = getchar()) != '\n' && c != EOF);
+#define FLUSH_INPUT	while ((c = getchar()) != '\n');
 
 struct node {
 	int data;
@@ -38,6 +38,8 @@ int main(void) {
 				else
 					printf("List is empty\n\n");
 				break;
+			case 'd':
+				//delete node
 			case 'e':
 				return 0;
 			default:
