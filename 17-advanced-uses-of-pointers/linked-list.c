@@ -11,15 +11,17 @@ struct node {
 
 struct node *create_node(struct node *listItem);
 void print_list(struct node *head);
+struct node *delete_node(struct node *head, int deleteValue);
 
 int numNodes = 0;
 
 int main(void) {
 	struct node *head, *listItem;
-	char *input, op, c;
+	char op, c;
+	int deleteValue;
 	
 	for (;;) {
-		printf("(a) add item\n(p) print list\n(e) exit\n>>> ");
+		printf("(a) add node\n(d) delete node\n(p) print list\n(e) exit\n>>> ");
 		scanf(" %c", &op);
 		FLUSH_INPUT
 		switch(op) {
@@ -39,7 +41,10 @@ int main(void) {
 					printf("List is empty\n\n");
 				break;
 			case 'd':
-				//delete node
+					printf("Enter node value to delete: ");
+					scanf(" %d", &deleteValue);
+					free(delete_node(head, deleteValue));
+					break;
 			case 'e':
 				return 0;
 			default:
@@ -76,6 +81,25 @@ void print_list(struct node *head) {
 	struct node *p;
 	
 	for (p = head; p->next != NULL; p = p->next)
-		printf("%d\n", p->data);
-	printf("%d\n", p->data);
+		printf("%p %d\n", p, p->data);
+	printf("%p %d\n", p, p->data);
+}
+
+// if there are two nodes with the same data, will delete the first one it encounters. Add a node ID to the struct
+// handle deletion when there are only two or one nodes left
+struct node *delete_node(struct node *head, int deleteValue) {
+	struct node *cur, *prev;
+	
+	for (cur = prev = head; 
+			 cur->next != NULL;
+			 prev = cur,
+			 cur = cur->next) {
+
+		if (cur->data == deleteValue) {
+			prev->next = cur->next;
+			numNodes--;
+			break;
+		}
+	}
+	return cur;
 }
