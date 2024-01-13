@@ -34,14 +34,12 @@ int main(void) {
 					listItem = create_node(listItem);
 				break;
 			case 'p':
-				if (numNodes > 0){
-					listItem->next = NULL;
+					if (numNodes > 0)
+						// listItem will always be the last node created = tail
+						listItem->next = NULL;
 					print_list(head);
 					printf("\n");
-				}
-				else
-					printf("List is empty\n\n");
-				break;
+					break;
 			case 'd':
 					printf("Enter node ID to delete: ");
 					scanf(" %d", &deleteId);
@@ -86,13 +84,17 @@ struct node *create_node(struct node *listItem) {
 void print_list(struct node *head) {
 	struct node *p;
 	
-	for (p = head; p->next != NULL; p = p->next)
+	if (numNodes > 0) {
+		printf("Number of nodes: %d\n", numNodes);
+		for (p = head; p->next != NULL; p = p->next)
+			printf("%p id:%d %d\n", p, p->id, p->data);
 		printf("%p id:%d %d\n", p, p->id, p->data);
-	printf("%p id:%d %d\n", p, p->id, p->data);
+	}
+	else
+		printf("List is empty\n");
 }
 
-// doesn't work if you delete the first node (head) or the last one. Need to track the tail?
-// handle deletion when there are only two or one nodes left
+// doesn't work if you delete the last one. Need to track the tail?
 struct node *delete_node(struct node *head, int deleteId) {
 	struct node *cur, *prev;
 	
