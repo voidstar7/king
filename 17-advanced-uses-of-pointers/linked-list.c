@@ -3,6 +3,7 @@
 #include <stdbool.h>
 
 #define FLUSH_INPUT	while ((c = getchar()) != '\n');
+#define PRINT_NODE printf("add: %p\ndata: %d\nid: %d \nnext: %p\n\n", p, p->data, p->id, p->next)
 
 struct node {
 	int data;
@@ -87,26 +88,29 @@ void print_list(struct node *head) {
 	struct node *p;
 	
 	if (numNodes > 0) {
-		printf("Number of nodes: %d\n", numNodes);
+		printf("Number of nodes: %d\n\n", numNodes);
 		// exits loop at 2nd to last node
 		for (p = head; p->next != NULL; p = p->next)
-			printf("%p id:%d %d\n", p, p->id, p->data);
-		printf("%p id:%d %d\n", p, p->id, p->data); // prints garbage if last node deleted
+			PRINT_NODE;
+		PRINT_NODE;
 	}
 	else
 		printf("List is empty\n");
 }
 
-// if you delete the last node (tail) while other nodes exist and print the list, there is a garbage value at the end of the list
 struct node *delete_node(struct node *head, int deleteId) {
 	struct node *cur, *prev;
 	
 	for (cur = prev = head; 
-			 cur->next != NULL;
+			 prev->next != NULL; // catches prev up to cur when cur reaches tail
 			 prev = cur,
 			 cur = cur->next) {
 
 		if (cur->id == deleteId) {
+			if (cur->next == NULL) {
+				prev->next = NULL;
+				break;
+			}
 			prev->next = cur->next;
 			break;
 		}
