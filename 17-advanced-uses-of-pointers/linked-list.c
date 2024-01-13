@@ -26,6 +26,7 @@ int main(void) {
 		printf("(a) add node\n(d) delete node\n(p) print list\n(e) exit\n>>> ");
 		scanf(" %c", &op);
 		FLUSH_INPUT
+		// invalid input isn't handled for each switch. No cancel op
 		switch(op) {
 			case 'a': 
 				if (numNodes == 0)
@@ -51,6 +52,7 @@ int main(void) {
 			case 'e':
 				return 0;
 			default:
+				// this will still add the valid input in the input string
 				printf("Invalid input\n\n");
 				continue;
 		} 
@@ -86,15 +88,16 @@ void print_list(struct node *head) {
 	
 	if (numNodes > 0) {
 		printf("Number of nodes: %d\n", numNodes);
+		// exits loop at 2nd to last node
 		for (p = head; p->next != NULL; p = p->next)
 			printf("%p id:%d %d\n", p, p->id, p->data);
-		printf("%p id:%d %d\n", p, p->id, p->data);
+		printf("%p id:%d %d\n", p, p->id, p->data); // prints garbage if last node deleted
 	}
 	else
 		printf("List is empty\n");
 }
 
-// if you delete the last node (tail) while other nodes exist and print the list, there is a garbage value at the end of the last
+// if you delete the last node (tail) while other nodes exist and print the list, there is a garbage value at the end of the list
 struct node *delete_node(struct node *head, int deleteId) {
 	struct node *cur, *prev;
 	
