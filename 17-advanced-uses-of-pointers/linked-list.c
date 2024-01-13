@@ -94,7 +94,7 @@ void print_list(struct node *head) {
 		printf("List is empty\n");
 }
 
-// doesn't work if you delete the last one. Need to track the tail?
+// if you delete the last node (tail) while other nodes exist and print the list, there is a garbage value at the end of the last
 struct node *delete_node(struct node *head, int deleteId) {
 	struct node *cur, *prev;
 	
@@ -105,9 +105,9 @@ struct node *delete_node(struct node *head, int deleteId) {
 
 		if (cur->id == deleteId) {
 			prev->next = cur->next;
-			numNodes--;
 			break;
 		}
 	}
+	numNodes--;
 	return cur;
 }
