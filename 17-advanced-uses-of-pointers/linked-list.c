@@ -18,7 +18,7 @@ int numNodes = 0;
 int nodeId = 100;
 
 int main(void) {
-	struct node *head, *listItem;
+	struct node *head, *listItem, *nodeToDelete;
 	char op, c;
 	int deleteId;
 	
@@ -45,7 +45,10 @@ int main(void) {
 			case 'd':
 					printf("Enter node ID to delete: ");
 					scanf(" %d", &deleteId);
-					free(delete_node(head, deleteId));
+					nodeToDelete = delete_node(head, deleteId);
+					if (nodeToDelete == head)
+						head = nodeToDelete->next;
+					free(nodeToDelete);
 					break;
 			case 'e':
 				return 0;
@@ -88,7 +91,7 @@ void print_list(struct node *head) {
 	printf("%p id:%d %d\n", p, p->id, p->data);
 }
 
-// doesn't work if you delete the first node (head) or the last one
+// doesn't work if you delete the first node (head) or the last one. Need to track the tail?
 // handle deletion when there are only two or one nodes left
 struct node *delete_node(struct node *head, int deleteId) {
 	struct node *cur, *prev;
