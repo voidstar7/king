@@ -43,6 +43,14 @@ int main(void)
 	int num_parts = 0;   /* number of parts currently stored */
   char code;
 
+	printf("Operation codes:\n"
+		 "  'i': Insert\n"
+		 "  's': Search\n"
+		 "  'u': Update Quantity\n"
+		 "  '$': Update Price\n"
+		 "  'p': Print\n"
+		 "  'q': Quit\n\n");
+
   for (;;) {
     printf("Enter operation code: ");
     scanf(" %c", &code);
