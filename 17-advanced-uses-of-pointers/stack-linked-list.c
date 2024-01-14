@@ -10,12 +10,9 @@ struct stackItem {
 	struct stackItem *next;
 };
 
-void make_empty(void);
-bool is_empty(void);
 struct stackItem *push(int input, struct stackItem *tail);
-int pop(void);
+struct stackItem *pop(struct stackItem *head, struct stackItem *tail);
 void print_stack(struct stackItem *head); 
-void stack_underflow(void); 
 
 int stackSize = 0;
 
@@ -37,10 +34,14 @@ int main(void) {
 				else
 					tail = push(input, tail);
 				break;
-		//	case 'o':
-		//		pop();
-		//		stack[top] = 0; 
-		//		break;
+			case 'o':
+				if (stackSize == 1) {
+					stackSize--;
+					free(head);
+				}
+				else
+					tail = pop(head, tail);
+				break;
 			case 't':
 				print_stack(head); 
 				break;
@@ -55,14 +56,6 @@ int main(void) {
 	return 0;
 }
 
-//void make_empty(void) {
-//	top = 0;
-//}
-
-//bool is_empty(void) {
-//	return top == 0;
-//}
-
 struct stackItem *push(int input, struct stackItem *tail) {
 	struct stackItem *newItem;
 
@@ -75,7 +68,6 @@ struct stackItem *push(int input, struct stackItem *tail) {
 	if (stackSize == 0)
 		newItem->next = NULL;
 	else {
-		// newItem becomes the new tail
 		tail->next = newItem; 
 		newItem->next = NULL;
 	}
@@ -83,25 +75,35 @@ struct stackItem *push(int input, struct stackItem *tail) {
 	return newItem;
 }
 
-/*
-int pop(void) {
-	if (is_empty()) {
-		stack_underflow();
-		return 0;
-	}
-	else
-		return stack[--top];
-}
-*/
+struct stackItem *pop(
+		struct stackItem *head,
+		struct stackItem *tail) {
+	struct stackItem *p, *q;
 
-void stack_underflow(void) {
-	printf("Stack underflow\n");
-	exit(1);
+	if (stackSize == 0) {
+		printf("Stack underflow\n");
+		exit(1);
+	}
+	for (p = head; p->next != tail; p = p->next)
+		q = p;
+	if (stackSize == 2)
+		head->next = NULL;
+	else {
+		q->next = p;
+		p->next = NULL;
+	}
+	free(tail);
+	stackSize--;
+	return p;
 }
 
 void print_stack(struct stackItem *head) {
 	struct stackItem *p;
 
+	if (stackSize == 0) {
+		printf("Stack is empty\n");
+		return;
+	}
 	for (p = head; p->next != NULL; p = p->next)
 		printf("%p %d\n", p, p->value);
 	printf("%p %d\n", p, p->value);
