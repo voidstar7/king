@@ -28,7 +28,7 @@ int insert(Part inventory[], int num_parts);
 void search(Part inventory[], int num_parts);
 void update_quantity(Part inventory[], int num_parts);
 void update_price(Part inventory[], int num_parts);
-void print(Part inventory[], int num_parts);
+void print(Part *pi, int num_parts);
 
 /**********************************************************
  * main: Prompts the user to enter an operation code,     *
@@ -39,7 +39,8 @@ void print(Part inventory[], int num_parts);
  **********************************************************/
 int main(void)
 {
-	Part inventory[MAX_PARTS];
+	Part inventory[MAX_PARTS], 
+			 *pi = inventory;
 	int num_parts = 0;   /* number of parts currently stored */
   char code;
 
@@ -65,7 +66,7 @@ int main(void)
                 break;
       case '$': update_price(inventory, num_parts);
                 break;
-      case 'p': print(inventory, num_parts);
+      case 'p': print(pi, num_parts);
                 break;
       case 'q': return 0;
       default:  printf("Illegal code\n");
@@ -183,33 +184,41 @@ void update_price(Part inventory[], int num_parts)
 }
 
 /**********************************************************
- * print: Prints a listing of all parts in the database,  *
+ * print: Prints a listing of all parts in the database,  
  *        showing the part number, part name, and         *
  *        quantity on hand. Parts are printed in the      *
  *        order in which they were entered into the       *
  *        database.                                       *
  **********************************************************/
-void print(Part inventory[], int num_parts)
+void print(Part *inventory, int num_parts)
 {
-  int i, j;
-	Part tmp;
+  int i, j, tmp;
+	Part *p, *q;
 
   printf("Part Number   Part Name                Price         "
          "Quantity on Hand\n");
 
-  for (i = 0; i < num_parts; i++)
-		for (j = i + 1; j < num_parts; j++)
-			if (inventory[j].number < inventory[i].number)
-			{
-				tmp = inventory[i];
-				inventory[i] = inventory[j];
-				inventory[j] = tmp;
+  for (
+			p = inventory;
+			p < inventory + num_parts; 
+			p++)
+		for (
+				q = p + 1; 
+				q < inventory + num_parts; 
+				q++)
+			if (q->number < p->number) {
+				tmp = p->number;
+				p->number = q->number;
+				q->number = tmp;
 			}
 
-  for (i = 0; i < num_parts; i++)
-    printf("%-14d%-25s$%-19.2lf%-11d\n", 
-				inventory[i].number, 
-				inventory[i].name, 
-				inventory[i].price, 
-				inventory[i].on_hand);
+  for (
+			p = inventory;
+			p < inventory + num_parts; 
+			p++)
+				printf("%-14d%-25s$%-19.2lf%-11d\n", 
+						p->number, 
+						p->name, 
+						p->price, 
+						p->on_hand);
 }
