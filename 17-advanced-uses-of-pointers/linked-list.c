@@ -14,6 +14,7 @@ struct node {
 struct node *create_node(struct node *listItem);
 void print_list(struct node *head);
 struct node *delete_node(struct node *head, int deleteId);
+int count_occurences(struct node *head, int n);
 
 int numNodes = 0;
 int nodeId = 100;
@@ -21,10 +22,10 @@ int nodeId = 100;
 int main(void) {
 	struct node *head, *listItem, *nodeToDelete;
 	char op, c;
-	int deleteId;
+	int deleteId, countValue;
 	
 	for (;;) {
-		printf("(a) add node\n(d) delete node\n(p) print list\n(e) exit\n>>> ");
+		printf("(a) add node\n(d) delete node\n(p) print list\n(c) count\n(e) exit\n>>> ");
 		scanf(" %c", &op);
 		FLUSH_INPUT
 		// invalid input isn't handled for each switch. No cancel op
@@ -49,6 +50,11 @@ int main(void) {
 					if (nodeToDelete == head)
 						head = nodeToDelete->next;
 					free(nodeToDelete);
+					break;
+			case 'c':
+					printf("Enter node value: ");
+					scanf("%d", &countValue);
+					printf("There are %d nodes with data value of %d\n\n", count_occurences(head, countValue), countValue);
 					break;
 			case 'e':
 				return 0;
@@ -117,4 +123,14 @@ struct node *delete_node(struct node *head, int deleteId) {
 	}
 	numNodes--;
 	return cur;
+}
+
+int count_occurences(struct node *head, int n) {
+	struct node *p;
+	int count;
+
+	for (p = head; p->next != NULL; p = p->next)
+		if (p->data == n)
+			count++;
+	return count;
 }
