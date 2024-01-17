@@ -15,17 +15,18 @@ struct node *create_node(struct node *listItem);
 void print_list(struct node *head);
 struct node *delete_node(struct node *head, int deleteId);
 int count_occurences(struct node *head, int n);
+struct node *find_last(struct node *head, int n);
 
 int numNodes = 0;
 int nodeId = 100;
 
 int main(void) {
-	struct node *head, *listItem, *nodeToDelete;
+	struct node *head, *listItem, *nodeToDelete, *last;
 	char op, c;
-	int deleteId, countValue;
+	int deleteId, value, lastId;
 	
 	for (;;) {
-		printf("(a) add node\n(d) delete node\n(p) print list\n(c) count\n(e) exit\n>>> ");
+		printf("(a) add node\n(d) delete node\n(p) print list\n(c) count\n(l) print last\n(e) exit\n>>> ");
 		scanf(" %c", &op);
 		FLUSH_INPUT
 		// invalid input isn't handled for each switch. No cancel op
@@ -53,8 +54,21 @@ int main(void) {
 					break;
 			case 'c':
 					printf("Enter node value: ");
-					scanf("%d", &countValue);
-					printf("There are %d nodes with data value of %d\n\n", count_occurences(head, countValue), countValue);
+					scanf("%d", &value);
+					printf("There are %d nodes with data value of %d\n\n", count_occurences(head, value), value);
+					break;
+			case 'l':
+					if (numNodes == 0) {
+						printf("List is empty\n\n");
+						break;
+					}
+					printf("Enter node value: ");
+					scanf("%d", &value);
+					last = find_last(head, value);
+					if (last)
+						printf("Last node with value %d is id:%d\n\n", value, last->id);
+					else
+						printf("There are no nodes with value %d\n\n", value); 
 					break;
 			case 'e':
 				return 0;
@@ -125,6 +139,7 @@ struct node *delete_node(struct node *head, int deleteId) {
 	return cur;
 }
 
+// add check in switch for empty list before function call to avoid seg fault
 int count_occurences(struct node *head, int n) {
 	struct node *p;
 	int count;
@@ -133,4 +148,18 @@ int count_occurences(struct node *head, int n) {
 		if (p->data == n)
 			count++;
 	return count;
+}
+
+struct node *find_last(struct node *head, int n) {
+	struct node *last, *p;
+	bool found = false;
+
+	for (p = head; p; p = p->next)
+		if (p->data == n) {
+			last = p;
+			found = true;
+		}
+	if (found)
+		return last;
+	return NULL;
 }
