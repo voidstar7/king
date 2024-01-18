@@ -13,7 +13,7 @@ struct node {
 
 struct node *create_node(struct node *listItem);
 void print_list(struct node *head);
-struct node *delete_node(struct node *head, int deleteId);
+void delete_node(struct node **head, int deleteId);
 int count_occurences(struct node *head, int n);
 struct node *find_last(struct node *head, int n);
 
@@ -47,10 +47,7 @@ int main(void) {
 			case 'd':
 					printf("Enter node ID to delete: ");
 					scanf(" %d", &deleteId);
-					nodeToDelete = delete_node(head, deleteId);
-					if (nodeToDelete == head)
-						head = nodeToDelete->next;
-					free(nodeToDelete);
+					delete_node(&head, deleteId);
 					break;
 			case 'c':
 					printf("Enter node value: ");
@@ -118,25 +115,32 @@ void print_list(struct node *head) {
 		printf("List is empty\n");
 }
 
-struct node *delete_node(struct node *head, int deleteId) {
-	struct node *cur, *prev;
+void delete_node(struct node **head, int deleteId) {
+	struct node *cur, *prev, *tmp;
 	
-	for (cur = prev = head; 
-			 prev->next != NULL; // catches prev up to cur when cur reaches tail
-			 prev = cur,
-			 cur = cur->next) {
+	if ((*head)->id == deleteId) {
+		tmp = *head;
+		*head = (*head)->next;
+		free(tmp);
+	}
+	else {
+		for (cur = prev = *head; 
+				prev->next != NULL; 
+				prev = cur,
+				cur = cur->next) {
 
-		if (cur->id == deleteId) {
-			if (cur->next == NULL) {
-				prev->next = NULL;
+			if (cur->id == deleteId) {
+				if (cur->next == NULL) {
+					prev->next = NULL;
+					break;
+				}
+				prev->next = cur->next;
 				break;
 			}
-			prev->next = cur->next;
-			break;
 		}
+		free(cur);
 	}
 	numNodes--;
-	return cur;
 }
 
 // add check in switch for empty list before function call to avoid seg fault
