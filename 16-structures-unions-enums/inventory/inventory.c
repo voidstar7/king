@@ -29,6 +29,7 @@ void search(Part inventory[], int num_parts);
 void update_quantity(Part inventory[], int num_parts);
 void update_price(Part inventory[], int num_parts);
 void print(Part *pi, int num_parts);
+int compare_parts(const void *p, const void *q); 
 
 /**********************************************************
  * main: Prompts the user to enter an operation code,     *
@@ -198,19 +199,10 @@ void print(Part *inventory, int num_parts)
   printf("Part Number   Part Name                Price         "
          "Quantity on Hand\n");
 
-  for (
-			p = inventory;
-			p < inventory + num_parts; 
-			p++)
-		for (
-				q = p + 1; 
-				q < inventory + num_parts; 
-				q++)
-			if (q->number < p->number) {
-				tmp = p->number;
-				p->number = q->number;
-				q->number = tmp;
-			}
+	// sort by part number (ascending)
+	qsort(inventory, num_parts, sizeof(Part), compare_parts);
+	
+	// sort by part number (descending)
 
   for (
 			p = inventory;
@@ -221,4 +213,15 @@ void print(Part *inventory, int num_parts)
 						p->name, 
 						p->price, 
 						p->on_hand);
+}
+
+int compare_parts(const void *p, const void *q) {
+	const Part *a = p, *b = q;
+
+	if (a->number < b->number)
+		return -1;
+	else if (a->number == b->number)
+		return 0;
+	else
+		return 1;
 }
