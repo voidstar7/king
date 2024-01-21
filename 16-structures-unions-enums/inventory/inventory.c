@@ -23,6 +23,8 @@ typedef struct {
 	double price;
 } Part;
 
+int sortOrder;
+
 int find_part(Part inventory[], int number, int num_parts);
 int insert(Part inventory[], int num_parts);
 void search(Part inventory[], int num_parts);
@@ -193,17 +195,13 @@ void update_price(Part inventory[], int num_parts)
  **********************************************************/
 void print(Part *inventory, int num_parts)
 {
-  int i, j, tmp;
-	Part *p, *q;
+	Part *p;
 
+	printf("(1) sort ascending\n(2) sort descending: ");
+	scanf("%d", &sortOrder);
+	qsort(inventory, num_parts, sizeof(Part), compare_parts);
   printf("Part Number   Part Name                Price         "
          "Quantity on Hand\n");
-
-	// sort by part number (ascending)
-	qsort(inventory, num_parts, sizeof(Part), compare_parts);
-	
-	// sort by part number (descending)
-
   for (
 			p = inventory;
 			p < inventory + num_parts; 
@@ -218,9 +216,15 @@ void print(Part *inventory, int num_parts)
 int compare_parts(const void *p, const void *q) {
 	const Part *a = p, *b = q;
 
-	if (a->number < b->number)
-		return -1;
-	else if (a->number == b->number)
+	if (sortOrder == 1) {
+		if (a->number < b->number)
+			return -1;
+	}
+	else {
+		if (a->number > b->number)
+			return -1;
+	}
+	if (a->number == b->number)
 		return 0;
 	else
 		return 1;
