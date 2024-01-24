@@ -11,10 +11,10 @@
 /* Maintains a parts database (array version) */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "readline.h"
 
 #define NAME_LEN 25
-#define MAX_PARTS 100
 
 typedef struct {
 	int number;
@@ -24,6 +24,7 @@ typedef struct {
 } Part;
 
 int sortOrder;
+int maxParts = 3;
 
 int find_part(Part inventory[], int number, int num_parts);
 int insert(Part inventory[], int num_parts);
@@ -42,9 +43,14 @@ int compare_parts(const void *p, const void *q);
  **********************************************************/
 int main(void)
 {
-	Part inventory[MAX_PARTS], 
-			 *pi = inventory;
-	int num_parts = 0;   /* number of parts currently stored */
+	Part *inventory = malloc(sizeof(Part) * maxParts);
+	if (inventory == NULL) {
+		printf("Error: could not initialize inventory\n");
+		free(inventory);
+		return 1;
+	}
+	Part *pi = inventory;
+	int num_parts = 0;
   char code;
 
 	printf("Operation codes:\n"
@@ -71,7 +77,8 @@ int main(void)
                 break;
       case 'p': print(pi, num_parts);
                 break;
-      case 'q': return 0;
+      case 'q': free(inventory);
+								return 0;
       default:  printf("Illegal code\n");
     }
     printf("\n");
@@ -104,11 +111,17 @@ int insert(Part inventory[], int num_parts)
 {
   int part_number;
 
-  if (num_parts == MAX_PARTS) {
-    printf("Database is full; can't add more parts.\n");
-    return 0;
+  if (num_parts == maxParts) {
+		Part *pi = inventory;
+    printf("Database is full (%d parts). Allocating space for 3 more parts\n\n", maxParts);
+		pi = realloc(inventory, sizeof(Part) * 3); 
+		if (inventory == NULL) {
+			printf("Error: failed to reallocate memory\n");
+			free(pi);
+			exit(1);
+		}
+		maxParts += 3;
   }
-
   printf("Enter part number: ");
   scanf("%d", &part_number);
 	if (num_parts > 0) {
@@ -117,7 +130,6 @@ int insert(Part inventory[], int num_parts)
 			return 0;
 		}
   }
-
   inventory[num_parts].number = part_number;
   printf("Enter part name: ");
   read_line(inventory[num_parts].name, NAME_LEN);
