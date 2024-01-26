@@ -16,8 +16,10 @@ int main(void) {
 		if (addWord(words, wordCount++) == 0)
 			break;
 	}
-	for (j = 0; j < wordCount; j++)
+	for (j = 0; j < wordCount; j++) {
 		printf("%s\n", words[j]);
+		free(words[j]);
+	}
 	return 0;
 }
 
@@ -29,7 +31,7 @@ int addWord(char *words[], int wordCount) {
   while (isspace(input = getchar()))
     ;
   while (input != '\n') {
-    if (i < MAX_LEN)
+    if (i < MAX_LEN && !(isspace(input)))
       buffer[i++] = input;
     input = getchar();
   }
@@ -40,6 +42,5 @@ int addWord(char *words[], int wordCount) {
 		exit(1);
 	}
 	strcpy(words[wordCount], buffer);
-	//free(words[wordCount]);
   return i;
 }
