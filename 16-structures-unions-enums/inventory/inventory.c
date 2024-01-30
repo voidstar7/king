@@ -112,13 +112,21 @@ int insert(Part inventory[], int num_parts)
   int part_number;
 
   if (num_parts == maxParts) {
-		Part *pi = inventory;
-    printf("Database is full (%d parts). Allocating space for 3 more parts\n\n", maxParts);
-		pi = realloc(inventory, sizeof(Part) * 3); 
+		Part *pi;
+    printf("Database is full (%d parts). Allocating space for 3 more parts\n", num_parts);
+		pi = realloc(inventory, sizeof(Part) * maxParts); 
 		if (inventory == NULL) {
 			printf("Error: failed to reallocate memory\n");
-			free(pi);
+			free(inventory);
 			exit(1);
+		}
+		if (pi == inventory)
+			printf("Reallocated memory (%p) has same address as initial block (%p)\n\n", pi, inventory);
+		else {
+			printf("Address of reallocated memory (%p) was moved by realloc(). Old location (%p)\n\n", pi, inventory);
+			inventory = pi;
+			printf("Updated inventory array pointer to point to %p\n", inventory);
+			// this breaks the program when printing after updating the pointer
 		}
 		maxParts += 3;
   }
@@ -218,11 +226,12 @@ void print(Part *inventory, int num_parts)
 			p = inventory;
 			p < inventory + num_parts; 
 			p++)
-				printf("%-14d%-25s$%-19.2lf%-11d\n", 
+				printf("%-14d%-25s$%-19.2lf%-11d %p\n", 
 						p->number, 
 						p->name, 
 						p->price, 
-						p->on_hand);
+						p->on_hand,
+						p);
 }
 
 int compare_parts(const void *p, const void *q) {
