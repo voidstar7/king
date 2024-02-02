@@ -14,7 +14,6 @@
 #include <stdlib.h>
 #include "readline.h"
 
-#define debug
 #define NAME_LEN 25
 
 typedef struct {
