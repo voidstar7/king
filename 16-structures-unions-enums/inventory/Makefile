@@ -1,12 +1,13 @@
-inventory: inventory.o readline.o
-	-gcc -o inventory inventory.o readline.o
+CFLAGS = -Wall -g
 
-inventory.o: inventory.c readline.o readline.h 
-	-gcc -c inventory.c
+inventory: inventory.o readline.o
+	cc -o inventory inventory.o readline.o
+
+inventory.o: inventory.c readline.h
+	cc $(CFLAGS) -c inventory.c
 
 readline.o: readline.c readline.h
-	-gcc -c readline.c
+	cc $(CFLAGS) -c readline.c
 
 clean: 
 	rm -f inventory *.o
-
