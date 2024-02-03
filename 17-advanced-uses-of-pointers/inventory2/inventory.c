@@ -30,6 +30,7 @@ void insert(void);
 void search(void);
 void update(void);
 void print(void);
+void delete(void);
 
 /**********************************************************
  * main: Prompts the user to enter an operation code,     *
@@ -54,6 +55,8 @@ int main(void)
                 break;
       case 'u': update();
                 break;
+			case 'd': delete();
+								break;
       case 'p': print();
                 break;
       case 'q': return 0;
@@ -182,6 +185,35 @@ void print(void)
   printf("Part Number   Part Name                  "
          "Quantity on Hand\n");
   for (p = inventory; p != NULL; p = p->next)
-    printf("%7d       %-25s%11d\n", p->number, p->name,
-           p->on_hand);
+    printf("%7d       %-25s%11d          %p\n", p->number, p->name,
+           p->on_hand, p);
+}
+
+void delete(void)
+{
+	struct part *cur, *prev, *tmp;
+	int n;
+
+	printf("Enter a part number to delete: ");
+	scanf("%d", &n);
+	if (!(tmp = find_part(n))) {
+		printf("Part not found");
+		return;
+	}
+
+	for (
+			cur = prev = inventory;
+			cur->number != n;
+			prev = cur, cur = cur->next)
+		;
+
+		if (cur == inventory) // first
+			inventory = cur->next;
+		else if (cur->next == NULL) // last
+			prev->next = NULL;
+		else // middle
+			prev->next = cur->next;
+
+	free(cur);
+	return;
 }
