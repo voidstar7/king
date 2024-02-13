@@ -5,74 +5,37 @@
 #define MAX_LEN 20
 
 int main(void) {
-	int numWords = 0, bytes = 0, len;
-	char **words, **tmp, buffer[MAX_LEN + 1];
+	char **words, **tmp, buffer[MAX_LEN];
+	int numWords = 0, i;
 
-	// 1
-	printf("Enter word: ");
-	fgets(buffer, MAX_LEN + 1, stdin);
-	len = strlen(buffer);
-	buffer[len] = '\0';
-	*words = malloc(len + 1);
-	if (*words == NULL) {
+	words = malloc(sizeof(char *));
+	if (words == NULL) {
 		printf("Could not allocate memory\n");
 		return 1;
 	}
-	strcpy(*words + (numWords++), buffer);
-	bytes += len + 1;
-	printf("%s", *words);
-	printf("string array is %dB\n", bytes);
-
-	// 2
-	printf("Enter word: ");
-	fgets(buffer, MAX_LEN + 1, stdin);
-	len = strlen(buffer);
-	buffer[len] = '\0';
-	*tmp = realloc(*words, bytes + (len + 1));
-	if (*tmp == NULL) {
-		printf("Failed to reallocate memory\n");
-		exit(1);
+	for (;;) {
+		printf("Enter word: ");
+		fgets(buffer, MAX_LEN, stdin);
+		if (buffer[0] == '\n')
+			break;
+		if (numWords > 0) {
+			tmp = realloc(words, sizeof(char *) * (numWords + 1));
+			if (tmp == NULL) {
+				printf("Could not reallocate memory\n");
+				return 1;
+			}
+			if (tmp != words) {
+				printf("original %p doesn't match new %p\n", words, tmp);
+				words = tmp;
+			}
+		}
+		words[numWords] = malloc(strlen(buffer));
+		strcpy(words[numWords], buffer);
+		numWords++;
+		for (i = 0; i < numWords; i++)
+			printf("%p\n", words[i]);
 	}
-	if (*tmp != *words)
-		*words = *tmp;
-	strcpy(*words + (numWords++), buffer);
-	bytes += len + 1;
-	printf("%s", *words + 1);
-	printf("string array is %dB\n", bytes);
-
-	// 3
-	printf("Enter word: ");
-	fgets(buffer, MAX_LEN + 1, stdin);
-	len = strlen(buffer);
-	buffer[len] = '\0';
-	*tmp = realloc(*words, bytes + (len + 1));
-	if (*tmp == NULL) {
-		printf("Failed to reallocate memory\n");
-		exit(1);
-	}
-	if (*tmp != *words)
-		*words = *tmp;
-	strcpy(*words + (numWords++), buffer);
-	bytes += len + 1;
-	printf("%s", *words + 2);
-	printf("string array is %dB\n", bytes);
-	
-	// 4
-	printf("Enter word: ");
-	fgets(buffer, MAX_LEN + 1, stdin);
-	len = strlen(buffer);
-	buffer[len] = '\0';
-	*tmp = realloc(*words, bytes + (len + 1));
-	if (*tmp == NULL) {
-		printf("Failed to reallocate memory\n");
-		exit(1);
-	}
-	if (*tmp != *words)
-		*words = *tmp;
-	strcpy(*words + (numWords++), buffer);
-	bytes += len + 1;
-	printf("%s", *words + 3);
-	printf("string array is %dB\n", bytes);
+	for (i = 0; i < numWords; i++)
+		printf("%s", words[i]);
+	return 0;
 }
-
-
