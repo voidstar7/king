@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #define MAX_LEN 20
+#define debug
 
 int main(void) {
 	char **words, **tmp, buffer[MAX_LEN];
@@ -25,15 +26,20 @@ int main(void) {
 				return 1;
 			}
 			if (tmp != words) {
-				printf("original %p doesn't match new %p\n", words, tmp);
+#ifdef debug
+				printf("realloc block moved\nold %p\nnew %p\n", 
+						words, tmp);
+#endif
 				words = tmp;
 			}
 		}
 		words[numWords] = malloc(strlen(buffer));
 		strcpy(words[numWords], buffer);
 		numWords++;
+#ifdef debug
 		for (i = 0; i < numWords; i++)
-			printf("%p\n", words[i]);
+			printf("%p %s", &words[i], words[i]);
+#endif
 	}
 	for (i = 0; i < numWords; i++)
 		printf("%s", words[i]);
