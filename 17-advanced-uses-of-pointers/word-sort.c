@@ -5,8 +5,10 @@
 #define MAX_LEN 20
 #define debug
 
+void readWord(char *buffer);
+
 int main(void) {
-	char **words, **tmp, buffer[MAX_LEN];
+	char **words, **tmp, buffer[MAX_LEN], c;
 	int numWords = 0, i;
 
 	words = malloc(sizeof(char *));
@@ -15,8 +17,8 @@ int main(void) {
 		return 1;
 	}
 	for (;;) {
-		printf("Enter word: ");
-		fgets(buffer, MAX_LEN, stdin);
+		readWord(buffer);
+		fflush(stdin); // this works, but behavior is undefined and now the break statement doesn't work
 		if (buffer[0] == '\n')
 			break;
 		if (numWords > 0) {
@@ -38,10 +40,20 @@ int main(void) {
 		numWords++;
 #ifdef debug
 		for (i = 0; i < numWords; i++)
-			printf("%p %s", &words[i], words[i]);
+			printf("%p %s\n", &words[i], words[i]);
 #endif
 	}
 	for (i = 0; i < numWords; i++)
-		printf("%s", words[i]);
+		printf("%s\n", words[i]);
 	return 0;
+}
+
+void readWord(char *buffer) {
+	int input;
+	int length = 0;
+
+	printf("Enter word: ");
+	while (length < MAX_LEN && (char)(input = getchar()) != '\n') 
+		buffer[length++] = input;
+	buffer[length] = '\0';
 }
