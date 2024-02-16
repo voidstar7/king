@@ -5,7 +5,7 @@
 #define MAX_LEN 20
 #define debug
 
-void readWord(char *buffer);
+void readWord(char *buffer, char **words, int numWords);
 
 int main(void) {
 	char **words, **tmp, buffer[MAX_LEN], c;
@@ -17,8 +17,8 @@ int main(void) {
 		return 1;
 	}
 	for (;;) {
-		readWord(buffer);
-		fflush(stdin); // this works, but behavior is undefined and now the break statement doesn't work
+		readWord(buffer, words, numWords);
+		fflush(stdin); // this is undefined and apparently very bad to use
 		if (buffer[0] == '\n')
 			break;
 		if (numWords > 0) {
@@ -43,17 +43,19 @@ int main(void) {
 			printf("%p %s\n", &words[i], words[i]);
 #endif
 	}
-	for (i = 0; i < numWords; i++)
-		printf("%s\n", words[i]);
-	return 0;
 }
 
-void readWord(char *buffer) {
-	int input;
-	int length = 0;
+void readWord(char *buffer, char **words, int numWords) {
+	int input, i, length = 0;
 
 	printf("Enter word: ");
 	while (length < MAX_LEN && (char)(input = getchar()) != '\n') 
 		buffer[length++] = input;
+	printf("length %d\n", length);
 	buffer[length] = '\0';
+	if (length == 0) {
+	for (i = 0; i < numWords; i++)
+		printf("%s\n", words[i]);
+	exit(1);
+	}
 }
