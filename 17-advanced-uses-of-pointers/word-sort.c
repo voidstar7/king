@@ -6,6 +6,7 @@
 #define debug
 
 void readWord(char *buffer, char **words, int numWords);
+int compareWords(const void *p, const void *q);
 
 int main(void) {
 	char **words, **tmp, buffer[MAX_LEN], c;
@@ -51,11 +52,30 @@ void readWord(char *buffer, char **words, int numWords) {
 	printf("Enter word: ");
 	while (length < MAX_LEN && (char)(input = getchar()) != '\n') 
 		buffer[length++] = input;
+#ifdef debug
 	printf("length %d\n", length);
+#endif
 	buffer[length] = '\0';
 	if (length == 0) {
+	qsort(words, numWords, sizeof(words[0]), compareWords);
 	for (i = 0; i < numWords; i++)
 		printf("%s\n", words[i]);
 	exit(1);
 	}
+}
+
+int compareWords(const void *p, const void *q) {
+	// parameters are void pointers, so it's necessary to cast these to pointers to strings and dereference them before the comparison
+	const char 
+		**x = (const char **)p, 
+		**y = (const char **)q;
+	int result = strcmp(*x, *y);
+
+	// can simplify this and just return result when comparing strings, but will keep this here as a reminder of how the qsort() comparison function works
+	if (result < 0)
+		return -1;
+	else if (result > 0)
+		return 1;
+	else
+		return 0;
 }
