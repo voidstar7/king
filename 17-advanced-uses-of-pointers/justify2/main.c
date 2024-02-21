@@ -15,7 +15,7 @@ int getWord(char *buffer);
 void createNode(struct node *new, char *buffer);
 
 int main(void) {
-	char buffer[MAX_WORD_LEN];
+	char buffer[MAX_WORD_LEN + 1];
 	struct node *newNode;
 
 	printf("Enter paragraph: ");
@@ -37,7 +37,7 @@ int getWord(char *buffer) {
 
 	while ((c = getchar()) == ' ' || c == '\t')
 		;
-	while (c != '\n') {
+	while (c != '\n' && wordSize < MAX_WORD_LEN) {
 		buffer[wordSize++] = c;
 		if (c == ' ')
 			break;
