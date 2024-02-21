@@ -11,7 +11,7 @@ struct node {
 	struct word *next;
 };
 
-void getWord(char *buffer);
+int getWord(char *buffer);
 void createNode(struct node *new, char *buffer);
 
 int main(void) {
@@ -19,17 +19,19 @@ int main(void) {
 	struct node *newNode;
 
 	printf("Enter paragraph: ");
-	getWord(buffer);
-	newNode = malloc(sizeof(struct node));
-	if (newNode == NULL) {
-		printf("Could not allocate memory for new node pointer\n");
-		return 1;
+	while (getWord(buffer) != EOF) {
+		newNode = malloc(sizeof(struct node));
+		if (newNode == NULL) {
+			printf("Could not allocate memory for new node pointer\n");
+			return 1;
+		}
+		createNode(newNode, buffer);
+		printf("%p %s", newNode, newNode->letters);
+		return 0;
 	}
-	createNode(newNode, buffer);
-	printf("%p %s", newNode, newNode->letters);
 }
 
-void getWord(char *buffer) {
+int getWord(char *buffer) {
 	int wordSize = 0;
 	char c;
 
@@ -42,6 +44,7 @@ void getWord(char *buffer) {
 		c = getchar();
 	}
 	buffer[wordSize++] = '\0';
+	return c;
 }
 
 void createNode(struct node *new, char *buffer) {
