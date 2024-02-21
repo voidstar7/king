@@ -11,12 +11,27 @@ struct node {
 	struct word *next;
 };
 
+void getWord(char *buffer);
 void createNode(struct node *new, char *buffer);
 
 int main(void) {
-	int wordSize = 0;
-	char buffer[MAX_WORD_LEN], c;
+	char buffer[MAX_WORD_LEN];
 	struct node *newNode;
+
+	printf("Enter paragraph: ");
+	getWord(buffer);
+	newNode = malloc(sizeof(struct node));
+	if (newNode == NULL) {
+		printf("Could not allocate memory for new node pointer\n");
+		return 1;
+	}
+	createNode(newNode, buffer);
+	printf("%p %s", newNode, newNode->letters);
+}
+
+void getWord(char *buffer) {
+	int wordSize = 0;
+	char c;
 
 	while ((c = getchar()) == ' ' || c == '\t')
 		;
@@ -27,13 +42,6 @@ int main(void) {
 		c = getchar();
 	}
 	buffer[wordSize++] = '\0';
-	newNode = malloc(sizeof(struct node));
-	if (newNode == NULL) {
-		printf("Could not allocate memory for new node pointer\n");
-		return 1;
-	}
-	createNode(newNode, buffer);
-	printf("%p %s", newNode, newNode->letters);
 }
 
 void createNode(struct node *new, char *buffer) {
