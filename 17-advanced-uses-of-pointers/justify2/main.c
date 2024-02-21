@@ -14,19 +14,19 @@ struct node {
 void createNode(struct node *new, char *buffer);
 
 int main(void) {
-	int count = 0;
+	int wordSize = 0;
 	char buffer[MAX_WORD_LEN], c;
 	struct node *newNode;
 
 	while ((c = getchar()) == ' ' || c == '\t')
 		;
 	while (c != '\n') {
-		buffer[count++] = c;
+		buffer[wordSize++] = c;
 		if (c == ' ')
 			break;
 		c = getchar();
 	}
-	buffer[count++] = '\0';
+	buffer[wordSize++] = '\0';
 	newNode = malloc(sizeof(struct node));
 	if (newNode == NULL) {
 		printf("Could not allocate memory for new node pointer\n");
