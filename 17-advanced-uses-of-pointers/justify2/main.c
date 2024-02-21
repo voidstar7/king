@@ -11,7 +11,7 @@ struct node {
 	struct word *next;
 };
 
-struct node *createNode(char *buffer);
+void createNode(struct node *new, char *buffer);
 
 int main(void) {
 	int count = 0;
@@ -27,28 +27,24 @@ int main(void) {
 		c = getchar();
 	}
 	buffer[count++] = '\0';
-	// should i allocate newNode memory here and pass a pointer to newNode to createNode() probably should do it here right?
-	newNode = createNode(buffer);
-	printf("%s", newNode->letters);
+	newNode = malloc(sizeof(struct node));
+	if (newNode == NULL) {
+		printf("Could not allocate memory for new node pointer\n");
+		return 1;
+	}
+	createNode(newNode, buffer);
+	printf("%p %s", newNode, newNode->letters);
 }
 
-struct node *createNode(char *buffer) {
-	struct node *word;
+void createNode(struct node *new, char *buffer) {
 	int wordLength = strlen(buffer);
 
-	// or do i allocate the memory here?
-	word = malloc(sizeof(struct node));
-	if (word == NULL) {
-		printf("Could not allocate memory for new node\n");
-		exit(1);
-	}
-	word->letters = malloc(wordLength);
-	if (word->letters == NULL) {
+	new->letters = malloc(wordLength);
+	if (new->letters == NULL) {
 		printf("Could not allocate memory for node string\n");
 		exit(1);
 	}
-	strcpy(word->letters, buffer);
-	word->length = wordLength;
-	return word;
+	strcpy(new->letters, buffer);
+	new->length = wordLength;
 }
 
