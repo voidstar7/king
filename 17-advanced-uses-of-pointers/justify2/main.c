@@ -17,7 +17,7 @@ void printParagraph(struct node *head);
 
 int main(void) {
 	char buffer[MAX_WORD_LEN + 1];
-	struct node *head, *newNode, *tmp;
+	struct node *head, *middle, *newNode;
 	int wordCount = 0;
 
 	printf("Enter paragraph: ");
@@ -35,8 +35,8 @@ int main(void) {
 		else if (wordCount == 1)
 			head->next = newNode;
 		else 
-			tmp->next = newNode;
-		tmp = newNode;
+			middle->next = newNode;
+		middle = newNode;
 		wordCount++;
 	}
 	newNode = malloc(sizeof(struct node));
@@ -45,7 +45,7 @@ int main(void) {
 		return 1;
 	}
 	createNode(newNode, buffer);
-	tmp->next = newNode;
+	middle->next = newNode;
 	newNode->next = NULL;
 	printParagraph(head);
 	return 0;
