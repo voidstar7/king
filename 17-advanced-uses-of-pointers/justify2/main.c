@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_LINE_LEN 60
+#define MAX_LINE_LEN 40
 #define MAX_WORD_LEN 16
 
 struct node {
@@ -78,12 +78,23 @@ void createNode(struct node *new, char *buffer) {
 	}
 	strcpy(new->letters, buffer);
 	new->length = wordLength;
-	new->next = NULL; // ???
+	new->next = NULL; 
 }
 
 void printParagraph(struct node *head) {
 	struct node *p;
+	int lineLen = 0;
 
-	for (p = head; p != NULL; p = p->next)
-		printf("%p %s\n", p, p->letters);
+	for (p = head; p != NULL; p = p->next) {
+		lineLen += p->length;
+		if (lineLen < MAX_LINE_LEN) {
+			printf("%s", p->letters);
+		}
+		else {
+			printf("\n");
+			lineLen = p->length;
+			printf("%s", p->letters);
+		}
+	}
+	printf("\n");
 }
