@@ -8,16 +8,18 @@
 struct node {
 	char *letters;
 	int length;
+	struct node *prev;
 	struct node *next;
 };
 
 int getWord(char *buffer);
 void createNode(struct node *new, char *buffer);
-void printParagraph(struct node *head); 
+//void printParagraph(struct node *head); 
+void printParagraph(struct node *tail); 
 
 int main(void) {
 	char buffer[MAX_WORD_LEN + 1];
-	struct node *head, *middle, *newNode;
+	struct node *head, *middle, *newNode, *tail;
 	int wordCount = 0;
 
 	printf("Enter paragraph: ");
@@ -30,12 +32,16 @@ int main(void) {
 		createNode(newNode, buffer);
 		if (wordCount == 0) {
 			head = newNode;
-			head->next = NULL;
+			head->prev = NULL;
 		}
-		else if (wordCount == 1)
+		else if (wordCount == 1) {
 			head->next = newNode;
-		else 
+			newNode->prev = head;
+		}
+		else  {
 			middle->next = newNode;
+			newNode->prev = middle;
+		}
 		middle = newNode;
 		wordCount++;
 	}
@@ -46,8 +52,12 @@ int main(void) {
 	}
 	createNode(newNode, buffer);
 	middle->next = newNode;
+	newNode->prev = middle;
 	newNode->next = NULL;
-	printParagraph(head);
+	tail = newNode;
+
+	//printParagraph(head);
+	printParagraph(tail);
 	return 0;
 }
 
@@ -81,11 +91,13 @@ void createNode(struct node *new, char *buffer) {
 	new->next = NULL; 
 }
 
-void printParagraph(struct node *head) {
+//void printParagraph(struct node *head) {
+void printParagraph(struct node *tail) {
 	struct node *p;
 	int lineLen = 0;
 
-	for (p = head; p != NULL; p = p->next) {
+	//for (p = head; p != NULL; p = p->next) {
+	for (p = tail; p != NULL; p = p->prev) {
 		lineLen += p->length;
 		if (lineLen < MAX_LINE_LEN) {
 			printf("%s", p->letters);
