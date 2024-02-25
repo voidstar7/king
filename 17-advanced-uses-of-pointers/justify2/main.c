@@ -8,27 +8,47 @@
 struct node {
 	char *letters;
 	int length;
-	struct word *next;
+	struct node *next;
 };
 
 int getWord(char *buffer);
 void createNode(struct node *new, char *buffer);
+void printParagraph(struct node *head); 
 
 int main(void) {
 	char buffer[MAX_WORD_LEN + 1];
-	struct node *newNode;
+	struct node *head, *newNode, *tmp;
+	int wordCount = 0;
 
 	printf("Enter paragraph: ");
-	while (getWord(buffer) != EOF) {
+	while (getWord(buffer) != '\n') { 
 		newNode = malloc(sizeof(struct node));
 		if (newNode == NULL) {
 			printf("Could not allocate memory for new node pointer\n");
 			return 1;
 		}
 		createNode(newNode, buffer);
-		printf("%p %s", newNode, newNode->letters);
-		return 0;
+		if (wordCount == 0) {
+			head = newNode;
+			head->next = NULL;
+		}
+		else if (wordCount == 1)
+			head->next = newNode;
+		else 
+			tmp->next = newNode;
+		tmp = newNode;
+		wordCount++;
 	}
+	newNode = malloc(sizeof(struct node));
+	if (newNode == NULL) {
+		printf("Could not allocate memory for tail node pointer\n");
+		return 1;
+	}
+	createNode(newNode, buffer);
+	tmp->next = newNode;
+	newNode->next = NULL;
+	printParagraph(head);
+	return 0;
 }
 
 int getWord(char *buffer) {
@@ -37,6 +57,7 @@ int getWord(char *buffer) {
 
 	while ((c = getchar()) == ' ' || c == '\t')
 		;
+	// need to cover truncation
 	while (c != '\n' && wordSize < MAX_WORD_LEN) {
 		buffer[wordSize++] = c;
 		if (c == ' ')
@@ -57,5 +78,12 @@ void createNode(struct node *new, char *buffer) {
 	}
 	strcpy(new->letters, buffer);
 	new->length = wordLength;
+	new->next = NULL; // ???
 }
 
+void printParagraph(struct node *head) {
+	struct node *p;
+
+	for (p = head; p != NULL; p = p->next)
+		printf("%p %s\n", p, p->letters);
+}
