@@ -14,8 +14,8 @@ struct node {
 
 int getWord(char *buffer);
 void createNode(struct node *new, char *buffer);
-//void printParagraph(struct node *head); 
-void printParagraph(struct node *tail); 
+void printParagraph(struct node *head); 
+int addSpace(char **nodeString, int stringLength); 
 
 int main(void) {
 	char buffer[MAX_WORD_LEN + 1];
@@ -56,8 +56,7 @@ int main(void) {
 	newNode->next = NULL;
 	tail = newNode;
 
-	//printParagraph(head);
-	printParagraph(tail);
+	printParagraph(head);
 	return 0;
 }
 
@@ -91,17 +90,45 @@ void createNode(struct node *new, char *buffer) {
 	new->next = NULL; 
 }
 
-//void printParagraph(struct node *head) {
-void printParagraph(struct node *tail) {
-	struct node *p;
-	int lineLen = 0;
+void printParagraph(struct node *head) {
+	struct node *p, *q, *r, *s;
+	int lineLen = 0, spacesToAdd = 0;
 
-	//for (p = head; p != NULL; p = p->next) {
-	for (p = tail; p != NULL; p = p->prev) {
+	for (p = q = r = s = head; p != NULL; p = p->next) {
 		lineLen += p->length;
 		if (lineLen < MAX_LINE_LEN) {
-			printf("%s", p->letters);
+			//printf("line length = %d\n", lineLen);
+			continue;
 		}
+		//printf("line length > max length\n");
+		spacesToAdd = MAX_LINE_LEN - (lineLen - p->length);
+		//printf("spaces to add = %d\n", spacesToAdd);
+		r = p->prev;
+		r = r->prev;
+		while (spacesToAdd > 0) {
+			spacesToAdd -= addSpace(&(s->letters), s->length);
+			s->length += 1;
+				s = s->next;
+					//printf("added space to s\n");
+					//printf("spaces to add = %d\n", spacesToAdd);
+			spacesToAdd -= addSpace(&(r->letters), r->length);
+			r->length += 1;
+				r = r->prev;
+					//printf("added space to r\n");
+					//printf("spaces to add = %d\n", spacesToAdd);
+			if (r == s) {
+				r = p->prev;
+				r = r->prev;
+				s = q;
+			}
+		}
+		lineLen = 0;
+		q = r = s = p;
+	}
+	for (lineLen = 0, p = head; p != NULL; p = p->next) {
+		lineLen += p->length;
+		if (lineLen < MAX_LINE_LEN)
+			printf("%s", p->letters);
 		else {
 			printf("\n");
 			lineLen = p->length;
@@ -109,4 +136,22 @@ void printParagraph(struct node *tail) {
 		}
 	}
 	printf("\n");
+}
+
+int addSpace(char **nodeString, int stringLength) {
+	char *tmp, space[2] = { ' ', '\0' };
+
+	//printf("nodestring length = %d\n", stringLength);
+	//printf("string to increase: %s\n", *nodeString);
+	tmp = realloc(*nodeString, 1);
+	if (tmp == NULL) {
+		printf("Could not increase size of node string\n");
+		exit(1);
+	}
+	//printf("realloc successful\n");
+	if (tmp != *nodeString)
+		*nodeString = tmp;
+	strcat(*nodeString, space);
+	//printf("new string: %s\n", *nodeString);
+	return 1;
 }
