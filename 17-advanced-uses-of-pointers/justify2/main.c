@@ -56,6 +56,7 @@ int main(void) {
 	newNode->next = NULL;
 	tail = newNode;
 
+	printf("\n");
 	printParagraph(head);
 	return 0;
 }
@@ -97,25 +98,18 @@ void printParagraph(struct node *head) {
 	for (p = q = r = s = head; p != NULL; p = p->next) {
 		lineLen += p->length;
 		if (lineLen < MAX_LINE_LEN) {
-			//printf("line length = %d\n", lineLen);
 			continue;
 		}
-		//printf("line length > max length\n");
 		spacesToAdd = MAX_LINE_LEN - (lineLen - p->length);
-		//printf("spaces to add = %d\n", spacesToAdd);
 		r = p->prev;
 		r = r->prev;
 		while (spacesToAdd > 0) {
 			spacesToAdd -= addSpace(&(s->letters), s->length);
 			s->length += 1;
 				s = s->next;
-					//printf("added space to s\n");
-					//printf("spaces to add = %d\n", spacesToAdd);
 			spacesToAdd -= addSpace(&(r->letters), r->length);
 			r->length += 1;
 				r = r->prev;
-					//printf("added space to r\n");
-					//printf("spaces to add = %d\n", spacesToAdd);
 			if (r == s) {
 				r = p->prev;
 				r = r->prev;
@@ -139,19 +133,15 @@ void printParagraph(struct node *head) {
 }
 
 int addSpace(char **nodeString, int stringLength) {
-	char *tmp, space[2] = { ' ', '\0' };
+	char *tmp, space[2] = { [0] = ' ' };
 
-	//printf("nodestring length = %d\n", stringLength);
-	//printf("string to increase: %s\n", *nodeString);
 	tmp = realloc(*nodeString, 1);
 	if (tmp == NULL) {
 		printf("Could not increase size of node string\n");
 		exit(1);
 	}
-	//printf("realloc successful\n");
 	if (tmp != *nodeString)
 		*nodeString = tmp;
 	strcat(*nodeString, space);
-	//printf("new string: %s\n", *nodeString);
 	return 1;
 }
