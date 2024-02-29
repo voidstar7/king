@@ -16,6 +16,7 @@ int getWord(char *buffer);
 void createNode(struct node *new, char *buffer);
 void printParagraph(struct node *head); 
 int addSpace(char **nodeString, int stringLength); 
+void parse(struct node *head, struct node *tail);
 
 int main(void) {
 	char buffer[MAX_WORD_LEN + 1];
@@ -38,7 +39,7 @@ int main(void) {
 			head->next = newNode;
 			newNode->prev = head;
 		}
-		else  {
+		else {
 			middle->next = newNode;
 			newNode->prev = middle;
 		}
@@ -57,6 +58,7 @@ int main(void) {
 	tail = newNode;
 
 	printf("\n");
+	parse(head, tail);
 	printParagraph(head);
 	return 0;
 }
@@ -91,46 +93,64 @@ void createNode(struct node *new, char *buffer) {
 	new->next = NULL; 
 }
 
-void printParagraph(struct node *head) {
+void parse(struct node *head, struct node *tail) {
 	struct node *p, *q, *r, *s;
-	int lineLen = 0, spacesToAdd = 0;
+	int lineLength = 0, spacesToAdd;
 
-	for (p = q = r = s = head; p != NULL; p = p->next) {
-		lineLen += p->length;
-		if (lineLen < MAX_LINE_LEN) {
-			continue;
-		}
-		spacesToAdd = MAX_LINE_LEN - (lineLen - p->length);
-		r = p->prev;
-		r = r->prev;
-		while (spacesToAdd > 0) {
-			spacesToAdd -= addSpace(&(s->letters), s->length);
-			s->length += 1;
-				s = s->next;
-			spacesToAdd -= addSpace(&(r->letters), r->length);
-			r->length += 1;
-				r = r->prev;
-			if (r == s) {
-				r = p->prev;
-				r = r->prev;
-				s = q;
+	printf("parsing\n");
+	for (p = q = r = s = head; p != tail; p = p->next) {
+
+		// it's moving p to next at the end of the loop which is messing things up
+
+		lineLength += p->length;
+		printf("lineLength %d\n", lineLength);
+		if (lineLength > MAX_LINE_LEN) {
+			printf("line length > max\n");
+			printf("p = %s\n", p->letters);
+			printf("q = %s\n", q->letters);
+			printf("r = %s\n", r->letters);
+			printf("s = %s\n", s->letters);
+			q = p->prev;
+			q->letters[(q->length)] = '\n';
+			q = q->prev;
+			spacesToAdd = MAX_LINE_LEN - (lineLength - p->length);
+			printf("spacesToAdd %d\n", spacesToAdd);
+			for (;;) {
+				if (spacesToAdd > 0) {
+					addSpace(&(s->letters), s->length);
+					s = s->next;
+					spacesToAdd--;
+				}
+				else
+					break;
+				if (spacesToAdd > 0) {
+					addSpace(&(q->letters), q->length);
+					q = q->prev;
+					spacesToAdd--;
+				}
+				else
+					break;
+				if (s == q) {
+					s = r;
+					q = p->prev;
+					q = q->prev;
+				}
 			}
 		}
-		lineLen = 0;
+		else
+			continue;
+
+		printf("end line\n");
+		printf("p = %s\n", p->letters);
+		printf("q = %s\n", q->letters);
+		printf("r = %s\n", r->letters);
+		printf("s = %s\n", s->letters);
+		lineLength = 0;
 		q = r = s = p;
 	}
-	for (lineLen = 0, p = head; p != NULL; p = p->next) {
-		lineLen += p->length;
-		if (lineLen < MAX_LINE_LEN)
-			printf("%s", p->letters);
-		else {
-			printf("\n");
-			lineLen = p->length;
-			printf("%s", p->letters);
-		}
-	}
-	printf("\n");
+	printf("finished parsing\n");
 }
+
 
 int addSpace(char **nodeString, int stringLength) {
 	char *tmp, space[2] = { [0] = ' ' };
@@ -143,5 +163,16 @@ int addSpace(char **nodeString, int stringLength) {
 	if (tmp != *nodeString)
 		*nodeString = tmp;
 	strcat(*nodeString, space);
+	printf("added space after %s\n", *nodeString);
 	return 1;
+}
+
+void printParagraph(struct node *head) {
+	struct node *p;
+	int lineLength = 0;
+	printf("printing\n");
+
+	for (p = head; p != NULL; p = p->next)
+		printf("%s", p->letters);
+	printf("\n");
 }
