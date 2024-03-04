@@ -97,24 +97,16 @@ void parse(struct node *head, struct node *tail) {
 	struct node *p, *q, *r, *s;
 	int lineLength = 0, spacesToAdd;
 
-	printf("parsing\n");
+	// this is way too complicated
 	for (p = q = r = s = head; p != tail; p = p->next) {
-
-		// it's moving p to next at the end of the loop which is messing things up
-
 		lineLength += p->length;
-		printf("lineLength %d\n", lineLength);
 		if (lineLength > MAX_LINE_LEN) {
-			printf("line length > max\n");
-			printf("p = %s\n", p->letters);
-			printf("q = %s\n", q->letters);
-			printf("r = %s\n", r->letters);
-			printf("s = %s\n", s->letters);
 			q = p->prev;
 			q->letters[(q->length)] = '\n';
+			spacesToAdd = MAX_LINE_LEN - ((MAX_LINE_LEN - q->length) + 1);
 			q = q->prev;
-			spacesToAdd = MAX_LINE_LEN - (lineLength - p->length);
-			printf("spacesToAdd %d\n", spacesToAdd);
+			printf("spaces to add = %d\n", spacesToAdd);
+			printf("p = %s\n", p->letters);
 			for (;;) {
 				if (spacesToAdd > 0) {
 					addSpace(&(s->letters), s->length);
@@ -137,18 +129,21 @@ void parse(struct node *head, struct node *tail) {
 				}
 			}
 		}
+		else if (lineLength == MAX_LINE_LEN) {
+			printf("spaces to add = 1\n");
+			printf("p = %s\n", p->letters);
+			p->letters[(p->length)] = '\n';
+			addSpace(&(r->letters), r->length);
+			lineLength = 0;
+			q = r = s = p->next;
+			continue;
+		}
 		else
 			continue;
-
-		printf("end line\n");
-		printf("p = %s\n", p->letters);
-		printf("q = %s\n", q->letters);
-		printf("r = %s\n", r->letters);
-		printf("s = %s\n", s->letters);
 		lineLength = 0;
-		q = r = s = p;
+		p = p->prev;
+		q = r = s = p->next;
 	}
-	printf("finished parsing\n");
 }
 
 
@@ -163,14 +158,12 @@ int addSpace(char **nodeString, int stringLength) {
 	if (tmp != *nodeString)
 		*nodeString = tmp;
 	strcat(*nodeString, space);
-	printf("added space after %s\n", *nodeString);
 	return 1;
 }
 
 void printParagraph(struct node *head) {
 	struct node *p;
 	int lineLength = 0;
-	printf("printing\n");
 
 	for (p = head; p != NULL; p = p->next)
 		printf("%s", p->letters);
