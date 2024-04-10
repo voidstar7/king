@@ -7,6 +7,7 @@ int main(void) {
 	int input;
 	char op;
 	for (;;) {
+		//printf("size %d\n", size);
 		printf("(e)nqueue / (d)equeue / (p)rint: ");
 		scanf(" %c", &op);
 		switch(op) {
@@ -22,7 +23,7 @@ int main(void) {
 				break;
 			case 'd':
 				if (isEmpty()) {
-					printf("Queue is empty");
+					printf("Queue is empty\n");
 					continue;
 				}
 				else

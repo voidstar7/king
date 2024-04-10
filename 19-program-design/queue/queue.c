@@ -18,20 +18,20 @@ void enqueue(int item) {
 
 int dequeue(void) {
 	int n = queue[head];
-	queue[head++] = 0;
+	if (head == QUEUE_MAX - 1) {
+		queue[head] = 0;
+		head = 0;
+	}
+	else
+		queue[head++] = 0;
 	size--;
 	return n;
 }
 
 bool isEmpty(void) {
-	int i;
-	for (i = 0; i < QUEUE_MAX; i++) {
-		if (i != 0) {
-			return false;
-		}
-	}
-	open = head = size = 0;
-	return true;
+	if (size == 0)
+		return true;
+	return false;
 }
 
 void printQueue(void) {
