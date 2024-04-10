@@ -11,8 +11,10 @@ void enqueue(int item) {
 }
 
 int dequeue(void) {
+	int n = queue[head];
+	queue[head++] = 0;
 	size--;
-	return queue[head++];
+	return n;
 }
 
 bool isEmpty(void) {

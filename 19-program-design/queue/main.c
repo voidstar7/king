@@ -26,8 +26,7 @@ int main(void) {
 					continue;
 				}
 				else
-					// this doesn't work
-					dequeue();
+					printf("%d\n", dequeue());
 				break;
 			case 'p':
 				printQueue();
