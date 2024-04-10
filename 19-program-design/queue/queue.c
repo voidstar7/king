@@ -2,11 +2,17 @@
 #include "queue.h"
 
 static int queue[QUEUE_MAX] = { 0 },
-					 open, head;
+					 open = 0,
+					 head = 0;
 extern int size;
 
 void enqueue(int item) {
-	queue[open++] = item;
+	if (open == QUEUE_MAX - 1) {
+		queue[open] = item;
+		open = 0;
+	}
+	else
+		queue[open++] = item;
 	size++;
 }
 
