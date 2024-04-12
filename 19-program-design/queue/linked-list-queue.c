@@ -1,31 +1,38 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "queue.h"
 
-static int queue[QUEUE_MAX] = { 0 },
-					 open = 0,
-					 head = 0;
 extern int size;
+static struct node *first, *last, *temp;
 
 void enqueue(int item) {
-	if (open == QUEUE_MAX - 1) {
-		queue[open] = item;
-		open = 0;
+	if (size == 0) {
+		first = createNode();
+		first->data = item;
+		first->next = NULL;
+		last = first;
 	}
-	else
-		queue[open++] = item;
+	else {
+		temp = createNode();
+		last->next = temp;
+		temp->data = item;
+		temp->next = NULL;
+		last = temp;
+	}
 	size++;
 }
 
-int dequeue(void) {
-	int n = queue[head];
-	if (head == QUEUE_MAX - 1) {
-		queue[head] = 0;
-		head = 0;
+struct node *createNode(void) {
+	struct node *n = malloc(sizeof(struct node));
+	if (n == NULL) {
+		printf("Could not allocate memory for new node\n");
+		exit(1);
 	}
-	else
-		queue[head++] = 0;
-	size--;
 	return n;
+}
+
+int dequeue(void) {
+	return 1;
 }
 
 bool isEmpty(void) {
@@ -35,9 +42,7 @@ bool isEmpty(void) {
 }
 
 void printQueue(void) {
-	int i;
-	for (i = 0; i < QUEUE_MAX; i++)
-		printf("%d ", queue[i]);
+	for (struct node *n = first; n != NULL; n = n->next)
+		printf("%d ", n->data);
 	printf("\n");
 }
-
