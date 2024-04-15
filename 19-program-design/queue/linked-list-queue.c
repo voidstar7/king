@@ -3,7 +3,7 @@
 #include "queue.h"
 
 extern int size;
-static struct node *first, *last, *temp;
+static struct node *first, *last, *new;
 
 void enqueue(int item) {
 	if (size == 0) {
@@ -13,11 +13,11 @@ void enqueue(int item) {
 		last = first;
 	}
 	else {
-		temp = createNode();
-		last->next = temp;
-		temp->data = item;
-		temp->next = NULL;
-		last = temp;
+		new = createNode();
+		last->next = new;
+		new->data = item;
+		new->next = NULL;
+		last = new;
 	}
 	size++;
 }
