@@ -30,6 +30,10 @@ int main(void) {
 					printf("%d\n", dequeue());
 				break;
 			case 'p':
+				if (isEmpty()) {
+					printf("Queue is empty\n");
+					continue;
+				}
 				printQueue();
 				break;
 			default:

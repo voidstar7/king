@@ -32,7 +32,12 @@ struct node *createNode(void) {
 }
 
 int dequeue(void) {
-	return 1;
+	int dequeued = first->data;
+	struct node *newFirst = first->next;
+	free(first);
+	first = newFirst;
+	size--;
+	return dequeued;
 }
 
 bool isEmpty(void) {
