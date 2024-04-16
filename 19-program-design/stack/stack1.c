@@ -2,42 +2,41 @@
 #include <stdlib.h>
 #include "stack.h"
 
-#define STACK_SIZE 100
-
-static int contents[STACK_SIZE];
-static int top = 0;
-
 static void terminate(const char *message)
 {
   printf("%s\n", message);
   exit(EXIT_FAILURE);
 }
 
-void make_empty(void)
+void make_empty(Stack *s)
 {
-  top = 0;
+  s->top = 0;
 }
 
-bool is_empty(void)
+bool is_empty(Stack *s)
 {
-  return top == 0;
+  return s->top == 0;
 }
 
-bool is_full(void)
+bool is_full(Stack *s)
 {
-  return top == STACK_SIZE;
+  return s->top == STACK_SIZE;
 }
 
-void push(int i)
+void push(Stack *s, int i)
 {
-  if (is_full())
+  if (is_full(s))
     terminate("Error in push: stack is full.");
-  contents[top++] = i;
+  s->contents[s->top] = i;
+	s->top++;
 }
 
-int pop(void)
+int pop(Stack *s)
 {
-  if (is_empty())
+	int i;
+  if (is_empty(s))
     terminate("Error in pop: stack is empty.");
-  return contents[--top];
+	i = s->contents[(s->top) - 1];
+	s->top--;
+  return i;;
 }
