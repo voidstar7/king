@@ -2,17 +2,20 @@
 #define STACK_H
 
 #include <stdbool.h>
-#define STACK_SIZE 100
+
+struct node {
+  int data;
+  struct node *next;
+};
 
 typedef struct {
-	int contents[STACK_SIZE];
-	int top;
+	struct node n;
 } Stack;
 
 void make_empty(Stack *s);
 bool is_empty(Stack *s);
 bool is_full(Stack *s);
-void push(Stack *s, int i);
+void push(Stack **s, int i);
 int pop(Stack *s);
 
 #endif

@@ -2,12 +2,8 @@
 #include <stdlib.h>
 #include "stack.h"
 
-struct node {
-  int data;
-  struct node *next;
-};
-
-static struct node *top = NULL;
+struct node *top = NULL;
+int stack_size = 0;
 
 static void terminate(const char *message)
 {
@@ -15,39 +11,38 @@ static void terminate(const char *message)
   exit(EXIT_FAILURE);
 }
 
-void make_empty(void)
+/*void make_empty(Stack *s)
 {
-  while (!is_empty())
-    pop();
-}
+  while (!is_empty(s))
+    pop(s);
+}*/
 
-bool is_empty(void)
+/*bool is_empty(void)
 {
   return top == NULL;
-}
+}*/
 
-bool is_full(void)
+/*bool is_full(Stack *s)
 {
   return false;
-}
+}*/
 
-void push(int i)
+void push(Stack **s, int i)
 {
-  struct node *new_node = malloc(sizeof(struct node));
-  if (new_node == NULL)
-    terminate("Error in push: stack is full.");
-
-  new_node->data = i;
-  new_node->next = top;
-  top = new_node;
+	*s = malloc(sizeof(Stack));
+	if (*s == NULL)
+		terminate("Error in push: stack is full.");
+  (*s)->n.data = i;
+	(*s)->n.next = NULL;
+	stack_size++;
 }
 
-int pop(void)
+/*int pop(Stack *s)
 {
   struct node *old_top;
   int i;
 
-  if (is_empty())
+  if (is_empty(s))
     terminate("Error in pop: stack is empty.");
 
   old_top = top;
@@ -55,4 +50,4 @@ int pop(void)
   top = top->next;
   free(old_top);
   return i;
-}
+}*/

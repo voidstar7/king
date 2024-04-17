@@ -5,7 +5,9 @@
 Stack *s1;
 
 int main(void) {
-	s1 = malloc(sizeof(Stack));
+	push(&s1, 72);
+	printf("%d", s1->n.data);
+	/*
 	make_empty(s1);
 	push(s1, 8);
 	printf("pushed 8\n");
@@ -17,4 +19,5 @@ int main(void) {
 	printf("popped %d\n", pop(s1));
 	printf("popped %d\n", pop(s1));
 	pop(s1);
+	*/
 }
