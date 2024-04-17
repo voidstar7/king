@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "stack.h"
 
-struct node *top = NULL;
+//struct node *top = NULL;
 int stack_size = 0;
 
 static void terminate(const char *message)
@@ -27,13 +27,13 @@ static void terminate(const char *message)
   return false;
 }*/
 
-void push(Stack **s, int i)
+void push(Node **n, int i)
 {
-	*s = malloc(sizeof(Stack));
-	if (*s == NULL)
-		terminate("Error in push: stack is full.");
-  (*s)->n.data = i;
-	(*s)->n.next = NULL;
+	*n = malloc(sizeof(Node));
+	if (*n == NULL)
+		terminate("Could not allocate node memory.");
+  (*n)->data = i;
+	(*n)->next = NULL;
 	stack_size++;
 }
 

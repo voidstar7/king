@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include "stack.h"
 
-Stack *s1;
+Node *n1;
 
 int main(void) {
-	push(&s1, 72);
+	push(&n1, 72);
+	printf("%d\n", n1->data);
 	//print_stack(&s1);
 	/*
 	make_empty(s1);

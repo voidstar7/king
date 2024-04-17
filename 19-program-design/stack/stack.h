@@ -3,20 +3,20 @@
 
 #include <stdbool.h>
 
-struct node {
-  int data;
-  struct node *next;
+struct nav {
+	struct nav *p;
 };
 
 typedef struct {
-	struct node n;
-} Stack;
+  int data;
+  struct nav *next;
+} Node;
 
-void make_empty(Stack *s);
-bool is_empty(Stack *s);
-bool is_full(Stack *s);
-void push(Stack **s, int i);
-int pop(Stack *s);
-void print_stack(Stack **s);
+//void make_empty(Stack *s);
+//bool is_empty(Stack *s);
+//bool is_full(Stack *s);
+void push(Node **n, int i);
+//int pop(Stack *s);
+//void print_stack(Node **n);
 
 #endif
