@@ -51,3 +51,10 @@ void push(Stack **s, int i)
   free(old_top);
   return i;
 }*/
+
+/*void print_stack(Stack **s) {
+	Stack *t;
+	for (t = *s; t->n != NULL; t->n = *(t->n).next)
+		printf("%d ", t->n.data);
+	printf("\n");
+}*/

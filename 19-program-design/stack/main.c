@@ -6,7 +6,7 @@ Stack *s1;
 
 int main(void) {
 	push(&s1, 72);
-	printf("%d", s1->n.data);
+	//print_stack(&s1);
 	/*
 	make_empty(s1);
 	push(s1, 8);
