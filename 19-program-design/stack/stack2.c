@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "stack.h"
 
-//struct node *top = NULL;
 int stack_size = 0;
+static Stack *top = NULL;
 
 static void terminate(const char *message)
 {
@@ -27,14 +27,28 @@ static void terminate(const char *message)
   return false;
 }*/
 
-void push(Node **n, int i)
+void push(Stack **s, int i)
 {
-	*n = malloc(sizeof(Node));
-	if (*n == NULL)
-		terminate("Could not allocate node memory.");
-  (*n)->data = i;
-	(*n)->next = NULL;
+	Stack *newNode = createNode();
+  newNode->data = i;
+	newNode->next = NULL;
+	if (stack_size == 0)
+		*s = top = newNode;
+	else {
+		top->next = newNode;
+		top = newNode;
+	}
 	stack_size++;
+	printf("Pushed %i to stack (size %d)\n", i, stack_size);
+}
+
+Stack *createNode(void) {
+	Stack *n = malloc(sizeof(Stack));
+	if (n == NULL) {
+		terminate("Could not allocate node memory.");
+		exit(1);
+	}
+	return n;
 }
 
 /*int pop(Stack *s)
@@ -52,9 +66,9 @@ void push(Node **n, int i)
   return i;
 }*/
 
-/*void print_stack(Stack **s) {
+void print_stack(Stack **s) {
 	Stack *t;
-	for (t = *s; t->n != NULL; t->n = *(t->n).next)
-		printf("%d ", t->n.data);
+	for (t = *s; t != NULL; t = t->next)
+		printf("%d ", t->data);
 	printf("\n");
-}*/
+}

@@ -2,12 +2,18 @@
 #include <stdlib.h>
 #include "stack.h"
 
-Node *n1;
+Stack *s1, *s2;
 
 int main(void) {
-	push(&n1, 72);
-	printf("%d\n", n1->data);
-	//print_stack(&s1);
+	push(&s1, 72);
+	push(&s2, 22);
+	push(&s2, 288);
+	push(&s2, 888);
+	push(&s1, 88);
+	push(&s1, 92);
+	push(&s1, 18);
+	print_stack(&s1);
+	print_stack(&s2);
 	/*
 	make_empty(s1);
 	push(s1, 8);
