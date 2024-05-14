@@ -8,10 +8,9 @@ typedef struct node {
 	struct node *next;
 } Node;
 
-void initialize(Node *n);
-//bool is_empty(Stack *s);
-void push(Node *s, int i);
-//int pop(Stack *s);
-Node *createStack(Node *n);
+bool isEmpty();
+void push(Node **head, int i);
+Node *createNode(void);
+Node *findTop(Node *n);
 
 #endif

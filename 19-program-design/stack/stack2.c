@@ -2,44 +2,47 @@
 #include <stdlib.h>
 #include "stack2.h"
 
-static Node *top, *head;
+static Node *top = NULL; 
 
 static void terminate(const char *message) {
   printf("%s\n", message);
   exit(EXIT_FAILURE);
 }
 
-void initialize(Node *n) {
-  n->next = NULL;
-	top = head = n;
+bool isEmpty() {
+  return top == NULL;
 }
 
-/*bool is_empty(Stack *s) {
-  return s->top == 0;
-}*/
-
-void push(Node *n, int i) {
-	if (n != head) {
-		top->next = n;
-		top = n;
+void push(Node **head, int i) {
+	if (isEmpty()) {
+		*head = createNode();
+		(*head)->data = i;
+		(*head)->next = NULL;
+		top = *head;
+		printf("pushed %d (%p)\n", (*head)->data, *head);
 	}
-	n->data = i;
-	printf("Pushed %i\n", i);
+	else {
+		Node *new, *oldTop;
+		new = createNode();
+		new->data = i;
+		new->next = NULL;
+		oldTop = findTop(*head);
+		oldTop->next = new;
+		top = new;
+		printf("pushed %d (%p)\n", new->data, new);
+	}
 }
 
-/*int pop(Stack *s) {
-	int i;
-  if (is_empty(s))
-    terminate("Error: stack is empty");
-	i = s->data[(s->top) - 1];
-	s->top--;
-  return i;
-}*/
-
-Node *createStack(Node *n) {
-	Node *m = malloc(sizeof(Node));
-	if (m == NULL) {
+Node *createNode(void) {
+	Node *new = malloc(sizeof(Node));
+	if (new == NULL)
 		terminate("Error: could not allocate memory for node\n");
-	}
-	return m;
+	return new;
+}
+
+Node *findTop(Node *head) {
+	Node *n;
+	for (n = head; n->next != NULL; n = n->next) 
+		;
+	return n;
 }
