@@ -33,16 +33,24 @@ void push(Node **head, int i) {
 	}
 }
 
-// pops all except in cases where 1 node remains
 void pop(Node **head) {
 	if (isEmpty())
 		terminate("Error: stack is empty");
-	printf("popped %d (%p)\n", top->data, top);
-	Node *newTop = createNode();
-	newTop = (findTop(*head)) - 1;
-	newTop->next = NULL;
-	free(top);
-	top = newTop;
+	if (top == *head) {
+		printf("popped %d (%p)\n", (*head)->data, *head);
+		free(*head);
+		top = NULL;
+	}
+	else {
+		Node *n = *head;
+		while (n->next != top) {
+			n = n->next;
+		}
+		printf("popped %d (%p)\n", (n->next)->data, n->next);
+		free(n->next);
+		n->next = NULL;
+		top = n;
+	}
 }
 
 Node *createNode(void) {
