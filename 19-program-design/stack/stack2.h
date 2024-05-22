@@ -10,6 +10,7 @@ typedef struct node {
 
 bool isEmpty();
 void push(Node **head, int i);
+void pop(Node **head);
 Node *createNode(void);
 Node *findTop(Node *n);
 

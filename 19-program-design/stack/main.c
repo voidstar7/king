@@ -10,4 +10,7 @@ int main(void) {
 	push(&s1, 5);
 	push(&s1, 2);
 	push(&s1, 1);
+	pop(&s1);
+	pop(&s1);
+	pop(&s1);
 }
