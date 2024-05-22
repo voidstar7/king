@@ -41,6 +41,12 @@ void pop(Node **head) {
 		free(*head);
 		top = NULL;
 	}
+	else if (top == ((*head)->next)) {
+		printf("popped %d (%p)\n", ((*head)->next)->data, (*head)->next);
+		free((*head)->next);
+		(*head)->next = NULL;
+		top = *head;
+	}
 	else {
 		Node *n = *head;
 		while (n->next != top) {

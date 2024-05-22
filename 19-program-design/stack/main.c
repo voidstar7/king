@@ -13,4 +13,13 @@ int main(void) {
 	pop(&s1);
 	pop(&s1);
 	pop(&s1);
+	pop(&s1);
+	pop(&s1);
+	push(&s1, 82);
+	push(&s1, 22);
+	push(&s1, 19);
+	pop(&s1);
+	pop(&s1);
+	pop(&s1);
+	pop(&s1); // throws empty error
 }
