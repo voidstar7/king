@@ -7,8 +7,6 @@
 void enqueue(int item);
 struct node *createNode(void);
 int dequeue(void);
-//int returnFirst(void);
-//int returnLast(void);
 bool isEmpty(void);
 void printQueue(void);
 
