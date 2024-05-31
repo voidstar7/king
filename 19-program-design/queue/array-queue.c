@@ -1,43 +1,46 @@
 #include <stdio.h>
 #include "queue.h"
 
-static int queue[QUEUE_MAX] = { 0 },
-					 open = 0,
-					 head = 0;
-extern int size;
+void init(Queue *q) {
+	for (int i = 0; i < QUEUE_MAX; i++) {
+		q->array[i] = 0;
+	};
+	q->size = 0;
+	q->open = 0;
+	q->head = 0;
+};
 
-void enqueue(int item) {
-	if (open == QUEUE_MAX - 1) {
-		queue[open] = item;
-		open = 0;
+void enqueue(Queue *q, int item) {
+	if (q->open == QUEUE_MAX - 1) {
+		q->array[q->open] = item;
+		q->open = 0;
 	}
 	else
-		queue[open++] = item;
-	size++;
+		q->array[q->open++] = item;
+	q->size++;
 }
 
-int dequeue(void) {
-	int n = queue[head];
-	if (head == QUEUE_MAX - 1) {
-		queue[head] = 0;
-		head = 0;
+int dequeue(Queue *q) {
+	int n = q->array[q->head];
+	if (q->head == QUEUE_MAX - 1) {
+		q->array[q->head] = 0;
+		q->head = 0;
 	}
 	else
-		queue[head++] = 0;
-	size--;
+		q->array[q->head++] = 0;
+	q->size--;
 	return n;
 }
 
-bool isEmpty(void) {
-	if (size == 0)
+bool isEmpty(Queue *q) {
+	if (q->size == 0)
 		return true;
 	return false;
 }
 
-void printQueue(void) {
-	int i;
-	for (i = 0; i < QUEUE_MAX; i++)
-		printf("%d ", queue[i]);
+void printQueue(Queue *q) {
+	for (int i = 0; i < QUEUE_MAX; i++)
+		printf("%d ", q->array[i]);
 	printf("\n");
 }
 
