@@ -22,6 +22,8 @@ int main(void)
 
   push(s1, 1);
   push(s1, 2);
+	// should print 2
+	printf("s1 top is %d\n", peek(s1));
 
   n = pop(s1);
   printf("Popped %d from s1\n", n);
