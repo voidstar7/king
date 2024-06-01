@@ -10,19 +10,19 @@
 /* stackclient.c (Chapter 19, page 494) */
 
 #include <stdio.h>
-#include "stackADT2.h"
+#include "stackADT.h"
 
 int main(void)
 {
   Stack s1, s2;
   int n;
 
-  s1 = create(5);
-  s2 = create(10);
+  s1 = create();
+  s2 = create();
 
   push(s1, 1);
-  push(s1, 2);
-	// should print 2
+  push(s1, 8);
+	// should print 8
 	printf("s1 top is %d\n", peek(s1));
 
   n = pop(s1);
