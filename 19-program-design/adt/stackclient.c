@@ -10,15 +10,15 @@
 /* stackclient.c (Chapter 19, page 494) */
 
 #include <stdio.h>
-#include "stackADT.h"
+#include "stackADT2.h"
 
 int main(void)
 {
   Stack s1, s2;
   int n;
 
-  s1 = create();
-  s2 = create();
+  s1 = create(5);
+  s2 = create(10);
 
   push(s1, 1);
   push(s1, 2);
