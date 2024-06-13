@@ -63,9 +63,17 @@ bool is_full(Stack s)
 
 void push(Stack s, Item i)
 {
-  if (is_full(s))
-    terminate("Error in push: stack is full.");
-  s->contents[s->top++] = i;
+  if (is_full(s)) {
+		printf("Stack is full. Doubling size\n");
+		int newSize = s->size * 2;
+		Item *tmp = realloc(s->contents, sizeof(Item) * newSize);
+		if (tmp == NULL) 
+			terminate("Could not reallocate memory\n");
+		s->contents = tmp;
+		s->size = newSize;
+	}
+	s->contents[s->top++] = i;
+	printf("pushed\n");
 }
 
 Item pop(Stack s)
