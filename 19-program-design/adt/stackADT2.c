@@ -12,12 +12,75 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "stackADT2.h"
+#include <ctype.h>
+#include <string.h>
 
 struct stack_type {
   Item *contents;
   int top;
   int size;
 };
+
+int evaluate_expression(const char *expression)
+{
+	Stack s = create(5);
+	char *p = (char *)expression;
+	while (*p)
+	{
+		if (isdigit(*p))
+		{
+			push(s, *p - '0');
+			p++;
+		}
+		else if (ispunct(*p))
+		{
+			int temp;
+			switch (*p)
+			{
+				case '+':
+					{
+						temp = 
+							(s->contents[(s->top) - 2]) + 
+							(s->contents[(s->top) - 1]);
+						pop(s); pop(s);
+						push(s, temp);
+						break;
+					}
+				case '-':
+					{
+						temp = 
+							(s->contents[(s->top) - 2]) - 
+							(s->contents[(s->top) - 1]);
+						pop(s); pop(s);
+						push(s, temp);
+						break;
+					}
+				case '*':
+					{
+						temp = 
+							(s->contents[(s->top) - 2]) * 
+							(s->contents[(s->top) - 1]);
+						pop(s); pop(s);
+						push(s, temp);
+						break;
+					}
+				case '/':
+					{
+						temp = 
+							(s->contents[(s->top) - 2]) / 
+							(s->contents[(s->top) - 1]);
+						pop(s); pop(s);
+						push(s, temp);
+						break;
+					}
+				default:
+					exit(EXIT_FAILURE);
+			}
+		}
+		p++;
+	}
+	return s->contents[0];
+}
 
 static void terminate(const char *message)
 {
@@ -73,7 +136,6 @@ void push(Stack s, Item i)
 		s->size = newSize;
 	}
 	s->contents[s->top++] = i;
-	printf("pushed\n");
 }
 
 Item pop(Stack s)

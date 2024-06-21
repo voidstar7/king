@@ -14,7 +14,7 @@
 
 #include <stdbool.h>   /* C99 only */
 
-typedef int Item;
+typedef char Item;
 
 typedef struct stack_type *Stack;
 
@@ -26,5 +26,6 @@ bool is_full(Stack s);
 void push(Stack s, Item i);
 Item pop(Stack s);
 Item peek(Stack s);
+int evaluate_expression(const char *expression);
 
 #endif
