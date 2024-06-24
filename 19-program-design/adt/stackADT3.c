@@ -19,10 +19,11 @@ struct node {
 };
 
 struct stack_type {
+	int len;
   struct node *top;
 };
 
-static void terminate(const char *message)
+void terminate(const char *message)
 {
   printf("%s\n", message);
   exit(EXIT_FAILURE);
@@ -33,6 +34,7 @@ Stack create(void)
   Stack s = malloc(sizeof(struct stack_type));
   if (s == NULL)
     terminate("Error in create: stack could not be created.");
+	s->len = 0;
   s->top = NULL;
   return s;
 }
@@ -68,6 +70,7 @@ void push(Stack s, Item i)
   new_node->data = i;
   new_node->next = s->top;
   s->top = new_node;
+	s->len++;
 }
 
 Item pop(Stack s)
@@ -81,6 +84,7 @@ Item pop(Stack s)
   old_top = s->top;
   i = old_top->data;
   s->top = old_top->next;
+	s->len--;
   free(old_top);
   return i;
 }
@@ -89,4 +93,8 @@ Item peek(Stack s) {
 	if (is_empty(s))
 		terminate("Error: stack is empty\n");
 	return s->top->data;
+}
+
+int length(Stack s) {
+	return s->len;
 }

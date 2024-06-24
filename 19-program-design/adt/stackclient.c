@@ -10,17 +10,22 @@
 /* stackclient.c (Chapter 19, page 494) */
 
 #include <stdio.h>
-#include "stackADT2.h"
+#include "stackADT.h"
 
 int main(void)
 {
   Stack s1;
-  s1 = create(5);
+  s1 = create();
 
   push(s1, 1);
   push(s1, 1);
   push(s1, 1);
   push(s1, 1);
+  push(s1, 1);
+  push(s1, 1);
+  push(s1, 1);
+  push(s1, 1);
+	printf("length: %d\n", length(s1));
   push(s1, 1); // full
 	printf("%d\n", peek(s1));
   push(s1, 2);
