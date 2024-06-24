@@ -14,31 +14,23 @@
 
 int main(void)
 {
-  Stack s1;
+  Stack s1, s2;
   s1 = create();
-
-  push(s1, 1);
-  push(s1, 1);
-  push(s1, 1);
-  push(s1, 1);
-  push(s1, 1);
-  push(s1, 1);
-  push(s1, 1);
-  push(s1, 1);
-	printf("length: %d\n", length(s1));
-  push(s1, 1); // full
-	printf("%d\n", peek(s1));
-  push(s1, 2);
-  push(s1, 2);
-  push(s1, 2);
-  push(s1, 2);
-  push(s1, 2); // full
-	printf("%d\n", peek(s1));
-  push(s1, 3);
-  push(s1, 3);
-  push(s1, 3);
-  push(s1, 3);
-  push(s1, 3); // full
-	printf("%d\n", peek(s1));
+  s2 = create();
+	
+	char input1[] = "Hello";
+	char input2[] = "world";
+	char input3[] = "Dog";
+	char input4[] = "Cat";
+	push(s1, input1);
+	push(s1, input2);
+	push(s2, input3);
+	push(s2, input4);
+	printf("%s\n", (char *)peek(s1));
+	printf("%s\n", (char *)peek(s2));
+	pop(s1);
+	pop(s2);
+	printf("%s\n", (char *)peek(s1));
+	printf("%s\n", (char *)peek(s2));
   return 0;
 }
