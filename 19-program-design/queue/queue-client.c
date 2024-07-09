@@ -2,39 +2,51 @@
 #include <stdlib.h>
 #include "array-queue.h"
 
-
 int main(void) {
 	Queue q1 = create();
-	int input;
+	Queue q2 = create();
+	Queue qp;
+	int input, selectedQueue;
 	char op;
 	for (;;) {
+		printf("Select queue (1 / 2): ");
+		scanf("%d", &selectedQueue);
+		if (selectedQueue == 1)
+			qp = q1;
+		else if (selectedQueue == 2)
+			qp = q2;
+		else {
+			printf("Invalid selection\n");
+			continue;
+		}
+		getchar();
 		printf("(e)nqueue / (d)equeue / (p)rint: ");
-		scanf(" %c", &op);
+		op = getchar();
 		switch(op) {
 			case 'e':
-				if (q1->size == QUEUE_MAX) {
+				if (qp->size == QUEUE_MAX) {
 					printf("Queue is full\n");
 					continue;
 				}
 				else
 					printf("Enter a number: ");
 					scanf("%d", &input);
-					enqueue(q1, input);
+					enqueue(qp, input);
 				break;
 			case 'd':
-				if (isEmpty(q1)) {
+				if (isEmpty(qp)) {
 					printf("Queue is empty\n");
 					continue;
 				}
 				else
-					printf("%d\n", dequeue(q1));
+					printf("%d\n", dequeue(qp));
 				break;
 			case 'p':
-				if (isEmpty(q1)) {
+				if (isEmpty(qp)) {
 					printf("Queue is empty\n");
 					continue;
 				}
-				printQueue(q1);
+				printQueue(qp);
 				break;
 			default:
 				printf("Invalid entry\n");

@@ -8,7 +8,7 @@
 typedef struct queue_type *Queue;
 
 struct queue_type { 
-	int array[QUEUE_MAX];
+	int *array;
 	int size;
 	int open;
 	int head;

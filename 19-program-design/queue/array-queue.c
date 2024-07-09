@@ -2,9 +2,15 @@
 #include "array-queue.h"
 
 Queue create(void) {
-	Queue q = malloc(sizeof(Queue));
+	Queue q = malloc(sizeof(struct queue_type));
+	printf("created %p\n", q);
 	if (q == NULL) {
 		printf("Could not allocate memory for queue\n");
+		exit(EXIT_FAILURE);
+	}
+	q->array = malloc(QUEUE_MAX * sizeof(int));
+	if (q->array == NULL) {
+		printf("Could not allocate memory for queue array\n");
 		exit(EXIT_FAILURE);
 	}
 	for (int i = 0; i < QUEUE_MAX; i++) {
@@ -28,12 +34,14 @@ void enqueue(Queue q, int item) {
 
 int dequeue(Queue q) {
 	int n = q->array[q->head];
+
 	if (q->head == QUEUE_MAX - 1) {
 		q->array[q->head] = 0;
 		q->head = 0;
 	}
 	else
 		q->array[q->head++] = 0;
+
 	q->size--;
 	return n;
 }
@@ -45,8 +53,8 @@ bool isEmpty(Queue q) {
 }
 
 void printQueue(Queue q) {
+	printf("Queue address %p\n", q);
 	for (int i = 0; i < QUEUE_MAX; i++)
-		printf("%d ", q->array[i]);
+		printf("%d %p\n", q->array[i], &(q->array[i]));
 	printf("\n");
 }
-
