@@ -34,14 +34,12 @@ void enqueue(Queue q, int item) {
 
 int dequeue(Queue q) {
 	int n = q->array[q->head];
-
 	if (q->head == QUEUE_MAX - 1) {
 		q->array[q->head] = 0;
 		q->head = 0;
 	}
 	else
 		q->array[q->head++] = 0;
-
 	q->size--;
 	return n;
 }
