@@ -3,7 +3,6 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
-#define QUEUE_MAX 5
 
 typedef struct queue_type *Queue;
 
@@ -12,9 +11,10 @@ struct queue_type {
 	int size;
 	int open;
 	int head;
+	int maxLength;
 };
 
-Queue create(void);
+Queue create(int max);
 void enqueue(Queue q, int item);
 int dequeue(Queue q);
 bool isEmpty(Queue q);

@@ -3,8 +3,8 @@
 #include "array-queue.h"
 
 int main(void) {
-	Queue q1 = create();
-	Queue q2 = create();
+	Queue q1 = create(5);
+	Queue q2 = create(3);
 	Queue qp;
 	int input, selectedQueue;
 	char op;
@@ -24,7 +24,7 @@ int main(void) {
 		op = getchar();
 		switch(op) {
 			case 'e':
-				if (qp->size == QUEUE_MAX) {
+				if (qp->size == qp->maxLength) {
 					printf("Queue is full\n");
 					continue;
 				}
