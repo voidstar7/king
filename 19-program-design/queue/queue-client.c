@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "array-queue.h"
+#include "linked-list-queue.h"
 
 int main(void) {
 	Queue q1 = create(5);
